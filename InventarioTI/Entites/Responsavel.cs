@@ -17,5 +17,6 @@ namespace InventarioTI.Entites
         public string Email { get; set; }
         public int Nivel { get; set; }
         public string Senha { get; set; }
+        public string Codigo { get; set; }
     }
 }
