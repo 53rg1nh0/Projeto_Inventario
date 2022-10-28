@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Drawing.Charts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -56,6 +58,55 @@ namespace InventarioTI.Extencions
                 }
             }
 
+        }
+
+        public static void ToExcel(this DataGridView dgv, string path)
+        {
+            using (var workbook = new XLWorkbook())
+            {
+
+                var worksheet = workbook.AddWorksheet("Inventário");
+                int i = 1, j = 1;
+                foreach (DataGridViewRow row in dgv.Rows)
+                {
+                    foreach (DataGridViewColumn column in dgv.Columns)
+                    {
+                        if (column.Visible)
+                        {
+                            if (i == 1)
+                            {
+                                worksheet.Column(j).Cell(i).Value = column.HeaderText.ToUpper();
+                                Celulas(worksheet.Column(j).Cell(i), true, true);
+                            }
+                            else
+                            {
+                                worksheet.Column(j).Cell(i).Value = dgv.Rows[i-1].Cells[j-1].Value;
+                                Celulas(worksheet.Column(j).Cell(i));
+                            }
+                            j++;
+                        }
+                    }
+                    i++;
+                    j = 1;
+                }
+                workbook.SaveAs(path);
+            }
+        }
+
+        private static void Celulas(IXLCell celula, bool fontBold = false, bool cor = false)
+        {
+            celula.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            celula.Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+            celula.Style.Border.RightBorder = XLBorderStyleValues.Thin;
+            celula.Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            celula.Style.Border.TopBorder = XLBorderStyleValues.Thin;
+
+            celula.Style.Font.Bold = fontBold;
+
+            if (cor)
+            {
+                celula.Style.Fill.BackgroundColor = XLColor.Yellow;
+            }
         }
     }
 }

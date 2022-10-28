@@ -101,30 +101,7 @@ namespace InventarioTI.Views
         {
             if (lblLogin.Text == "Login")
             {
-                using (var context = new InventarioContext())
-                {
-                    var responsavel =
-                        from responsaveis in context.Responsaveis
-                        join clientes in context.Clientes on responsaveis.ID_R equals clientes.ID_C
-                        where txbUsuario.Text == clientes.UserId
-                        select new
-                        {
-                            clientes.UserId,
-                            responsaveis.Senha
-                        };
-                    if (txbSenha_Email.Text == responsavel.Select(x => x.Senha).SingleOrDefault() &&
-                    txbUsuario.Text == responsavel.Select(x => x.UserId).SingleOrDefault())
-                    {
-                        Properties.Settings.Default.Usuario = txbUsuario.Text;
-                        Properties.Settings.Default.Senha = txbSenha_Email.Text;
-                        Properties.Settings.Default.Save();
-                        Application.Restart();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Usuário não está cadastrado!");
-                    }
-                }
+                Login();
             }
             else if (lblLogin.Text == "Cadastro")
             {
@@ -187,6 +164,47 @@ namespace InventarioTI.Views
             else
             {
                 btnAdd_Remove.BackgroundImage = Properties.Resources.LixeiraClaro25;
+            }
+        }
+
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////
+      
+
+        private void Login()
+        {
+            using (var context = new InventarioContext())
+            {
+                var responsavel =
+                            from responsaveis in context.Responsaveis
+                            join clientes in context.Clientes on responsaveis.ID_R equals clientes.ID_C
+                            where txbUsuario.Text == clientes.UserId
+                            select new
+                            {
+                                clientes.UserId,
+                                responsaveis.Senha
+                            };
+                if (string.IsNullOrEmpty(txbSenha_Email.Text) || string.IsNullOrEmpty(txbUsuario.Text))
+                {
+                    MessageBox.Show("Não pode haver campos em branco!");
+                }
+                else
+                {
+                    if (txbSenha_Email.Text == responsavel.Select(x => x.Senha).SingleOrDefault() &&
+                    txbUsuario.Text == responsavel.Select(x => x.UserId).SingleOrDefault())
+                    {
+                        Properties.Settings.Default.Usuario = txbUsuario.Text;
+                        Properties.Settings.Default.Senha = txbSenha_Email.Text;
+                        Properties.Settings.Default.Save();
+                        Application.Restart();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Usuário não está cadastrado!");
+                    }
+                }
             }
         }
     }
