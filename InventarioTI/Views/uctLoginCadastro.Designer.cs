@@ -42,7 +42,7 @@
             this.lblSenha = new System.Windows.Forms.Label();
             this.lblMatricula = new System.Windows.Forms.Label();
             this.txbCodigo = new System.Windows.Forms.TextBox();
-            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.txbUnidadeAtua = new System.Windows.Forms.TextBox();
             this.lblCodigo = new System.Windows.Forms.Label();
             this.lblUnidades = new System.Windows.Forms.Label();
             this.lblTelSec = new System.Windows.Forms.Label();
@@ -53,7 +53,7 @@
             this.mtbTelCorp = new System.Windows.Forms.MaskedTextBox();
             this.mtbTelSec = new System.Windows.Forms.MaskedTextBox();
             this.cbxIncluir = new System.Windows.Forms.ComboBox();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnAdd_Remove = new System.Windows.Forms.Button();
             this.lblUniResponsavel = new System.Windows.Forms.Label();
             this.txbNome = new System.Windows.Forms.TextBox();
             this.lblNome = new System.Windows.Forms.Label();
@@ -80,9 +80,10 @@
             this.btnFechar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnFechar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnFechar.FlatAppearance.BorderSize = 0;
+            this.btnFechar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.btnFechar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.btnFechar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFechar.Location = new System.Drawing.Point(289, 5);
+            this.btnFechar.Location = new System.Drawing.Point(949, 5);
             this.btnFechar.Margin = new System.Windows.Forms.Padding(4);
             this.btnFechar.Name = "btnFechar";
             this.btnFechar.Size = new System.Drawing.Size(35, 35);
@@ -205,14 +206,15 @@
             this.txbCodigo.Size = new System.Drawing.Size(283, 22);
             this.txbCodigo.TabIndex = 25;
             // 
-            // textBox8
+            // txbUnidadeAtua
             // 
-            this.textBox8.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textBox8.Location = new System.Drawing.Point(784, 96);
-            this.textBox8.Margin = new System.Windows.Forms.Padding(0);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(180, 22);
-            this.textBox8.TabIndex = 24;
+            this.txbUnidadeAtua.Enabled = false;
+            this.txbUnidadeAtua.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txbUnidadeAtua.Location = new System.Drawing.Point(784, 96);
+            this.txbUnidadeAtua.Margin = new System.Windows.Forms.Padding(0);
+            this.txbUnidadeAtua.Name = "txbUnidadeAtua";
+            this.txbUnidadeAtua.Size = new System.Drawing.Size(180, 22);
+            this.txbUnidadeAtua.TabIndex = 24;
             // 
             // lblCodigo
             // 
@@ -266,9 +268,10 @@
             this.btnNext.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnNext.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnNext.FlatAppearance.BorderSize = 0;
+            this.btnNext.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.btnNext.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNext.Location = new System.Drawing.Point(256, 216);
+            this.btnNext.Location = new System.Drawing.Point(916, 216);
             this.btnNext.Margin = new System.Windows.Forms.Padding(4);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(50, 50);
@@ -326,26 +329,32 @@
             // 
             // cbxIncluir
             // 
+            this.cbxIncluir.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxIncluir.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cbxIncluir.FormattingEnabled = true;
             this.cbxIncluir.Location = new System.Drawing.Point(681, 96);
             this.cbxIncluir.Name = "cbxIncluir";
             this.cbxIncluir.Size = new System.Drawing.Size(63, 23);
             this.cbxIncluir.TabIndex = 28;
+            this.cbxIncluir.SelectedValueChanged += new System.EventHandler(this.cbxIncluir_SelectedValueChanged);
             // 
-            // button3
+            // btnAdd_Remove
             // 
-            this.button3.BackColor = System.Drawing.Color.Transparent;
-            this.button3.BackgroundImage = global::InventarioTI.Properties.Resources.LoginClaro;
-            this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button3.FlatAppearance.BorderSize = 0;
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Location = new System.Drawing.Point(751, 95);
-            this.button3.Margin = new System.Windows.Forms.Padding(4);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(25, 25);
-            this.button3.TabIndex = 33;
-            this.button3.UseVisualStyleBackColor = false;
+            this.btnAdd_Remove.BackColor = System.Drawing.Color.Transparent;
+            this.btnAdd_Remove.BackgroundImage = global::InventarioTI.Properties.Resources.AddClaro25;
+            this.btnAdd_Remove.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnAdd_Remove.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAdd_Remove.FlatAppearance.BorderSize = 0;
+            this.btnAdd_Remove.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnAdd_Remove.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btnAdd_Remove.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAdd_Remove.Location = new System.Drawing.Point(751, 95);
+            this.btnAdd_Remove.Margin = new System.Windows.Forms.Padding(4);
+            this.btnAdd_Remove.Name = "btnAdd_Remove";
+            this.btnAdd_Remove.Size = new System.Drawing.Size(25, 25);
+            this.btnAdd_Remove.TabIndex = 33;
+            this.btnAdd_Remove.UseVisualStyleBackColor = false;
+            this.btnAdd_Remove.Click += new System.EventHandler(this.btnAdd_Remove_Click);
             // 
             // lblUniResponsavel
             // 
@@ -385,6 +394,7 @@
             this.btnBack.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnBack.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnBack.FlatAppearance.BorderSize = 0;
+            this.btnBack.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.btnBack.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.btnBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBack.Location = new System.Drawing.Point(22, 216);
@@ -406,12 +416,12 @@
             this.Controls.Add(this.txbNome);
             this.Controls.Add(this.lblNome);
             this.Controls.Add(this.lblUniResponsavel);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.btnAdd_Remove);
             this.Controls.Add(this.cbxIncluir);
             this.Controls.Add(this.mtbTelSec);
             this.Controls.Add(this.mtbTelCorp);
             this.Controls.Add(this.txbCodigo);
-            this.Controls.Add(this.textBox8);
+            this.Controls.Add(this.txbUnidadeAtua);
             this.Controls.Add(this.lblCodigo);
             this.Controls.Add(this.lblUnidades);
             this.Controls.Add(this.lblTelSec);
@@ -434,7 +444,8 @@
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "uctLoginCadastro";
-            this.Size = new System.Drawing.Size(330, 262);
+            this.Size = new System.Drawing.Size(990, 262);
+            this.Load += new System.EventHandler(this.uctLoginCadastro_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ptbLogin)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -455,7 +466,7 @@
         private Label lblSenha;
         private Label lblMatricula;
         private TextBox txbCodigo;
-        private TextBox textBox8;
+        private TextBox txbUnidadeAtua;
         private Label lblCodigo;
         private Label lblUnidades;
         private Label lblTelSec;
@@ -463,7 +474,7 @@
         private MaskedTextBox mtbTelCorp;
         private MaskedTextBox mtbTelSec;
         private ComboBox cbxIncluir;
-        private Button button3;
+        private Button btnAdd_Remove;
         private Label lblUniResponsavel;
         private TextBox txbNome;
         private Label lblNome;

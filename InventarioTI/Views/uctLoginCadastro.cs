@@ -13,6 +13,7 @@ namespace InventarioTI.Views
 {
     public partial class uctLoginCadastro : UserControl
     {
+        private List<string> _responsavelUnidade = new List<string>();
         public uctLoginCadastro()
         {
             InitializeComponent();
@@ -100,7 +101,30 @@ namespace InventarioTI.Views
         {
             if (lblLogin.Text == "Login")
             {
-
+                using (var context = new InventarioContext())
+                {
+                    var responsavel =
+                        from responsaveis in context.Responsaveis
+                        join clientes in context.Clientes on responsaveis.ID_R equals clientes.ID_C
+                        where txbUsuario.Text == clientes.UserId
+                        select new
+                        {
+                            clientes.UserId,
+                            responsaveis.Senha
+                        };
+                    if (txbSenha_Email.Text == responsavel.Select(x => x.Senha).SingleOrDefault() &&
+                    txbUsuario.Text == responsavel.Select(x => x.UserId).SingleOrDefault())
+                    {
+                        Properties.Settings.Default.Usuario = txbUsuario.Text;
+                        Properties.Settings.Default.Senha = txbSenha_Email.Text;
+                        Properties.Settings.Default.Save();
+                        Application.Restart();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Usuário não está cadastrado!");
+                    }
+                }
             }
             else if (lblLogin.Text == "Cadastro")
             {
@@ -109,6 +133,60 @@ namespace InventarioTI.Views
             else if (lblLogin.Text == "Editar\nCadastro")
             {
 
+            }
+        }
+
+        private void uctLoginCadastro_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                using (var context = new InventarioContext())
+                {
+                    var unidades =
+                            from uni in context.Unidades
+                            select uni.Sigla;
+
+                    cbxIncluir.DataSource = unidades.ToArray();
+                }
+            }
+            catch { }
+        }
+
+        private void btnAdd_Remove_Click(object sender, EventArgs e)
+        {
+            if (!_responsavelUnidade.Contains(cbxIncluir.SelectedValue.ToString()))
+            {
+                _responsavelUnidade.Add(cbxIncluir.SelectedValue.ToString());
+                btnAdd_Remove.BackgroundImage = Properties.Resources.LixeiraClaro25;
+                string aux = "";
+                foreach (string unidade in _responsavelUnidade)
+                {
+                    aux += unidade + ",";
+                }
+                txbUnidadeAtua.Text = aux;
+            }
+            else
+            {
+                _responsavelUnidade.Remove(cbxIncluir.SelectedValue.ToString());
+                btnAdd_Remove.BackgroundImage = Properties.Resources.AddClaro25;
+                string aux = "";
+                foreach (string unidade in _responsavelUnidade)
+                {
+                    aux += unidade + ",";
+                }
+                txbUnidadeAtua.Text = aux;
+            }
+        }
+
+        private void cbxIncluir_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (!_responsavelUnidade.Contains(cbxIncluir.SelectedValue.ToString()))
+            {
+                btnAdd_Remove.BackgroundImage = Properties.Resources.AddClaro25;
+            }
+            else
+            {
+                btnAdd_Remove.BackgroundImage = Properties.Resources.LixeiraClaro25;
             }
         }
     }

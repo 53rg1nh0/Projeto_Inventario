@@ -63,10 +63,30 @@ namespace InventarioTI.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap AddClaro25 {
+            get {
+                object obj = ResourceManager.GetObject("AddClaro25", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap BackClaro50 {
             get {
                 object obj = ResourceManager.GetObject("BackClaro50", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Byte[].
+        /// </summary>
+        internal static byte[] DesconectadoBackgroud {
+            get {
+                object obj = ResourceManager.GetObject("DesconectadoBackgroud", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -76,6 +96,16 @@ namespace InventarioTI.Properties {
         internal static System.Drawing.Bitmap FecharClaro25 {
             get {
                 object obj = ResourceManager.GetObject("FecharClaro25", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap LixeiraClaro25 {
+            get {
+                object obj = ResourceManager.GetObject("LixeiraClaro25", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -111,12 +141,30 @@ namespace InventarioTI.Properties {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a .
+        /// </summary>
+        internal static string Senha {
+            get {
+                return ResourceManager.GetString("Senha", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap SolarCocaCola {
             get {
                 object obj = ResourceManager.GetObject("SolarCocaCola", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a .
+        /// </summary>
+        internal static string Usuario {
+            get {
+                return ResourceManager.GetString("Usuario", resourceCulture);
             }
         }
     }

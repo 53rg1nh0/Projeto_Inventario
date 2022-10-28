@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace InventarioTI
 {
-    public class InventarioContext:DbContext
+    public class InventarioContext : DbContext
     {
         private string _pathDB = @"C:\Users\sesousa\OneDrive - SOLAR BR PARTICIPAÇÕES S.A\Desktop\DBInvenTI.db";
 
@@ -21,7 +21,7 @@ namespace InventarioTI
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source="+_pathDB);
+            optionsBuilder.UseSqlite("Data Source=" + _pathDB);
         }
 
     }

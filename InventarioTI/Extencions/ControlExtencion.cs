@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,6 +52,14 @@ namespace InventarioTI.Extencions
                 if (c.Controls.Count != 0)
                 {
                     Arrastar(c);
+                }
+                if (conteiner is Form1)
+                {
+                    var form = (Form1)conteiner;
+
+                    form.Size = new Size(990, 262);
+                    form.FormBorderStyle = FormBorderStyle.None;
+
                 }
             }
         }

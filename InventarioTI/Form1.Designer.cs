@@ -29,34 +29,43 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.uctLoginCadastro = new InventarioTI.Views.uctLoginCadastro();
-            this.uctSobre = new InventarioTI.Views.uctSobre();
+            this.pgnLoginCadastro = new InventarioTI.Views.uctLoginCadastro();
+            this.pgnSobre = new InventarioTI.Views.uctSobre();
+            this.pgnDesconectado = new InventarioTI.Views.uctDesconectado();
             this.SuspendLayout();
             // 
-            // uctLoginCadastro
+            // pgnLoginCadastro
             // 
-            this.uctLoginCadastro.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(65)))), ((int)(((byte)(81)))));
-            this.uctLoginCadastro.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.uctLoginCadastro.Location = new System.Drawing.Point(246, 9);
-            this.uctLoginCadastro.Margin = new System.Windows.Forms.Padding(0);
-            this.uctLoginCadastro.Name = "uctLoginCadastro";
-            this.uctLoginCadastro.Size = new System.Drawing.Size(100, 100);
-            this.uctLoginCadastro.TabIndex = 0;
+            this.pgnLoginCadastro.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(65)))), ((int)(((byte)(81)))));
+            this.pgnLoginCadastro.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.pgnLoginCadastro.Location = new System.Drawing.Point(246, 12);
+            this.pgnLoginCadastro.Margin = new System.Windows.Forms.Padding(0);
+            this.pgnLoginCadastro.Name = "pgnLoginCadastro";
+            this.pgnLoginCadastro.Size = new System.Drawing.Size(100, 100);
+            this.pgnLoginCadastro.TabIndex = 0;
             // 
-            // uctSobre
+            // pgnSobre
             // 
-            this.uctSobre.Location = new System.Drawing.Point(361, 9);
-            this.uctSobre.Name = "uctSobre";
-            this.uctSobre.Size = new System.Drawing.Size(100, 100);
-            this.uctSobre.TabIndex = 1;
+            this.pgnSobre.Location = new System.Drawing.Point(366, 12);
+            this.pgnSobre.Name = "pgnSobre";
+            this.pgnSobre.Size = new System.Drawing.Size(100, 100);
+            this.pgnSobre.TabIndex = 1;
+            // 
+            // pgnDesconectado
+            // 
+            this.pgnDesconectado.Location = new System.Drawing.Point(486, 12);
+            this.pgnDesconectado.Name = "pgnDesconectado";
+            this.pgnDesconectado.Size = new System.Drawing.Size(100, 100);
+            this.pgnDesconectado.TabIndex = 2;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(993, 384);
-            this.Controls.Add(this.uctSobre);
-            this.Controls.Add(this.uctLoginCadastro);
+            this.Controls.Add(this.pgnDesconectado);
+            this.Controls.Add(this.pgnSobre);
+            this.Controls.Add(this.pgnLoginCadastro);
             this.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
@@ -68,7 +77,8 @@
 
         #endregion
 
-        private Views.uctLoginCadastro uctLoginCadastro;
-        private Views.uctSobre uctSobre;
+        private Views.uctLoginCadastro pgnLoginCadastro;
+        private Views.uctSobre pgnSobre;
+        private Views.uctDesconectado pgnDesconectado;
     }
 }
