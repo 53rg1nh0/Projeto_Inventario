@@ -66,28 +66,26 @@ namespace InventarioTI.Extencions
             {
 
                 var worksheet = workbook.AddWorksheet("Inventário");
-                int i = 1, j = 1;
+
+                foreach (DataGridViewColumn column in dgv.Columns)
+                {
+                    if (column.Visible)
+                    {
+                        worksheet.Column(column.Index + 1).Cell(1).Value = column.HeaderText.ToUpper();
+                        Celulas(worksheet.Column(column.Index + 1).Cell(1), true, true);
+                    }
+                }
+
                 foreach (DataGridViewRow row in dgv.Rows)
                 {
                     foreach (DataGridViewColumn column in dgv.Columns)
                     {
                         if (column.Visible)
                         {
-                            if (i == 1)
-                            {
-                                worksheet.Column(j).Cell(i).Value = column.HeaderText.ToUpper();
-                                Celulas(worksheet.Column(j).Cell(i), true, true);
-                            }
-                            else
-                            {
-                                worksheet.Column(j).Cell(i).Value = dgv.Rows[i-1].Cells[j-1].Value;
-                                Celulas(worksheet.Column(j).Cell(i));
-                            }
-                            j++;
+                            worksheet.Column(column.Index + 1).Cell(row.Index + 2).Value = dgv.Rows[row.Index].Cells[column.Index].Value;
+                            Celulas(worksheet.Column(column.Index + 1).Cell(row.Index + 2));
                         }
                     }
-                    i++;
-                    j = 1;
                 }
                 workbook.SaveAs(path);
             }

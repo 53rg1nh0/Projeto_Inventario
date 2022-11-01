@@ -13,8 +13,10 @@ namespace InventarioTI.Entites
         public int ID_M { get; set; }
         public DateTime Data { get; set; }
         public string Status { get; set; }
-        public int FK_ID_C { get; set; }
-        public int FK_ID_E { get; set; }
-        public int Chamado { get; set; }
+        public Cliente Cliente { get; set; }
+        public Equipamento Equipamento { get; set; }
+        public Unidade Unidade { get; set; }
+        public Responsavel Responsavel { get; set; }
+        public int? Chamado { get; set; }
     }
 }

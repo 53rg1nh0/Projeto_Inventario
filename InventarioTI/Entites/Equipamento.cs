@@ -22,8 +22,9 @@ namespace InventarioTI.Entites
         public string Ram { get; set; }
         public string Disco { get; set; }
         public string Status { get; set; }
-        public int FK_ID_U { get; set; }
-        public int? FK_ID_C { get; set; }
+        public Cliente Cliente{ get; set; }
+        public Unidade Unidade { get; set; }
+        public ICollection<Movimetacao> Movimentacoes { get; set; }
 
         public string Nomenclatura 
         {

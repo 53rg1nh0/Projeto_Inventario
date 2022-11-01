@@ -15,10 +15,11 @@ namespace InventarioTI.Entites
 
         [Key]
         public int ID_C { get; set; }
-        public int Matricula { get; set; }
+        public int? Matricula { get; set; }
         public string Area { get; set; }
         public string Cargo { get; set; }
-        public int ID_FK_U { get; set; }
+        public ICollection<Equipamento> Equipamentos { get; set; }
+        public ICollection<Movimetacao> Movimetacoes { get; set; }
 
         public string UserId 
         {

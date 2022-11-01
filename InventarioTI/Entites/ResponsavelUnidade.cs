@@ -10,12 +10,10 @@ namespace InventarioTI.Entites
 {
     public class ResponsavelUnidade
     {
-        
-        public int FK_ID_C { get; set; }
- 
-        public int FK_ID_U { get; set; }
+        public int ID_R { get; set; }
+        public Responsavel Responsavel { get; set; }
 
-        [Key]
-        public int ChaveEF { get; set; }
+        public int ID_U { get; set; }
+        public Unidade Unidade { get; set; }
     }
 }

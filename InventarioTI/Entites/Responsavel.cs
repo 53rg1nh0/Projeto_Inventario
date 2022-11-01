@@ -18,5 +18,7 @@ namespace InventarioTI.Entites
         public int Nivel { get; set; }
         public string Senha { get; set; }
         public string Codigo { get; set; }
+        public Cliente CLiente { get; set; }
+        public ICollection<ResponsavelUnidade> Unidades { get; set; }
     }
 }

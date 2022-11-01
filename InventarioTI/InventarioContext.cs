@@ -24,5 +24,161 @@ namespace InventarioTI
             optionsBuilder.UseSqlite("Data Source=" + _pathDB);
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //////////////////////////////////CLIENTE//////////////////////////////
+
+            modelBuilder.Entity<Cliente>()
+                .Property(c => c.UserId)
+                    .HasMaxLength(25)
+                        .IsRequired();
+
+            modelBuilder.Entity<Cliente>()
+                .Property(c => c.Nome)
+                    .HasMaxLength(100)
+                        .IsRequired();
+
+            modelBuilder.Entity<Cliente>()
+                .Property(c => c.Matricula)
+                    .HasMaxLength(10)
+                        .IsRequired(false);
+
+            modelBuilder.Entity<Cliente>()
+                .Property(c => c.Area)
+                    .IsRequired();
+
+            modelBuilder.Entity<Cliente>()
+              .Property(c => c.Cargo)
+                .IsRequired();
+
+            //modelBuilder.Entity<Cliente>()
+            //    .Property(c => c.Unidade)
+            //        .IsRequired();
+
+            //modelBuilder.Entity<Cliente>()
+            //    .HasOne(c => c.Unidade)
+            //        .WithMany(u => u.Clientes);
+
+
+            //////////////////////////////////EQUIPAMENTO//////////////////////////////
+            ///
+
+            modelBuilder.Entity<Equipamento>()
+               .Property(e => e.Patrimonio)
+                   .HasMaxLength(15)
+                       .IsRequired();
+
+            modelBuilder.Entity<Equipamento>()
+                .Property(e => e.Nomenclatura)
+                    .HasMaxLength(20)
+                        .IsRequired();
+
+            modelBuilder.Entity<Equipamento>()
+                .Property(e => e.Serie)
+                    .HasMaxLength(50)
+                        .IsRequired();
+
+            modelBuilder.Entity<Equipamento>()
+                .Property(e => e.Modelo)
+                    .HasMaxLength(20)
+                        .IsRequired();
+
+            modelBuilder.Entity<Equipamento>()
+                .Property(e => e.Tipo)
+                    .HasMaxLength(15)
+                        .IsRequired();
+
+            modelBuilder.Entity<Equipamento>()
+                .Property(e => e.Marca)
+                    .HasMaxLength(50)
+                        .IsRequired();
+
+            modelBuilder.Entity<Equipamento>()
+                .Property(e => e.Processador)
+                    .HasMaxLength(20)
+                        .IsRequired();
+
+            modelBuilder.Entity<Equipamento>()
+                .Property(e => e.Ram)
+                    .HasMaxLength(20)
+                        .IsRequired();
+
+            modelBuilder.Entity<Equipamento>()
+                .Property(e => e.Disco)
+                    .HasMaxLength(20)
+                        .IsRequired(false);
+
+            modelBuilder.Entity<Equipamento>()
+                .Property(e => e.Status)
+                    .HasMaxLength(10)
+                        .IsRequired();
+
+            //modelBuilder.Entity<Equipamento>()
+            //    .Property(e => e.Cliente)
+            //        .IsRequired(false);
+
+
+            modelBuilder.Entity<Equipamento>()
+                .HasOne(e => e.Cliente)
+                    .WithMany(c => c.Equipamentos);
+
+
+            //////////////////////////////////UNIDADE//////////////////////////////
+            ///
+
+            modelBuilder.Entity<Unidade>()
+                .Property(u => u.Regiao)
+                    .HasMaxLength(20)
+                        .IsRequired();
+
+            modelBuilder.Entity<Unidade>()
+                .Property(u => u.Uf)
+                    .HasMaxLength(2)
+                        .IsRequired();
+
+            modelBuilder.Entity<Unidade>()
+                .Property(u => u.Nome)
+                    .HasMaxLength(50)
+                        .IsRequired();
+
+            modelBuilder.Entity<Unidade>()
+                .Property(u => u.Sigla)
+                    .HasMaxLength(4)
+                        .IsRequired();
+
+            //////////////////////////////////MOVIMENTACAO//////////////////////////////
+            ///
+            modelBuilder.Entity<Movimetacao>()
+                .Property(m => m.Data)
+                    .HasColumnType("DateTime")
+                        .IsRequired();
+
+            modelBuilder.Entity<Movimetacao>()
+                .Property(m => m.Status)
+                    .HasMaxLength(10)
+                        .IsRequired();
+
+            modelBuilder.Entity<Movimetacao>()
+                .Property(m => m.Chamado)
+                    .HasMaxLength(20)
+                        .IsRequired(false);
+
+            modelBuilder.Entity<Movimetacao>()
+                .HasOne(m => m.Equipamento)
+                    .WithMany(e => e.Movimentacoes)
+                        .IsRequired();
+
+            modelBuilder.Entity<Movimetacao>()
+                .HasOne(m => m.Cliente)
+                    .WithMany(c => c.Movimetacoes)
+                        .IsRequired(false);
+
+            //////////////////////////////////RESPONSAVELUNIDADE//////////////////////////////
+            ///
+            modelBuilder.Entity<ResponsavelUnidade>()
+                .HasKey(c => new { c.ID_R, c.ID_U });
+        }
+
+
     }
 }

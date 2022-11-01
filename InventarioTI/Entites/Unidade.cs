@@ -15,6 +15,7 @@ namespace InventarioTI.Entites
         public string Uf { get; set; }
         public string Nome { get; set; }
         public string Sigla { get; set; }
-
+        //public ICollection<Cliente> Clientes { get; set; }
+        public ICollection<ResponsavelUnidade> Responsaveis { get; set; }
     }
 }
