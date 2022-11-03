@@ -1,4 +1,8 @@
-﻿using InventarioTI.Extencions;
+﻿using DocumentFormat.OpenXml.InkML;
+using InventarioTI.Entites;
+using InventarioTI.Exceptions;
+using InventarioTI.Extencions;
+using InventarioTI.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,6 +10,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -14,6 +19,8 @@ namespace InventarioTI.Views
     public partial class uctLoginCadastro : UserControl
     {
         private List<string> _responsavelUnidade = new List<string>();
+        private byte _pgn = 1;
+        private string _codigo = "";
         public uctLoginCadastro()
         {
             InitializeComponent();
@@ -67,25 +74,50 @@ namespace InventarioTI.Views
             txbSenha_Email.PasswordChar = '\0';
 
             btnBack.Visible = true;
+            btnVisualizarSenha1.Visible = false;
         }
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            lblCadastrar.Visible = true;
-            lblEditarCadastro.Visible = true;
-            lblSenha_Email.Text = "Senha";
-            lblLogin.Text = "Login";
-            txbUsuario.Text = "";
-            txbSenha_Email.Text = "";
-            lblSenha_Email.Visible = true;
-            txbSenha_Email.Visible = true;
-            txbSenha_Email.PasswordChar = '*';
+            switch (_pgn)
+            {
+                case 1:
+                    lblCadastrar.Visible = true;
+                    lblEditarCadastro.Visible = true;
+                    lblSenha_Email.Text = "Senha";
+                    lblLogin.Text = "Login";
+                    txbUsuario.Text = "";
+                    txbSenha_Email.Text = "";
+                    lblSenha_Email.Visible = true;
+                    txbSenha_Email.Visible = true;
+                    txbSenha_Email.PasswordChar = '*';
+                    txbSenha_Email.PlaceholderText = "";
 
-            btnBack.Visible = false;
+                    btnBack.Visible = false;
+                    btnVisualizarSenha1.Visible = true;
+                    break;
+                case 2:
+                    _pgn--;
+                    if(lblLogin.Text!= "Editar\nCadastro")
+                    {
+                        VoltarPagina();
+                    }
+                    else
+                    {
+                        lblSenha_Email.Visible = false;
+                        txbSenha_Email.Visible= false;
+                    }
+                    break;
+                case 3:
+                    _pgn--;
+                    VoltarPagina();
+                    break;
+            }
         }
 
         private void lblEditarCadastro_Click(object sender, EventArgs e)
         {
+
             lblCadastrar.Visible = false;
             lblEditarCadastro.Visible = false;
             lblSenha_Email.Visible = false;
@@ -95,22 +127,56 @@ namespace InventarioTI.Views
             lblLogin.Text = "Editar\nCadastro";
 
             btnBack.Visible = true;
+            btnVisualizarSenha1.Visible = false;
         }
 
         private void btnNext_Click(object sender, EventArgs e)
         {
-            if (lblLogin.Text == "Login")
-            {
-                Login();
-            }
-            else if (lblLogin.Text == "Cadastro")
+            try
             {
 
-            }
-            else if (lblLogin.Text == "Editar\nCadastro")
-            {
+                if (lblLogin.Text == "Login")
+                {
+                    Login();
+                }
+                else if (lblLogin.Text == "Cadastro")
+                {
+                    btnVisualizarSenha1.Visible = false;
+                    switch (_pgn)
+                    {
+                        case 1:
 
+                            PrimeraEtapaCadastro();
+                            break;
+                        case 2:
+                            SegundaEtapaCadastro();
+                            break;
+                        case 3:
+                            TerceiraEtapaCadastro();
+                            btnVisualizarSenha1.Visible = true;
+                            break;
+                    }
+                }
+                else if (lblLogin.Text == "Editar\nCadastro")
+                {
+                    btnVisualizarSenha1.Visible = false;
+                    switch (_pgn)
+                    {
+                        case 1:
+                            PrimeiraEtapaEditarCadastro();
+                            break;
+                    }
+                }
             }
+            catch (DomainException ex)
+            {
+                MessageBox.Show(ex.Message, "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
         }
 
         private void uctLoginCadastro_Load(object sender, EventArgs e)
@@ -167,43 +233,223 @@ namespace InventarioTI.Views
             }
         }
 
+        private void btnVisualizarSenha1_MouseDown(object sender, MouseEventArgs e)
+        {
+            btnVisualizarSenha1.BackgroundImage = Properties.Resources.OlhoAbertoEscuro22;
+            txbSenha_Email.PasswordChar = '\0';
+        }
 
+        private void btnVisualizarSenha1_MouseUp(object sender, MouseEventArgs e)
+        {
+            btnVisualizarSenha1.BackgroundImage = Properties.Resources.OlhoFechadoEscuro22;
+            txbSenha_Email.PasswordChar = '*';
+        }
 
+        private void btnVisualizarSenha2_MouseDown(object sender, MouseEventArgs e)
+        {
+            btnVisualizarSenha2.BackgroundImage = Properties.Resources.OlhoAbertoEscuro22;
+            txbSenha.PasswordChar = '\0';
+        }
+
+        private void btnVisualizarSenha2_MouseUp(object sender, MouseEventArgs e)
+        {
+            btnVisualizarSenha2.BackgroundImage = Properties.Resources.OlhoFechadoEscuro22;
+            txbSenha.PasswordChar = '*';
+        }
+
+        private void btnVisualizarSenha3_MouseDown(object sender, MouseEventArgs e)
+        {
+            btnVisualizarSenha3.BackgroundImage = Properties.Resources.OlhoAbertoEscuro22;
+            txbConfirmarSenha.PasswordChar = '\0';
+        }
+
+        private void btnVisualizarSenha3_MouseUp(object sender, MouseEventArgs e)
+        {
+            btnVisualizarSenha3.BackgroundImage = Properties.Resources.OlhoFechadoEscuro22;
+            txbConfirmarSenha.PasswordChar = '*';
+        }
 
         /////////////////////////////////////////////////////////////////////////////////////
-      
+
 
         private void Login()
         {
             using (var context = new InventarioContext())
             {
                 var responsavel =
-                            from responsaveis in context.Responsaveis
-                            join clientes in context.Clientes on responsaveis.ID_R equals clientes.ID_C
-                            where txbUsuario.Text == clientes.UserId
+                            from resp in context.Responsaveis
+                            where txbUsuario.Text == resp.CLiente.UserId
                             select new
                             {
-                                clientes.UserId,
-                                responsaveis.Senha
+                                resp.CLiente.UserId,
+                                resp.Senha
                             };
                 if (string.IsNullOrEmpty(txbSenha_Email.Text) || string.IsNullOrEmpty(txbUsuario.Text))
                 {
-                    MessageBox.Show("Não pode haver campos em branco!");
+                    throw new DomainException("Não pode haver campos em branco!");
+                }
+                else if(!(txbSenha_Email.Text == responsavel.Select(x => x.Senha).SingleOrDefault() &&
+                    txbUsuario.Text.ToLower() == responsavel.Select(x => x.UserId).SingleOrDefault()))
+                {
+                    throw new DomainException("Usuário não está cadastrado!");
                 }
                 else
                 {
-                    if (txbSenha_Email.Text == responsavel.Select(x => x.Senha).SingleOrDefault() &&
-                    txbUsuario.Text == responsavel.Select(x => x.UserId).SingleOrDefault())
-                    {
-                        Properties.Settings.Default.Usuario = txbUsuario.Text;
-                        Properties.Settings.Default.Senha = txbSenha_Email.Text;
-                        Properties.Settings.Default.Save();
-                        Application.Restart();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Usuário não está cadastrado!");
-                    }
+                    Properties.Settings.Default.Usuario = txbUsuario.Text;
+                    Properties.Settings.Default.Senha = txbSenha_Email.Text;
+                    Properties.Settings.Default.Save();
+                    Application.Restart();
+                }
+            }
+        }
+
+        private void PrimeraEtapaCadastro()
+        {
+            using (var context = new InventarioContext())
+            {
+                string exp = @"^(\w+.)?\w+@solarbr.com.br$";
+                Regex re = new Regex(exp);
+                var r = context.Responsaveis.Where(r => r.CLiente.UserId.ToLower() == txbUsuario.Text.ToLower()).SingleOrDefault();
+                if (txbSenha_Email.Text == "" || txbUsuario.Text == "")
+                {
+                    throw new DomainException("Usuário ou e-mail não podem está em branco!");
+                }
+                else if (string.IsNullOrEmpty(context.Clientes.Where(c => c.UserId.ToLower() == txbUsuario.Text.ToLower()).Select(c => c.UserId).SingleOrDefault()))
+                {
+                    throw new DomainException("Usuário não existe no Banco de Dados do Sistema!");
+                }
+                else if (!(r is null))
+                {
+                    throw new DomainException("Usuário já cadastrado no Sistema!");
+                }
+                else if (!re.IsMatch(txbSenha_Email.Text))
+                {
+                    throw new DomainException("Email deve conter o domínio @solarbr.com.br");
+                }
+                else
+                {
+                    _codigo = Servico.GerarCodigo();
+                    Task.Factory.StartNew(() => { Servico.EnviarEmail(txbSenha_Email.Text, _codigo); });
+                    txbCodigo.PlaceholderText = "Verifique em seu e-mail o código enviado!";
+
+                    _pgn++;
+                    PassarPagina();
+                    btnVisualizarSenha1.Visible = true;
+                }
+            }
+        }
+
+        private void SegundaEtapaCadastro()
+        {
+            if (txbCodigo.Text == "" || txbMatricula.Text == "" || txbSenha.Text == "" || txbConfirmarSenha.Text == "")
+            {
+                throw new DomainException("Não pode haver campos em branco!");
+            }
+            else if (txbCodigo.Text != _codigo)
+            {
+                throw new DomainException("O código fornecido não conrresponde ao enviado por e-mail!");
+            }
+            else if (txbSenha.Text != txbConfirmarSenha.Text)
+            {
+                throw new DomainException("As senhas não coencidem!");
+            }
+            else
+            {
+                _pgn++;
+                PassarPagina();
+            }
+        }
+        private void TerceiraEtapaCadastro()
+        {
+            string tel = @"^[(][0-9]{2}[)][ ]([0-9][ ])?[0-9]{4}[-][0-9]{4}$";
+            Regex re = new Regex(tel);
+            if (txbNome.Text == "" || txbUnidadeAtua.Text == "" || mtbTelCorp.Text == "(  )     -")
+            {
+                throw new DomainException("Campos obrigatórios não podem está em branco!");
+            }
+            else if (!re.IsMatch(mtbTelCorp.Text) || (mtbTelSec.Text != "" && !re.IsMatch(mtbTelSec.Text)))
+            {
+                throw new DomainException("Telefone inválido!");
+            }
+            else
+            {
+                using (var context = new InventarioContext())
+                {
+                    Cliente c = new Cliente();
+                    c = context.Clientes.Where(c => c.UserId == txbUsuario.Text).SingleOrDefault();
+                    Responsavel r = new Responsavel();
+                    r.TelefoneCorporativo = mtbTelCorp.Text;
+                    r.TelefoneSecundario = mtbTelCorp.Text;
+                    r.Email = txbSenha_Email.Text;
+                    r.Nivel = 1;
+                    r.Senha = txbSenha.Text;
+                    r.Codigo = txbCodigo.Text;
+                    r.CLiente = c;
+                    c.Matricula = int.Parse(txbMatricula.Text);
+                    context.Add(r);
+                    context.Update(c);
+                    context.SaveChanges();
+                    Application.Restart();
+                    Properties.Settings.Default.Usuario = txbUsuario.Text;
+                    Properties.Settings.Default.Senha = txbSenha.Text;
+                    Properties.Settings.Default.Save();
+                }
+            }
+        }
+
+        private void PrimeiraEtapaEditarCadastro()
+        {
+            using (var context = new InventarioContext())
+            {
+                txbCodigo.PlaceholderText = "";
+                var r = context.Responsaveis.Where(r => r.CLiente.UserId.ToLower() == txbUsuario.Text.ToLower()).SingleOrDefault();
+                if (txbUsuario.Text == "")
+                {
+                    throw new DomainException("Campo não pode está em branco!");
+                }
+                else if (string.IsNullOrEmpty(context.Clientes.Where(c => c.UserId.ToLower() == txbUsuario.Text.ToLower()).Select(c => c.UserId).SingleOrDefault()))
+                {
+                    throw new DomainException("Usuário não existe no Banco de Dados do Sistema!");
+                }
+                else if (r is null)
+                {
+                    throw new DomainException("Usuário não está cadastrado no sistema!");
+                }
+                else
+                {
+                    _codigo = Servico.GerarCodigo();
+                    txbSenha_Email.Visible = true;
+                    lblSenha_Email.Visible=true;
+                    lblSenha_Email.Text = "Código";
+                    txbSenha_Email.PlaceholderText = "Verifique em seu e-mail o código enviado!";
+                    Task.Factory.StartNew(() => { Servico.EnviarEmail(txbSenha_Email.Text, _codigo); });
+                    _pgn++;
+                }
+            }
+        }
+
+        private void PassarPagina()
+        {
+            foreach (Control control in this.Controls)
+            {
+                if (!(control.Name == "btnFechar" || control.Name == "btnNext" || control.Name == "btnBack"))
+                {
+                    Point p = control.Location;
+                    p.Offset(-330, 0);
+                    control.Location = p;
+                }
+            }
+        }
+
+        private void VoltarPagina()
+        {
+            foreach (Control control in this.Controls)
+            {
+                if (!(control.Name == "btnFechar" || control.Name == "btnNext" || control.Name == "btnBack"))
+                {
+                    Point p = control.Location;
+                    p.Offset(330, 0);
+                    control.Location = p;
                 }
             }
         }

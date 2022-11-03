@@ -141,6 +141,26 @@ namespace InventarioTI.Properties {
         }
         
         /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap OlhoAbertoEscuro22 {
+            get {
+                object obj = ResourceManager.GetObject("OlhoAbertoEscuro22", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap OlhoFechadoEscuro22 {
+            get {
+                object obj = ResourceManager.GetObject("OlhoFechadoEscuro22", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a .
         /// </summary>
         internal static string Senha {

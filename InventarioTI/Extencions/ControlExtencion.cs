@@ -56,8 +56,7 @@ namespace InventarioTI.Extencions
                 if (conteiner is Form1)
                 {
                     var form = (Form1)conteiner;
-
-                    form.Size = new Size(990, 262);
+                    form.Size = new Size(330, 262);
                     form.FormBorderStyle = FormBorderStyle.None;
 
                 }
@@ -79,6 +78,11 @@ namespace InventarioTI.Extencions
                         user.Dock = DockStyle.Fill;
                     }
 
+                }
+                if (uct is Panel && control.Name == "pgnLoginCadastro")
+                {
+                    var panel = (Panel)uct;
+                    panel.Visible = false;
                 }
             }
         }

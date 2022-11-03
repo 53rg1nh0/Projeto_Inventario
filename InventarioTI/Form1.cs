@@ -69,35 +69,54 @@ namespace InventarioTI
                     //dataGridView1.Estilo(array);
                     //dataGridView1.ToExcel(@"C:\Users\sesousa\OneDrive - SOLAR BR PARTICIPAÇÕES S.A\Desktop\teste.xlsx");
 
-                    Cliente c = context.Clientes.Where(c => c.Nome == "Backup").FirstOrDefault();
-                    Unidade u = context.Unidades.Where(u => u.Sigla == "CVF").FirstOrDefault();
+                    //EXEMPLO DE COMO INCLUIR DADOS 
 
-                    Equipamento equi = new Equipamento
-                    {
-                        Tipo = "Desktop",
-                        Patrimonio = 81841,
-                        Nomenclatura = "CVF00081841D",
-                        Serie = "BRJ429FG3",
-                        Marca = "HP",
-                        Modelo = "800 G1",
-                        Processador = "Core I5",
-                        Ram = "8GB",
-                        Status = "Ativo",
-                        Cliente = c,
-                        Unidade=u
-                    };
+                    //Cliente c = context.Clientes.Where(c => c.Nome == "Backup").FirstOrDefault();
+                    //Unidade u = context.Unidades.Where(u => u.Sigla == "CVF").FirstOrDefault();
 
-                    context.Add(equi);
-                    context.SaveChanges();
+                    //Equipamento equi = new Equipamento
+                    //{
+                    //    Tipo = "Desktop",
+                    //    Patrimonio = 81841,
+                    //    Nomenclatura = "CVF00081841D",
+                    //    Serie = "BRJ429FG3",
+                    //    Marca = "HP",
+                    //    Modelo = "800 G1",
+                    //    Processador = "Core I5",
+                    //    Ram = "8GB",
+                    //    Status = "Ativo",
+                    //    Cliente = c,
+                    //    Unidade=u
+                    //};
+
+                    //context.Add(equi);
+                    //context.SaveChanges();
+
+                    //Unidade u = context.Unidades.Where(u => u.Sigla == "CVF").FirstOrDefault();
+
+
+                    //var query = from equi in context.Equipamentos
+                    //            where equi.Cliente.Area == "RH"
+                    //            select new
+                    //            {
+                    //                equi.Tipo,
+                    //                equi.Modelo,
+                    //                equi.Patrimonio,
+                    //                Funcionario = equi.Cliente.Nome,
+                    //                User = equi.Cliente.UserId,
+                    //                Cargo = equi.Cliente.Cargo,
+                    //            };
+
+
+                    //dataGridView1.Estilo(query.ToArray());
 
                     var responsavel =
-                        from responsaveis in context.Responsaveis
-                        join clientes in context.Clientes on responsaveis.ID_R equals clientes.ID_C
-                        where Properties.Settings.Default.Usuario == clientes.UserId
+                        from resp in context.Responsaveis
+                        where Properties.Settings.Default.Usuario == resp.CLiente.UserId
                         select new
                         {
-                            clientes.UserId,
-                            responsaveis.Senha
+                            resp.CLiente.UserId,
+                            resp.Senha
                         };
 
 
@@ -118,7 +137,7 @@ namespace InventarioTI
                 this.IrParaPagina(pgnDesconectado);
                 pgnDesconectado.lblMensagem.Text = "Erro na operação com BD. Verifique conexão!";
             }
-            catch(Microsoft.EntityFrameworkCore.DbUpdateException ex)
+            catch(DbUpdateException ex)
             {
                 MessageBox.Show(ex.Message);
             }

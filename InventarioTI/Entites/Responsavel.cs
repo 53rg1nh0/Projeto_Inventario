@@ -12,7 +12,7 @@ namespace InventarioTI.Entites
     {
         [Key]
         public int ID_R { get; set; }
-        public string TelefoneCOrporativo { get; set; }
+        public string TelefoneCorporativo { get; set; }
         public string TelefoneSecundario { get; set; }
         public string Email { get; set; }
         public int Nivel { get; set; }

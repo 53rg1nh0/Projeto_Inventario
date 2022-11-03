@@ -58,6 +58,9 @@
             this.txbNome = new System.Windows.Forms.TextBox();
             this.lblNome = new System.Windows.Forms.Label();
             this.btnBack = new System.Windows.Forms.Button();
+            this.btnVisualizarSenha1 = new System.Windows.Forms.Button();
+            this.btnVisualizarSenha2 = new System.Windows.Forms.Button();
+            this.btnVisualizarSenha3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.ptbLogin)).BeginInit();
             this.SuspendLayout();
             // 
@@ -146,6 +149,7 @@
             this.txbConfirmarSenha.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txbConfirmarSenha.Location = new System.Drawing.Point(351, 197);
             this.txbConfirmarSenha.Name = "txbConfirmarSenha";
+            this.txbConfirmarSenha.PasswordChar = '*';
             this.txbConfirmarSenha.Size = new System.Drawing.Size(283, 22);
             this.txbConfirmarSenha.TabIndex = 12;
             // 
@@ -165,6 +169,7 @@
             this.txbSenha.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txbSenha.Location = new System.Drawing.Point(351, 147);
             this.txbSenha.Name = "txbSenha";
+            this.txbSenha.PasswordChar = '*';
             this.txbSenha.Size = new System.Drawing.Size(283, 22);
             this.txbSenha.TabIndex = 17;
             // 
@@ -348,7 +353,7 @@
             this.btnAdd_Remove.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.btnAdd_Remove.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.btnAdd_Remove.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAdd_Remove.Location = new System.Drawing.Point(751, 95);
+            this.btnAdd_Remove.Location = new System.Drawing.Point(751, 93);
             this.btnAdd_Remove.Margin = new System.Windows.Forms.Padding(4);
             this.btnAdd_Remove.Name = "btnAdd_Remove";
             this.btnAdd_Remove.Size = new System.Drawing.Size(25, 25);
@@ -406,11 +411,76 @@
             this.btnBack.Visible = false;
             this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             // 
+            // btnVisualizarSenha1
+            // 
+            this.btnVisualizarSenha1.BackColor = System.Drawing.Color.White;
+            this.btnVisualizarSenha1.BackgroundImage = global::InventarioTI.Properties.Resources.OlhoFechadoEscuro22;
+            this.btnVisualizarSenha1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnVisualizarSenha1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnVisualizarSenha1.FlatAppearance.BorderSize = 0;
+            this.btnVisualizarSenha1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnVisualizarSenha1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnVisualizarSenha1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnVisualizarSenha1.Location = new System.Drawing.Point(282, 197);
+            this.btnVisualizarSenha1.Margin = new System.Windows.Forms.Padding(4);
+            this.btnVisualizarSenha1.Name = "btnVisualizarSenha1";
+            this.btnVisualizarSenha1.Size = new System.Drawing.Size(22, 20);
+            this.btnVisualizarSenha1.TabIndex = 38;
+            this.btnVisualizarSenha1.TabStop = false;
+            this.btnVisualizarSenha1.UseVisualStyleBackColor = false;
+            this.btnVisualizarSenha1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnVisualizarSenha1_MouseDown);
+            this.btnVisualizarSenha1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnVisualizarSenha1_MouseUp);
+            // 
+            // btnVisualizarSenha2
+            // 
+            this.btnVisualizarSenha2.BackColor = System.Drawing.Color.White;
+            this.btnVisualizarSenha2.BackgroundImage = global::InventarioTI.Properties.Resources.OlhoFechadoEscuro22;
+            this.btnVisualizarSenha2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnVisualizarSenha2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnVisualizarSenha2.FlatAppearance.BorderSize = 0;
+            this.btnVisualizarSenha2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnVisualizarSenha2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnVisualizarSenha2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnVisualizarSenha2.Location = new System.Drawing.Point(610, 147);
+            this.btnVisualizarSenha2.Margin = new System.Windows.Forms.Padding(4);
+            this.btnVisualizarSenha2.Name = "btnVisualizarSenha2";
+            this.btnVisualizarSenha2.Size = new System.Drawing.Size(22, 20);
+            this.btnVisualizarSenha2.TabIndex = 39;
+            this.btnVisualizarSenha2.TabStop = false;
+            this.btnVisualizarSenha2.UseVisualStyleBackColor = false;
+            this.btnVisualizarSenha2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnVisualizarSenha2_MouseDown);
+            this.btnVisualizarSenha2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnVisualizarSenha2_MouseUp);
+            // 
+            // btnVisualizarSenha3
+            // 
+            this.btnVisualizarSenha3.BackColor = System.Drawing.Color.White;
+            this.btnVisualizarSenha3.BackgroundImage = global::InventarioTI.Properties.Resources.OlhoFechadoEscuro22;
+            this.btnVisualizarSenha3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnVisualizarSenha3.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnVisualizarSenha3.FlatAppearance.BorderSize = 0;
+            this.btnVisualizarSenha3.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnVisualizarSenha3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnVisualizarSenha3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnVisualizarSenha3.Location = new System.Drawing.Point(610, 197);
+            this.btnVisualizarSenha3.Margin = new System.Windows.Forms.Padding(4);
+            this.btnVisualizarSenha3.Name = "btnVisualizarSenha3";
+            this.btnVisualizarSenha3.Size = new System.Drawing.Size(22, 20);
+            this.btnVisualizarSenha3.TabIndex = 40;
+            this.btnVisualizarSenha3.TabStop = false;
+            this.btnVisualizarSenha3.UseVisualStyleBackColor = false;
+            this.btnVisualizarSenha3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnVisualizarSenha3_MouseDown);
+            this.btnVisualizarSenha3.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnVisualizarSenha3_MouseUp);
+            // 
             // uctLoginCadastro
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(65)))), ((int)(((byte)(81)))));
+            this.Controls.Add(this.btnVisualizarSenha3);
+            this.Controls.Add(this.btnVisualizarSenha2);
+            this.Controls.Add(this.btnVisualizarSenha1);
+            this.Controls.Add(this.mtbTelSec);
+            this.Controls.Add(this.txbConfirmarSenha);
             this.Controls.Add(this.txbSenha_Email);
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.txbNome);
@@ -418,7 +488,6 @@
             this.Controls.Add(this.lblUniResponsavel);
             this.Controls.Add(this.btnAdd_Remove);
             this.Controls.Add(this.cbxIncluir);
-            this.Controls.Add(this.mtbTelSec);
             this.Controls.Add(this.mtbTelCorp);
             this.Controls.Add(this.txbCodigo);
             this.Controls.Add(this.txbUnidadeAtua);
@@ -430,7 +499,6 @@
             this.Controls.Add(this.txbMatricula);
             this.Controls.Add(this.lblSenha);
             this.Controls.Add(this.lblMatricula);
-            this.Controls.Add(this.txbConfirmarSenha);
             this.Controls.Add(this.lblConfirmarSenha);
             this.Controls.Add(this.lblEditarCadastro);
             this.Controls.Add(this.lblCadastrar);
@@ -439,8 +507,8 @@
             this.Controls.Add(this.lblUserId_Nome);
             this.Controls.Add(this.lblLogin);
             this.Controls.Add(this.btnFechar);
-            this.Controls.Add(this.ptbLogin);
             this.Controls.Add(this.btnNext);
+            this.Controls.Add(this.ptbLogin);
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "uctLoginCadastro";
@@ -465,13 +533,11 @@
         private TextBox txbMatricula;
         private Label lblSenha;
         private Label lblMatricula;
-        private TextBox txbCodigo;
         private TextBox txbUnidadeAtua;
         private Label lblCodigo;
         private Label lblUnidades;
         private Label lblTelSec;
         private Label lblTelCorp;
-        private MaskedTextBox mtbTelCorp;
         private MaskedTextBox mtbTelSec;
         private ComboBox cbxIncluir;
         private Button btnAdd_Remove;
@@ -484,5 +550,10 @@
         public Label lblEditarCadastro;
         public Button btnBack;
         public Button btnNext;
+        private Button btnVisualizarSenha1;
+        private Button btnVisualizarSenha2;
+        private Button btnVisualizarSenha3;
+        public TextBox txbCodigo;
+        public MaskedTextBox mtbTelCorp;
     }
 }

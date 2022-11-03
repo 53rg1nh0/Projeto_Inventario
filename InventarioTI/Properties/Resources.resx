@@ -142,6 +142,12 @@
   <data name="NextClaro50" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>nextclaro50.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="OlhoAbertoEscuro22" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>olhoabertoescuro22.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="OlhoFechadoEscuro22" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>olhofechadoescuro22.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Senha" xml:space="preserve">
     <value />
   </data>
