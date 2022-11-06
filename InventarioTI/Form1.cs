@@ -148,7 +148,10 @@ namespace InventarioTI
             Logoff();
         }
 
-
+        private void pgnLoginCadastro_SizeChanged(object sender, EventArgs e)
+        {
+            this.Size = pgnLoginCadastro.Size;
+        }
 
         /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -160,6 +163,7 @@ namespace InventarioTI
             Properties.Settings.Default.Save();
             Application.Restart();
         }
+
     }
 
 }

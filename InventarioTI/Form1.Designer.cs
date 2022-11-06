@@ -44,6 +44,7 @@
             this.pgnLoginCadastro.Name = "pgnLoginCadastro";
             this.pgnLoginCadastro.Size = new System.Drawing.Size(100, 100);
             this.pgnLoginCadastro.TabIndex = 0;
+            this.pgnLoginCadastro.SizeChanged += new System.EventHandler(this.pgnLoginCadastro_SizeChanged);
             // 
             // pgnSobre
             // 

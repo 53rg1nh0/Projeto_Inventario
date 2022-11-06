@@ -1,4 +1,5 @@
-﻿using DocumentFormat.OpenXml.InkML;
+﻿using DocumentFormat.OpenXml.Drawing;
+using DocumentFormat.OpenXml.InkML;
 using InventarioTI.Entites;
 using InventarioTI.Exceptions;
 using InventarioTI.Extencions;
@@ -13,6 +14,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Point = System.Drawing.Point;
 
 namespace InventarioTI.Views
 {
@@ -95,22 +97,25 @@ namespace InventarioTI.Views
 
                     btnBack.Visible = false;
                     btnVisualizarSenha1.Visible = true;
+                    lblCodigo.Text = "Código";
                     break;
                 case 2:
                     _pgn--;
-                    if(lblLogin.Text!= "Editar\nCadastro")
+                    if (lblLogin.Text != "Editar\nCadastro")
                     {
                         VoltarPagina();
                     }
                     else
                     {
                         lblSenha_Email.Visible = false;
-                        txbSenha_Email.Visible= false;
+                        txbSenha_Email.Visible = false;
+                        txbUsuario.ReadOnly = false;
                     }
                     break;
                 case 3:
                     _pgn--;
                     VoltarPagina();
+                    this.Size = new Size(330, 262);
                     break;
             }
         }
@@ -164,6 +169,9 @@ namespace InventarioTI.Views
                     {
                         case 1:
                             PrimeiraEtapaEditarCadastro();
+                            break;
+                        case 2:
+                            SegundaEtapaEditarCadastro();
                             break;
                     }
                 }
@@ -288,7 +296,7 @@ namespace InventarioTI.Views
                 {
                     throw new DomainException("Não pode haver campos em branco!");
                 }
-                else if(!(txbSenha_Email.Text == responsavel.Select(x => x.Senha).SingleOrDefault() &&
+                else if (!(txbSenha_Email.Text == responsavel.Select(x => x.Senha).SingleOrDefault() &&
                     txbUsuario.Text.ToLower() == responsavel.Select(x => x.UserId).SingleOrDefault()))
                 {
                     throw new DomainException("Usuário não está cadastrado!");
@@ -376,8 +384,13 @@ namespace InventarioTI.Views
                 using (var context = new InventarioContext())
                 {
                     Cliente c = new Cliente();
-                    c = context.Clientes.Where(c => c.UserId == txbUsuario.Text).SingleOrDefault();
                     Responsavel r = new Responsavel();
+                    ResponsavelUnidade un = new ResponsavelUnidade();
+                    ICollection<ResponsavelUnidade> ru = new List<ResponsavelUnidade>();
+
+                    c = context.Clientes.Where(c => c.UserId == txbUsuario.Text).SingleOrDefault();
+                    
+                    
                     r.TelefoneCorporativo = mtbTelCorp.Text;
                     r.TelefoneSecundario = mtbTelCorp.Text;
                     r.Email = txbSenha_Email.Text;
@@ -385,14 +398,27 @@ namespace InventarioTI.Views
                     r.Senha = txbSenha.Text;
                     r.Codigo = txbCodigo.Text;
                     r.CLiente = c;
-                    c.Matricula = int.Parse(txbMatricula.Text);
                     context.Add(r);
-                    context.Update(c);
                     context.SaveChanges();
-                    Application.Restart();
+                    c.Matricula = int.Parse(txbMatricula.Text);
+                    context.Update(c);
+
+                    foreach (var unidade in _responsavelUnidade)
+                    {
+                        
+                        un.Unidade = context.Unidades.Where(u => u.Sigla == unidade).SingleOrDefault();
+                        un.ID_U = context.Unidades.Where(u => u.Sigla == unidade).SingleOrDefault().ID_U;
+                        un.Responsavel = r;
+                        un.ID_R = r.ID_R;
+                        context.Add(un);
+                        context.SaveChanges();
+                    }
+                    
                     Properties.Settings.Default.Usuario = txbUsuario.Text;
                     Properties.Settings.Default.Senha = txbSenha.Text;
                     Properties.Settings.Default.Save();
+                    
+                    Application.Restart();      
                 }
             }
         }
@@ -417,10 +443,12 @@ namespace InventarioTI.Views
                 }
                 else
                 {
+                    txbUsuario.ReadOnly = true;
                     _codigo = Servico.GerarCodigo();
                     txbSenha_Email.Visible = true;
-                    lblSenha_Email.Visible=true;
+                    lblSenha_Email.Visible = true;
                     lblSenha_Email.Text = "Código";
+                    txbSenha_Email.PasswordChar = '\0';
                     txbSenha_Email.PlaceholderText = "Verifique em seu e-mail o código enviado!";
                     Task.Factory.StartNew(() => { Servico.EnviarEmail(txbSenha_Email.Text, _codigo); });
                     _pgn++;
@@ -428,6 +456,57 @@ namespace InventarioTI.Views
             }
         }
 
+        private void SegundaEtapaEditarCadastro()
+        {
+            if (txbSenha_Email.Text == "")
+            {
+                throw new DomainException("Campo não pode está vazio!");
+            }
+            else if (txbSenha_Email.Text != _codigo)
+            {
+                throw new DomainException("O código fornecido não conrresponde ao enviado por e-mail!");
+            }
+            else
+            {
+                txbUsuario.ReadOnly = false;
+                lblCodigo.Text = "Usuário";
+                _pgn++;
+                PassarPagina();
+                this.Size = new Size(660, 262);
+
+                using(var context = new InventarioContext())
+                {
+                    var r = context.Responsaveis.Where(r => r.CLiente.UserId == txbUsuario.Text).SingleOrDefault();
+                    var unidades = context.ResponsaveisUnidades.Where(u => u.Responsavel.Equals(r)).Select(u => u.Unidade);
+                    context.Entry(r).Reference(r => r.CLiente).Load();
+                    string Unidades="";
+                    txbCodigo.Text = r.CLiente.UserId;
+                    txbMatricula.Text = r.CLiente.Matricula.ToString();
+                    txbSenha.Text = r.Senha;
+                    txbConfirmarSenha.Text = r.Senha;
+                    txbNome.Text = r.CLiente.Nome;
+                    context.Entry(r).Collection(r=>r.Unidades).Load();
+
+                    foreach(var u in unidades)
+                    {
+                        Unidades += u.Sigla + ", ";
+                        _responsavelUnidade.Add(u.Sigla);
+                    }
+                    txbUnidadeAtua.Text = Unidades;
+                    mtbTelCorp.Text = r.TelefoneCorporativo;
+                    mtbTelSec.Text = r.TelefoneSecundario;
+                    if (_responsavelUnidade.Contains(cbxIncluir.SelectedValue.ToString()))
+                    {
+                        btnAdd_Remove.BackgroundImage = Properties.Resources.LixeiraClaro25;
+                    }
+                }
+            }
+        }
+
+        private void TerceiraEtapaEditarCadastro()
+        {
+           
+        }
         private void PassarPagina()
         {
             foreach (Control control in this.Controls)
