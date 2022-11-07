@@ -123,18 +123,18 @@ namespace InventarioTI
                     if (Properties.Settings.Default.Senha == responsavel.Select(x => x.Senha).SingleOrDefault() &&
                         Properties.Settings.Default.Usuario == responsavel.Select(x => x.UserId).SingleOrDefault())
                     {
-                        this.IrParaPagina(pgnSobre);
+                        this.pnlBack.IrParaPagina(pgnSobre);
                     }
                     else
                     {
-                        this.IrParaPagina(pgnLoginCadastro);
+                        this.pnlBack.IrParaPagina(pgnLoginCadastro);
                         this.Arrastar();
                     }
                 }
             }
             catch (Microsoft.Data.Sqlite.SqliteException ex)
             {
-                this.IrParaPagina(pgnDesconectado);
+                this.pnlBack.IrParaPagina(pgnDesconectado);
                 pgnDesconectado.lblMensagem.Text = "Erro na operação com BD. Verifique conexão!";
             }
             catch(DbUpdateException ex)
@@ -151,6 +151,9 @@ namespace InventarioTI
         private void pgnLoginCadastro_SizeChanged(object sender, EventArgs e)
         {
             this.Size = pgnLoginCadastro.Size;
+            pnlBaixo.Visible = false;
+            pnlTopo.Visible = false;
+            pnlLateral.Visible = false;
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////

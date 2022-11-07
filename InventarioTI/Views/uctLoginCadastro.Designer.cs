@@ -90,7 +90,7 @@
             this.btnFechar.Margin = new System.Windows.Forms.Padding(4);
             this.btnFechar.Name = "btnFechar";
             this.btnFechar.Size = new System.Drawing.Size(35, 35);
-            this.btnFechar.TabIndex = 1;
+            this.btnFechar.TabIndex = 7;
             this.btnFechar.UseVisualStyleBackColor = false;
             this.btnFechar.Click += new System.EventHandler(this.btnFechar_Click);
             // 
@@ -133,7 +133,7 @@
             this.txbUsuario.Location = new System.Drawing.Point(23, 150);
             this.txbUsuario.Name = "txbUsuario";
             this.txbUsuario.Size = new System.Drawing.Size(283, 22);
-            this.txbUsuario.TabIndex = 5;
+            this.txbUsuario.TabIndex = 1;
             // 
             // txbSenha_Email
             // 
@@ -142,7 +142,7 @@
             this.txbSenha_Email.Name = "txbSenha_Email";
             this.txbSenha_Email.PasswordChar = '*';
             this.txbSenha_Email.Size = new System.Drawing.Size(283, 22);
-            this.txbSenha_Email.TabIndex = 6;
+            this.txbSenha_Email.TabIndex = 2;
             // 
             // txbConfirmarSenha
             // 
@@ -151,7 +151,7 @@
             this.txbConfirmarSenha.Name = "txbConfirmarSenha";
             this.txbConfirmarSenha.PasswordChar = '*';
             this.txbConfirmarSenha.Size = new System.Drawing.Size(283, 22);
-            this.txbConfirmarSenha.TabIndex = 12;
+            this.txbConfirmarSenha.TabIndex = 5;
             // 
             // lblConfirmarSenha
             // 
@@ -171,7 +171,7 @@
             this.txbSenha.Name = "txbSenha";
             this.txbSenha.PasswordChar = '*';
             this.txbSenha.Size = new System.Drawing.Size(283, 22);
-            this.txbSenha.TabIndex = 17;
+            this.txbSenha.TabIndex = 3;
             // 
             // txbMatricula
             // 
@@ -179,7 +179,7 @@
             this.txbMatricula.Location = new System.Drawing.Point(351, 97);
             this.txbMatricula.Name = "txbMatricula";
             this.txbMatricula.Size = new System.Drawing.Size(283, 22);
-            this.txbMatricula.TabIndex = 16;
+            this.txbMatricula.TabIndex = 2;
             // 
             // lblSenha
             // 
@@ -209,7 +209,7 @@
             this.txbCodigo.Location = new System.Drawing.Point(351, 47);
             this.txbCodigo.Name = "txbCodigo";
             this.txbCodigo.Size = new System.Drawing.Size(283, 22);
-            this.txbCodigo.TabIndex = 25;
+            this.txbCodigo.TabIndex = 1;
             // 
             // txbUnidadeAtua
             // 
@@ -280,7 +280,7 @@
             this.btnNext.Margin = new System.Windows.Forms.Padding(4);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(50, 50);
-            this.btnNext.TabIndex = 9;
+            this.btnNext.TabIndex = 6;
             this.btnNext.UseVisualStyleBackColor = false;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
@@ -292,7 +292,7 @@
             this.lblCadastrar.Location = new System.Drawing.Point(22, 222);
             this.lblCadastrar.Name = "lblCadastrar";
             this.lblCadastrar.Size = new System.Drawing.Size(66, 15);
-            this.lblCadastrar.TabIndex = 7;
+            this.lblCadastrar.TabIndex = 4;
             this.lblCadastrar.Text = "Cadastrar";
             this.lblCadastrar.Click += new System.EventHandler(this.lblCadastrar_Click);
             this.lblCadastrar.MouseEnter += new System.EventHandler(this.lblCadastrar_MouseEnter);
@@ -307,7 +307,7 @@
             this.lblEditarCadastro.Location = new System.Drawing.Point(22, 237);
             this.lblEditarCadastro.Name = "lblEditarCadastro";
             this.lblEditarCadastro.Size = new System.Drawing.Size(184, 15);
-            this.lblEditarCadastro.TabIndex = 8;
+            this.lblEditarCadastro.TabIndex = 5;
             this.lblEditarCadastro.Text = "EditarCadastro/RedefinirSenha";
             this.lblEditarCadastro.Click += new System.EventHandler(this.lblEditarCadastro_Click);
             this.lblEditarCadastro.MouseEnter += new System.EventHandler(this.lblEditarCadastro_MouseEnter);
@@ -321,7 +321,7 @@
             this.mtbTelCorp.Mask = "(99) 9999-9999";
             this.mtbTelCorp.Name = "mtbTelCorp";
             this.mtbTelCorp.Size = new System.Drawing.Size(283, 23);
-            this.mtbTelCorp.TabIndex = 26;
+            this.mtbTelCorp.TabIndex = 4;
             // 
             // mtbTelSec
             // 
@@ -330,7 +330,7 @@
             this.mtbTelSec.Mask = "(99) 9 9999-9999";
             this.mtbTelSec.Name = "mtbTelSec";
             this.mtbTelSec.Size = new System.Drawing.Size(283, 23);
-            this.mtbTelSec.TabIndex = 27;
+            this.mtbTelSec.TabIndex = 5;
             // 
             // cbxIncluir
             // 
@@ -340,7 +340,7 @@
             this.cbxIncluir.Location = new System.Drawing.Point(681, 96);
             this.cbxIncluir.Name = "cbxIncluir";
             this.cbxIncluir.Size = new System.Drawing.Size(63, 23);
-            this.cbxIncluir.TabIndex = 28;
+            this.cbxIncluir.TabIndex = 2;
             this.cbxIncluir.SelectedValueChanged += new System.EventHandler(this.cbxIncluir_SelectedValueChanged);
             // 
             // btnAdd_Remove
@@ -357,7 +357,7 @@
             this.btnAdd_Remove.Margin = new System.Windows.Forms.Padding(4);
             this.btnAdd_Remove.Name = "btnAdd_Remove";
             this.btnAdd_Remove.Size = new System.Drawing.Size(25, 25);
-            this.btnAdd_Remove.TabIndex = 33;
+            this.btnAdd_Remove.TabIndex = 3;
             this.btnAdd_Remove.UseVisualStyleBackColor = false;
             this.btnAdd_Remove.Click += new System.EventHandler(this.btnAdd_Remove_Click);
             // 
@@ -378,7 +378,7 @@
             this.txbNome.Location = new System.Drawing.Point(681, 47);
             this.txbNome.Name = "txbNome";
             this.txbNome.Size = new System.Drawing.Size(283, 22);
-            this.txbNome.TabIndex = 36;
+            this.txbNome.TabIndex = 1;
             // 
             // lblNome
             // 
@@ -425,7 +425,7 @@
             this.btnVisualizarSenha1.Margin = new System.Windows.Forms.Padding(4);
             this.btnVisualizarSenha1.Name = "btnVisualizarSenha1";
             this.btnVisualizarSenha1.Size = new System.Drawing.Size(22, 20);
-            this.btnVisualizarSenha1.TabIndex = 38;
+            this.btnVisualizarSenha1.TabIndex = 3;
             this.btnVisualizarSenha1.TabStop = false;
             this.btnVisualizarSenha1.UseVisualStyleBackColor = false;
             this.btnVisualizarSenha1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnVisualizarSenha1_MouseDown);
@@ -445,7 +445,7 @@
             this.btnVisualizarSenha2.Margin = new System.Windows.Forms.Padding(4);
             this.btnVisualizarSenha2.Name = "btnVisualizarSenha2";
             this.btnVisualizarSenha2.Size = new System.Drawing.Size(22, 20);
-            this.btnVisualizarSenha2.TabIndex = 39;
+            this.btnVisualizarSenha2.TabIndex = 4;
             this.btnVisualizarSenha2.TabStop = false;
             this.btnVisualizarSenha2.UseVisualStyleBackColor = false;
             this.btnVisualizarSenha2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnVisualizarSenha2_MouseDown);
@@ -465,7 +465,7 @@
             this.btnVisualizarSenha3.Margin = new System.Windows.Forms.Padding(4);
             this.btnVisualizarSenha3.Name = "btnVisualizarSenha3";
             this.btnVisualizarSenha3.Size = new System.Drawing.Size(22, 20);
-            this.btnVisualizarSenha3.TabIndex = 40;
+            this.btnVisualizarSenha3.TabIndex = 6;
             this.btnVisualizarSenha3.TabStop = false;
             this.btnVisualizarSenha3.UseVisualStyleBackColor = false;
             this.btnVisualizarSenha3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnVisualizarSenha3_MouseDown);

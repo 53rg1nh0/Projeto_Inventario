@@ -84,6 +84,8 @@ namespace InventarioTI.Views
             switch (_pgn)
             {
                 case 1:
+                    PagsInvisiveis();
+                    Pag1Vizivel();
                     lblCadastrar.Visible = true;
                     lblEditarCadastro.Visible = true;
                     lblSenha_Email.Text = "Senha";
@@ -103,6 +105,8 @@ namespace InventarioTI.Views
                     _pgn--;
                     if (lblLogin.Text != "Editar\nCadastro")
                     {
+                        PagsInvisiveis();
+                        Pag1Vizivel();
                         VoltarPagina();
                     }
                     else
@@ -114,6 +118,16 @@ namespace InventarioTI.Views
                     break;
                 case 3:
                     _pgn--;
+                    if(lblLogin.Text != "Editar\nCadastro")
+                    {
+                        PagsInvisiveis();
+                        Pag2Visivel();
+                    }
+                    else
+                    {
+                        PagsInvisiveis();
+                        Pag1Vizivel();
+                    }
                     VoltarPagina();
                     this.Size = new Size(330, 262);
                     break;
@@ -122,7 +136,8 @@ namespace InventarioTI.Views
 
         private void lblEditarCadastro_Click(object sender, EventArgs e)
         {
-
+            PagsInvisiveis();
+            Pag1Vizivel();
             lblCadastrar.Visible = false;
             lblEditarCadastro.Visible = false;
             lblSenha_Email.Visible = false;
@@ -150,7 +165,6 @@ namespace InventarioTI.Views
                     switch (_pgn)
                     {
                         case 1:
-
                             PrimeraEtapaCadastro();
                             break;
                         case 2:
@@ -164,7 +178,6 @@ namespace InventarioTI.Views
                 }
                 else if (lblLogin.Text == "Editar\nCadastro")
                 {
-                    btnVisualizarSenha1.Visible = false;
                     switch (_pgn)
                     {
                         case 1:
@@ -173,7 +186,11 @@ namespace InventarioTI.Views
                         case 2:
                             SegundaEtapaEditarCadastro();
                             break;
+                        case 3:
+                            TerceiraEtapaEditarCadastro();
+                            break;
                     }
+                    btnVisualizarSenha1.Visible = false;
                 }
             }
             catch (DomainException ex)
@@ -189,6 +206,8 @@ namespace InventarioTI.Views
 
         private void uctLoginCadastro_Load(object sender, EventArgs e)
         {
+            PagsInvisiveis();
+            Pag1Vizivel();
             try
             {
                 using (var context = new InventarioContext())
@@ -199,6 +218,7 @@ namespace InventarioTI.Views
 
                     cbxIncluir.DataSource = unidades.ToArray();
                 }
+
             }
             catch { }
         }
@@ -342,6 +362,8 @@ namespace InventarioTI.Views
 
                     _pgn++;
                     PassarPagina();
+                    PagsInvisiveis();
+                    Pag2Visivel();
                     btnVisualizarSenha1.Visible = true;
                 }
             }
@@ -349,6 +371,16 @@ namespace InventarioTI.Views
 
         private void SegundaEtapaCadastro()
         {
+            string min = "[a-z]+";
+            string mai = "[A-Z]+";
+            string num = "[1-9]+";
+            string esp = @"\W+";
+
+            Regex s1 = new Regex(min);
+            Regex s2 = new Regex(num);
+            Regex s3 = new Regex(esp);
+            Regex s4 = new Regex(mai);
+
             if (txbCodigo.Text == "" || txbMatricula.Text == "" || txbSenha.Text == "" || txbConfirmarSenha.Text == "")
             {
                 throw new DomainException("Não pode haver campos em branco!");
@@ -361,16 +393,24 @@ namespace InventarioTI.Views
             {
                 throw new DomainException("As senhas não coencidem!");
             }
+            else if (!(s1.IsMatch(txbSenha.Text) && s2.IsMatch(txbSenha.Text) && s3.IsMatch(txbSenha.Text) && s4.IsMatch(txbSenha.Text) && txbSenha.Text.Length > 6))
+            {
+                throw new DomainException("Senha não atende aos requisitos mínimos de complexidade e segurança!");
+            }
             else
             {
                 _pgn++;
                 PassarPagina();
+                PagsInvisiveis();
+                Pag3VIsivel();
             }
         }
         private void TerceiraEtapaCadastro()
         {
-            string tel = @"^[(][0-9]{2}[)][ ]([0-9][ ])?[0-9]{4}[-][0-9]{4}$";
+            string tel = @"^[(][0-9]{2}[)][ ]([0-9][ ])?[0-9]{4}[-][0-9]{4}$";     
+
             Regex re = new Regex(tel);
+            
             if (txbNome.Text == "" || txbUnidadeAtua.Text == "" || mtbTelCorp.Text == "(  )     -")
             {
                 throw new DomainException("Campos obrigatórios não podem está em branco!");
@@ -386,13 +426,12 @@ namespace InventarioTI.Views
                     Cliente c = new Cliente();
                     Responsavel r = new Responsavel();
                     ResponsavelUnidade un = new ResponsavelUnidade();
-                    ICollection<ResponsavelUnidade> ru = new List<ResponsavelUnidade>();
 
                     c = context.Clientes.Where(c => c.UserId == txbUsuario.Text).SingleOrDefault();
-                    
-                    
+
+
                     r.TelefoneCorporativo = mtbTelCorp.Text;
-                    r.TelefoneSecundario = mtbTelCorp.Text;
+                    r.TelefoneSecundario = mtbTelSec.Text;
                     r.Email = txbSenha_Email.Text;
                     r.Nivel = 1;
                     r.Senha = txbSenha.Text;
@@ -405,7 +444,7 @@ namespace InventarioTI.Views
 
                     foreach (var unidade in _responsavelUnidade)
                     {
-                        
+
                         un.Unidade = context.Unidades.Where(u => u.Sigla == unidade).SingleOrDefault();
                         un.ID_U = context.Unidades.Where(u => u.Sigla == unidade).SingleOrDefault().ID_U;
                         un.Responsavel = r;
@@ -413,12 +452,14 @@ namespace InventarioTI.Views
                         context.Add(un);
                         context.SaveChanges();
                     }
-                    
+
                     Properties.Settings.Default.Usuario = txbUsuario.Text;
                     Properties.Settings.Default.Senha = txbSenha.Text;
                     Properties.Settings.Default.Save();
-                    
-                    Application.Restart();      
+
+                    MessageBox.Show("Cadastro realizado com sucesso!");
+
+                    Application.Restart();
                 }
             }
         }
@@ -443,6 +484,8 @@ namespace InventarioTI.Views
                 }
                 else
                 {
+                    PagsInvisiveis();
+                    Pag1Vizivel();
                     txbUsuario.ReadOnly = true;
                     _codigo = Servico.GerarCodigo();
                     txbSenha_Email.Visible = true;
@@ -472,22 +515,25 @@ namespace InventarioTI.Views
                 lblCodigo.Text = "Usuário";
                 _pgn++;
                 PassarPagina();
+                PagsInvisiveis();
+                Pag2Visivel();
+                Pag3VIsivel();
                 this.Size = new Size(660, 262);
 
-                using(var context = new InventarioContext())
+                using (var context = new InventarioContext())
                 {
                     var r = context.Responsaveis.Where(r => r.CLiente.UserId == txbUsuario.Text).SingleOrDefault();
                     var unidades = context.ResponsaveisUnidades.Where(u => u.Responsavel.Equals(r)).Select(u => u.Unidade);
                     context.Entry(r).Reference(r => r.CLiente).Load();
-                    string Unidades="";
+                    string Unidades = "";
                     txbCodigo.Text = r.CLiente.UserId;
                     txbMatricula.Text = r.CLiente.Matricula.ToString();
                     txbSenha.Text = r.Senha;
                     txbConfirmarSenha.Text = r.Senha;
                     txbNome.Text = r.CLiente.Nome;
-                    context.Entry(r).Collection(r=>r.Unidades).Load();
+                    context.Entry(r).Collection(r => r.Unidades).Load();
 
-                    foreach(var u in unidades)
+                    foreach (var u in unidades)
                     {
                         Unidades += u.Sigla + ", ";
                         _responsavelUnidade.Add(u.Sigla);
@@ -505,7 +551,45 @@ namespace InventarioTI.Views
 
         private void TerceiraEtapaEditarCadastro()
         {
-           
+            using (var context = new InventarioContext())
+            {
+                Responsavel r = new Responsavel();
+                ResponsavelUnidade un = new ResponsavelUnidade();
+
+                r = context.Responsaveis.Where(r => r.CLiente.UserId == txbUsuario.Text).SingleOrDefault();
+                context.Entry(r).Reference(r => r.CLiente).Load();
+
+                var uns = context.ResponsaveisUnidades.Where(ru => ru.Responsavel.Equals(r));
+                foreach (var u in uns)
+                {
+                    context.Remove(u);
+                    context.SaveChanges();
+                }
+
+                foreach (string unidade in _responsavelUnidade)
+                {
+                    un.Unidade = context.Unidades.Where(u => u.Sigla == unidade).SingleOrDefault();
+                    un.ID_U = context.Unidades.Where(u => u.Sigla == unidade).SingleOrDefault().ID_U;
+                    un.Responsavel = r;
+                    un.ID_R = r.ID_R;
+                    context.Add(un);
+                    context.SaveChanges();
+                }
+
+                r.CLiente.UserId = txbCodigo.Text;
+                r.CLiente.Matricula = int.Parse(txbMatricula.Text);
+                r.Senha = txbSenha.Text;
+                r.CLiente.Nome = txbNome.Text;
+                r.TelefoneCorporativo = mtbTelCorp.Text;
+                r.TelefoneSecundario = mtbTelSec.Text;
+
+                context.Update(r);
+                context.SaveChanges();
+
+                MessageBox.Show("Operação realizada com sucesso!");
+
+                Application.Restart();
+            }
         }
         private void PassarPagina()
         {
@@ -531,6 +615,64 @@ namespace InventarioTI.Views
                     control.Location = p;
                 }
             }
+        }
+
+        private void PagsInvisiveis()
+        {
+            foreach (Control control in this.Controls)
+            {
+                if (!(control.Name == "btnBack" || control.Name == "btnNext" || control.Name == "btnFechar" || control.Name == "lblLogin" || control.Name == "ptbLogin"))
+                {
+                    control.Visible = false;
+                }
+            }
+        }
+        private void Pag1Vizivel()
+        {
+            txbUsuario.Select();
+
+            lblUserId_Nome.Visible = true;
+            txbUsuario.Visible = true;
+            lblSenha_Email.Visible = true;
+            txbSenha_Email.Visible = true;
+            btnVisualizarSenha1.Visible = true;
+            if (lblLogin.Text == "Login")
+            {
+                lblCadastrar.Visible = true;
+                lblEditarCadastro.Visible = true;
+            }
+        }
+        private void Pag2Visivel()
+        {
+            txbCodigo.Select();
+
+            lblCodigo.Visible = true;
+            txbCodigo.Visible = true;
+            lblMatricula.Visible = true;
+            txbMatricula.Visible = true;
+            lblSenha.Visible = true;
+            txbSenha.Visible = true;
+            btnVisualizarSenha2.Visible = true;
+            lblConfirmarSenha.Visible = true;
+            txbConfirmarSenha.Visible = true;
+            btnVisualizarSenha3.Visible = true;
+        }
+
+        private void Pag3VIsivel()
+        {
+            txbNome.Select();
+
+            lblNome.Visible = true;
+            txbNome.Visible = true;
+            lblUnidades.Visible = true;
+            cbxIncluir.Visible = true;
+            btnAdd_Remove.Visible = true;
+            lblUniResponsavel.Visible = true;
+            txbUnidadeAtua.Visible = true;
+            lblTelCorp.Visible = true;
+            mtbTelCorp.Visible = true;
+            lblTelSec.Visible = true;
+            mtbTelSec.Visible = true;
         }
     }
 }
