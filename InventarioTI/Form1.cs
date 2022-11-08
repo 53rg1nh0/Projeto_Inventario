@@ -3,6 +3,7 @@ using InventarioTI.Extencions;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Runtime.ConstrainedExecution;
 using System.Security.Cryptography.X509Certificates;
 
 namespace InventarioTI
@@ -107,8 +108,22 @@ namespace InventarioTI
                     //                Cargo = equi.Cliente.Cargo,
                     //            };
 
-
+                    
+                    
+                    
+                    
                     //dataGridView1.Estilo(query.ToArray());
+                    Image[] imagem = new Image[20];
+                    imagem[7] = Properties.Resources.HomeEscuro45;
+                    imagem[6] = Properties.Resources.ComputadorEscuro45;
+                    imagem[5] = Properties.Resources.SobreEscuro45;
+                    imagem[4] = Properties.Resources.AjusteEscuro45;
+                    imagem[3] = Properties.Resources.HomeClaro45;
+                    imagem[2] = Properties.Resources.ComputadorClaro45;
+                    imagem[1] = Properties.Resources.SobreClaro45;
+                    imagem[0] = Properties.Resources.AjusteClaro45;
+
+                    pnlLateral.Estilo(Color.FromArgb(50, 65, 81), 55, 180, imagem);
 
                     var responsavel =
                         from resp in context.Responsaveis
@@ -167,6 +182,17 @@ namespace InventarioTI
             Application.Restart();
         }
 
+        private void ptbLateralLogo_Click(object sender, EventArgs e)
+        {
+            if (pnlLateralBack.Width == 180)
+            {
+                pnlLateralBack.Width = 55;
+            }
+            else
+            {
+                pnlLateralBack.Width = 180;
+            }
+        }
     }
 
 }

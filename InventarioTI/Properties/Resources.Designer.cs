@@ -73,9 +73,49 @@ namespace InventarioTI.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap AjusteClaro45 {
+            get {
+                object obj = ResourceManager.GetObject("AjusteClaro45", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap AjusteEscuro45 {
+            get {
+                object obj = ResourceManager.GetObject("AjusteEscuro45", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap BackClaro50 {
             get {
                 object obj = ResourceManager.GetObject("BackClaro50", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ComputadorClaro45 {
+            get {
+                object obj = ResourceManager.GetObject("ComputadorClaro45", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ComputadorEscuro45 {
+            get {
+                object obj = ResourceManager.GetObject("ComputadorEscuro45", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -96,6 +136,26 @@ namespace InventarioTI.Properties {
         internal static System.Drawing.Bitmap FecharClaro25 {
             get {
                 object obj = ResourceManager.GetObject("FecharClaro25", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap HomeClaro45 {
+            get {
+                object obj = ResourceManager.GetObject("HomeClaro45", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap HomeEscuro45 {
+            get {
+                object obj = ResourceManager.GetObject("HomeEscuro45", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -166,6 +226,26 @@ namespace InventarioTI.Properties {
         internal static string Senha {
             get {
                 return ResourceManager.GetString("Senha", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SobreClaro45 {
+            get {
+                object obj = ResourceManager.GetObject("SobreClaro45", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SobreEscuro45 {
+            get {
+                object obj = ResourceManager.GetObject("SobreEscuro45", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
