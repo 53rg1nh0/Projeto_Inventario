@@ -46,5 +46,17 @@ namespace InventarioTI.Properties {
                 this["Senha"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string UnidadePadrao {
+            get {
+                return ((string)(this["UnidadePadrao"]));
+            }
+            set {
+                this["UnidadePadrao"] = value;
+            }
+        }
     }
 }

@@ -133,6 +133,16 @@ namespace InventarioTI.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Exit50 {
+            get {
+                object obj = ResourceManager.GetObject("Exit50", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap FecharClaro25 {
             get {
                 object obj = ResourceManager.GetObject("FecharClaro25", resourceCulture);
@@ -166,6 +176,16 @@ namespace InventarioTI.Properties {
         internal static System.Drawing.Bitmap LixeiraClaro25 {
             get {
                 object obj = ResourceManager.GetObject("LixeiraClaro25", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap LocalizacaoClaro50 {
+            get {
+                object obj = ResourceManager.GetObject("LocalizacaoClaro50", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -256,6 +276,15 @@ namespace InventarioTI.Properties {
             get {
                 object obj = ResourceManager.GetObject("SolarCocaCola", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a .
+        /// </summary>
+        internal static string UnidadePadrao {
+            get {
+                return ResourceManager.GetString("UnidadePadrao", resourceCulture);
             }
         }
         

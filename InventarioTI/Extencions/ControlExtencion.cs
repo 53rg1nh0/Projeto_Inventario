@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -63,7 +64,7 @@ namespace InventarioTI.Extencions
             }
         }
 
-        public static void IrParaPagina(this Control form, Control control)
+        public static void IrParaPagina(this Control form, Control control,Panel p, Image[] imagem)
         {
             foreach (var uct in form.Controls)
             {
@@ -81,8 +82,27 @@ namespace InventarioTI.Extencions
                 }
                 if (uct is Panel && control.Name == "pgnLoginCadastro")
                 {
+                    control.Size = new Size(330, 262);
                     var panel = (Panel)uct;
                     panel.Visible = false;
+                }
+            }
+            if (!(control.Name == "pgnLoginCadastro" || control.Name == "pgnDesconectado"))
+            {
+                int i = 0;
+                foreach (Control c in p.Controls)
+                {
+                    if (c is Button)
+                    {
+                        if (control.Name.Substring(3) == c.Name.Substring(3))
+                        {
+                            var btn = (Button)c;
+                            btn.BackColor = SystemColors.Control;
+                            btn.ForeColor = Color.Black;
+                            btn.Image = imagem[p.Controls.Count/2+i-1];
+                        }
+                        i++;
+                    }
                 }
             }
         }

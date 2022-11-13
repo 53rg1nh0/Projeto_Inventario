@@ -33,17 +33,16 @@
             this.pgnSobre = new InventarioTI.Views.uctSobre();
             this.pgnDesconectado = new InventarioTI.Views.uctDesconectado();
             this.pnlLateral = new System.Windows.Forms.Panel();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnAjustes = new System.Windows.Forms.Button();
+            this.btnSobre = new System.Windows.Forms.Button();
+            this.btnEquipamento = new System.Windows.Forms.Button();
+            this.btnHome = new System.Windows.Forms.Button();
             this.pnlLateralTopo = new System.Windows.Forms.Panel();
             this.ptbLateralSolar = new System.Windows.Forms.PictureBox();
             this.ptbLateralLogo = new System.Windows.Forms.PictureBox();
             this.pnlLateralBack = new System.Windows.Forms.Panel();
-            this.pnlTopo = new System.Windows.Forms.Panel();
-            this.pnlBaixo = new System.Windows.Forms.Panel();
             this.pnlBack = new System.Windows.Forms.Panel();
+            this.pgnHome = new InventarioTI.Views.uctHome();
             this.pnlLateral.SuspendLayout();
             this.pnlLateralTopo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptbLateralSolar)).BeginInit();
@@ -56,7 +55,7 @@
             // 
             this.pgnLoginCadastro.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(65)))), ((int)(((byte)(81)))));
             this.pgnLoginCadastro.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.pgnLoginCadastro.Location = new System.Drawing.Point(3, 3);
+            this.pgnLoginCadastro.Location = new System.Drawing.Point(3, 5);
             this.pgnLoginCadastro.Margin = new System.Windows.Forms.Padding(0);
             this.pgnLoginCadastro.Name = "pgnLoginCadastro";
             this.pgnLoginCadastro.Size = new System.Drawing.Size(100, 100);
@@ -65,14 +64,14 @@
             // 
             // pgnSobre
             // 
-            this.pgnSobre.Location = new System.Drawing.Point(123, 3);
+            this.pgnSobre.Location = new System.Drawing.Point(114, 5);
             this.pgnSobre.Name = "pgnSobre";
             this.pgnSobre.Size = new System.Drawing.Size(100, 100);
             this.pgnSobre.TabIndex = 1;
             // 
             // pgnDesconectado
             // 
-            this.pgnDesconectado.Location = new System.Drawing.Point(243, 3);
+            this.pgnDesconectado.Location = new System.Drawing.Point(225, 5);
             this.pgnDesconectado.Name = "pgnDesconectado";
             this.pgnDesconectado.Size = new System.Drawing.Size(100, 100);
             this.pgnDesconectado.TabIndex = 2;
@@ -80,10 +79,10 @@
             // pnlLateral
             // 
             this.pnlLateral.BackColor = System.Drawing.SystemColors.Control;
-            this.pnlLateral.Controls.Add(this.button4);
-            this.pnlLateral.Controls.Add(this.button3);
-            this.pnlLateral.Controls.Add(this.button2);
-            this.pnlLateral.Controls.Add(this.button1);
+            this.pnlLateral.Controls.Add(this.btnAjustes);
+            this.pnlLateral.Controls.Add(this.btnSobre);
+            this.pnlLateral.Controls.Add(this.btnEquipamento);
+            this.pnlLateral.Controls.Add(this.btnHome);
             this.pnlLateral.Controls.Add(this.pnlLateralTopo);
             this.pnlLateral.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlLateral.Location = new System.Drawing.Point(0, 0);
@@ -91,41 +90,41 @@
             this.pnlLateral.Size = new System.Drawing.Size(180, 384);
             this.pnlLateral.TabIndex = 4;
             // 
-            // button4
+            // btnAjustes
             // 
-            this.button4.Location = new System.Drawing.Point(39, 229);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 6;
-            this.button4.Text = "                Ajustes";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btnAjustes.Location = new System.Drawing.Point(39, 229);
+            this.btnAjustes.Name = "btnAjustes";
+            this.btnAjustes.Size = new System.Drawing.Size(75, 23);
+            this.btnAjustes.TabIndex = 6;
+            this.btnAjustes.Text = "                Ajustes";
+            this.btnAjustes.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // btnSobre
             // 
-            this.button3.Location = new System.Drawing.Point(39, 200);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 5;
-            this.button3.Text = "                Sobre";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnSobre.Location = new System.Drawing.Point(39, 200);
+            this.btnSobre.Name = "btnSobre";
+            this.btnSobre.Size = new System.Drawing.Size(75, 23);
+            this.btnSobre.TabIndex = 5;
+            this.btnSobre.Text = "                Sobre";
+            this.btnSobre.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnEquipamento
             // 
-            this.button2.Location = new System.Drawing.Point(39, 116);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "                Equipamento";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnEquipamento.Location = new System.Drawing.Point(39, 116);
+            this.btnEquipamento.Name = "btnEquipamento";
+            this.btnEquipamento.Size = new System.Drawing.Size(75, 23);
+            this.btnEquipamento.TabIndex = 4;
+            this.btnEquipamento.Text = "                Equipamento";
+            this.btnEquipamento.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // btnHome
             // 
-            this.button1.Location = new System.Drawing.Point(39, 87);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "                Home";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnHome.Location = new System.Drawing.Point(39, 87);
+            this.btnHome.Name = "btnHome";
+            this.btnHome.Size = new System.Drawing.Size(75, 23);
+            this.btnHome.TabIndex = 3;
+            this.btnHome.Text = "                Home";
+            this.btnHome.UseVisualStyleBackColor = true;
             // 
             // pnlLateralTopo
             // 
@@ -168,32 +167,25 @@
             this.pnlLateralBack.Size = new System.Drawing.Size(180, 384);
             this.pnlLateralBack.TabIndex = 5;
             // 
-            // pnlTopo
-            // 
-            this.pnlTopo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlTopo.Location = new System.Drawing.Point(180, 0);
-            this.pnlTopo.Name = "pnlTopo";
-            this.pnlTopo.Size = new System.Drawing.Size(813, 50);
-            this.pnlTopo.TabIndex = 6;
-            // 
-            // pnlBaixo
-            // 
-            this.pnlBaixo.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlBaixo.Location = new System.Drawing.Point(180, 359);
-            this.pnlBaixo.Name = "pnlBaixo";
-            this.pnlBaixo.Size = new System.Drawing.Size(813, 25);
-            this.pnlBaixo.TabIndex = 7;
-            // 
             // pnlBack
             // 
+            this.pnlBack.Controls.Add(this.pgnHome);
             this.pnlBack.Controls.Add(this.pgnLoginCadastro);
             this.pnlBack.Controls.Add(this.pgnDesconectado);
             this.pnlBack.Controls.Add(this.pgnSobre);
             this.pnlBack.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlBack.Location = new System.Drawing.Point(180, 50);
+            this.pnlBack.Location = new System.Drawing.Point(180, 0);
             this.pnlBack.Name = "pnlBack";
-            this.pnlBack.Size = new System.Drawing.Size(813, 309);
+            this.pnlBack.Size = new System.Drawing.Size(813, 384);
             this.pnlBack.TabIndex = 8;
+            // 
+            // pgnHome
+            // 
+            this.pgnHome.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.pgnHome.Location = new System.Drawing.Point(336, 5);
+            this.pgnHome.Name = "pgnHome";
+            this.pgnHome.Size = new System.Drawing.Size(100, 106);
+            this.pgnHome.TabIndex = 3;
             // 
             // Form1
             // 
@@ -201,8 +193,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(993, 384);
             this.Controls.Add(this.pnlBack);
-            this.Controls.Add(this.pnlBaixo);
-            this.Controls.Add(this.pnlTopo);
             this.Controls.Add(this.pnlLateralBack);
             this.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -228,13 +218,12 @@
         private Panel pnlLateralTopo;
         private PictureBox ptbLateralSolar;
         private PictureBox ptbLateralLogo;
-        private Button button4;
-        private Button button3;
-        private Button button2;
-        private Button button1;
+        private Button btnAjustes;
+        private Button btnSobre;
+        private Button btnEquipamento;
+        private Button btnHome;
         private Panel pnlLateralBack;
-        private Panel pnlTopo;
-        private Panel pnlBaixo;
         private Panel pnlBack;
+        private Views.uctHome pgnHome;
     }
 }

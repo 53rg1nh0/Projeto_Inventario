@@ -52,7 +52,10 @@ namespace InventarioTI.Extencions
                 {
                     column.Width = 300;
                 }
-                if (column.HeaderText == "ID_C" || column.HeaderText == "ID_U" || column.HeaderText == "ID_FK_C" || column.HeaderText == "ID_FK_U" || column.HeaderText == "Nivel" || column.HeaderText == "Senha")
+                if (column.HeaderText == "ID_C" || column.HeaderText == "ID_U" || column.HeaderText == "ID_FK_C" 
+                    || column.HeaderText == "ID_FK_U" || column.HeaderText == "Nivel" || column.HeaderText == "Senha"
+                    || column.HeaderText == "ID_E" || column.HeaderText == "Cliente" || column.HeaderText == "Unidade"
+                    || column.HeaderText == "Movimentacoes" || column.HeaderText == "Disco" || column.HeaderText == "Status")
                 {
                     column.Visible = false;
                 }

@@ -90,6 +90,7 @@ namespace InventarioTI.Extencions
             }
         }
 
+       
         private static void ApertaBotao(object sender, EventArgs e)
         {
             int i = 0;

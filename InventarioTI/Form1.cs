@@ -17,7 +17,15 @@ namespace InventarioTI
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            Image[] imagem = new Image[20];
+            imagem[7] = Properties.Resources.HomeEscuro45;
+            imagem[6] = Properties.Resources.ComputadorEscuro45;
+            imagem[5] = Properties.Resources.SobreEscuro45;
+            imagem[4] = Properties.Resources.AjusteEscuro45;
+            imagem[3] = Properties.Resources.HomeClaro45;
+            imagem[2] = Properties.Resources.ComputadorClaro45;
+            imagem[1] = Properties.Resources.SobreClaro45;
+            imagem[0] = Properties.Resources.AjusteClaro45;
             try
             {
                 using (var context = new InventarioContext())
@@ -108,22 +116,22 @@ namespace InventarioTI
                     //                Cargo = equi.Cliente.Cargo,
                     //            };
 
-                    
-                    
-                    
-                    
+
+
+
+
                     //dataGridView1.Estilo(query.ToArray());
-                    Image[] imagem = new Image[20];
-                    imagem[7] = Properties.Resources.HomeEscuro45;
-                    imagem[6] = Properties.Resources.ComputadorEscuro45;
-                    imagem[5] = Properties.Resources.SobreEscuro45;
-                    imagem[4] = Properties.Resources.AjusteEscuro45;
-                    imagem[3] = Properties.Resources.HomeClaro45;
-                    imagem[2] = Properties.Resources.ComputadorClaro45;
-                    imagem[1] = Properties.Resources.SobreClaro45;
-                    imagem[0] = Properties.Resources.AjusteClaro45;
+                    foreach (Control b in pnlLateral.Controls)
+                    {
+                        if (b is Button)
+                        {
+                            b.Click += Navegacao;
+                        }
+                    }
 
                     pnlLateral.Estilo(Color.FromArgb(50, 65, 81), 55, 180, imagem);
+
+
 
                     var responsavel =
                         from resp in context.Responsaveis
@@ -138,49 +146,59 @@ namespace InventarioTI
                     if (Properties.Settings.Default.Senha == responsavel.Select(x => x.Senha).SingleOrDefault() &&
                         Properties.Settings.Default.Usuario == responsavel.Select(x => x.UserId).SingleOrDefault())
                     {
-                        this.pnlBack.IrParaPagina(pgnSobre);
+                        this.pnlBack.IrParaPagina(pgnHome, pnlLateral, imagem);
+                        pgnHome.Carregar();
                     }
                     else
                     {
-                        this.pnlBack.IrParaPagina(pgnLoginCadastro);
+                        pnlBack.IrParaPagina(pgnLoginCadastro, pnlLateral, imagem);
                         this.Arrastar();
                     }
                 }
             }
             catch (Microsoft.Data.Sqlite.SqliteException ex)
             {
-                this.pnlBack.IrParaPagina(pgnDesconectado);
+                this.pnlBack.IrParaPagina(pgnDesconectado, pnlLateral, imagem);
                 pgnDesconectado.lblMensagem.Text = "Erro na operação com BD. Verifique conexão!";
             }
-            catch(DbUpdateException ex)
+            catch (DbUpdateException ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Logoff();
-        }
 
         private void pgnLoginCadastro_SizeChanged(object sender, EventArgs e)
         {
             this.Size = pgnLoginCadastro.Size;
-            pnlBaixo.Visible = false;
-            pnlTopo.Visible = false;
-            pnlLateral.Visible = false;
+            pnlLateralBack.Visible = false;
+        }
+
+        private void Navegacao(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            foreach (Control b in pnlLateral.Controls)
+            {
+                if (b is Button)
+                {
+                    if (btn.Name == b.Name)
+                    {
+                        foreach (Control p in pnlBack.Controls)
+                        {
+                            p.Visible = false;
+                            if (p.Name.Substring(3) == b.Name.Substring(3))
+                            {
+                                p.Visible = true;
+                                p.Dock = DockStyle.Fill;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////
 
-
-        private void Logoff()
-        {
-            Properties.Settings.Default.Senha = null;
-            Properties.Settings.Default.Usuario = null;
-            Properties.Settings.Default.Save();
-            Application.Restart();
-        }
 
         private void ptbLateralLogo_Click(object sender, EventArgs e)
         {
@@ -193,6 +211,7 @@ namespace InventarioTI
                 pnlLateralBack.Width = 180;
             }
         }
+
     }
 
 }
