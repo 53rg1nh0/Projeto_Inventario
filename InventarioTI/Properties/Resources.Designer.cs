@@ -153,6 +153,16 @@ namespace InventarioTI.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap FiltroClaro20 {
+            get {
+                object obj = ResourceManager.GetObject("FiltroClaro20", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap HomeClaro45 {
             get {
                 object obj = ResourceManager.GetObject("HomeClaro45", resourceCulture);
@@ -206,6 +216,16 @@ namespace InventarioTI.Properties {
         internal static System.Drawing.Bitmap Logo {
             get {
                 object obj = ResourceManager.GetObject("Logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap LupaClarp20 {
+            get {
+                object obj = ResourceManager.GetObject("LupaClarp20", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

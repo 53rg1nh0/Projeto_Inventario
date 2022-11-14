@@ -87,7 +87,7 @@
             this.pnlLateral.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlLateral.Location = new System.Drawing.Point(0, 0);
             this.pnlLateral.Name = "pnlLateral";
-            this.pnlLateral.Size = new System.Drawing.Size(180, 384);
+            this.pnlLateral.Size = new System.Drawing.Size(180, 361);
             this.pnlLateral.TabIndex = 4;
             // 
             // btnAjustes
@@ -164,7 +164,7 @@
             this.pnlLateralBack.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlLateralBack.Location = new System.Drawing.Point(0, 0);
             this.pnlLateralBack.Name = "pnlLateralBack";
-            this.pnlLateralBack.Size = new System.Drawing.Size(180, 384);
+            this.pnlLateralBack.Size = new System.Drawing.Size(180, 361);
             this.pnlLateralBack.TabIndex = 5;
             // 
             // pnlBack
@@ -176,7 +176,7 @@
             this.pnlBack.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlBack.Location = new System.Drawing.Point(180, 0);
             this.pnlBack.Name = "pnlBack";
-            this.pnlBack.Size = new System.Drawing.Size(813, 384);
+            this.pnlBack.Size = new System.Drawing.Size(904, 361);
             this.pnlBack.TabIndex = 8;
             // 
             // pgnHome
@@ -191,7 +191,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(993, 384);
+            this.ClientSize = new System.Drawing.Size(1084, 361);
             this.Controls.Add(this.pnlBack);
             this.Controls.Add(this.pnlLateralBack);
             this.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
