@@ -91,6 +91,7 @@
             this.pagInfra = new System.Windows.Forms.TabPage();
             this.pagTele = new System.Windows.Forms.TabPage();
             this.pagEquipe = new System.Windows.Forms.TabPage();
+            this.dgvEquipe = new System.Windows.Forms.DataGridView();
             this.pnlTopo.SuspendLayout();
             this.tlpTopo.SuspendLayout();
             this.pnlTopoUni.SuspendLayout();
@@ -111,6 +112,8 @@
             this.pnlStatus.SuspendLayout();
             this.pagComp.SuspendLayout();
             this.tbcHome.SuspendLayout();
+            this.pagEquipe.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvEquipe)).BeginInit();
             this.SuspendLayout();
             // 
             // pnlTopo
@@ -846,13 +849,24 @@
             // 
             // pagEquipe
             // 
-            this.pagEquipe.Location = new System.Drawing.Point(27, 4);
+            this.pagEquipe.BackColor = System.Drawing.SystemColors.Control;
+            this.pagEquipe.Controls.Add(this.dgvEquipe);
+            this.pagEquipe.Location = new System.Drawing.Point(24, 4);
             this.pagEquipe.Name = "pagEquipe";
             this.pagEquipe.Padding = new System.Windows.Forms.Padding(3);
-            this.pagEquipe.Size = new System.Drawing.Size(985, 401);
+            this.pagEquipe.Size = new System.Drawing.Size(988, 401);
             this.pagEquipe.TabIndex = 4;
             this.pagEquipe.Text = "Equipe";
-            this.pagEquipe.UseVisualStyleBackColor = true;
+            // 
+            // dgvEquipe
+            // 
+            this.dgvEquipe.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvEquipe.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvEquipe.Location = new System.Drawing.Point(6, 6);
+            this.dgvEquipe.Name = "dgvEquipe";
+            this.dgvEquipe.RowTemplate.Height = 25;
+            this.dgvEquipe.Size = new System.Drawing.Size(69, 77);
+            this.dgvEquipe.TabIndex = 0;
             // 
             // uctHome
             // 
@@ -894,6 +908,8 @@
             this.pnlStatus.ResumeLayout(false);
             this.pagComp.ResumeLayout(false);
             this.tbcHome.ResumeLayout(false);
+            this.pagEquipe.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvEquipe)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -962,5 +978,6 @@
         private ComboBox cbxStatus;
         private ComboBox cbxPatrimonio;
         private Panel pnlCobre;
+        private DataGridView dgvEquipe;
     }
 }

@@ -1,6 +1,9 @@
 ﻿using DocumentFormat.OpenXml.InkML;
+using DocumentFormat.OpenXml.Vml;
 using InventarioTI.Entites;
 using InventarioTI.Extencions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,7 +18,7 @@ namespace InventarioTI.Views
 {
     public partial class uctHome : UserControl
     {
-        List<Unidade> _unidades = new List<Unidade>();
+        Unidade[] _unidades;
         Equipamento[] _filtro;
         ComboBox[] _combos = new ComboBox[7];
         Button[] _buttons = new Button[7];
@@ -41,51 +44,36 @@ namespace InventarioTI.Views
 
         private void cbxUnidades_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            cbxUnidades.Visible = false;
-            lblLocal.Text = "Regiao: " + _unidades.Where(u => u.Sigla == cbxUnidades.Text).SingleOrDefault().Regiao
-                + "\nEstado: " + _unidades.Where(u => u.Sigla == cbxUnidades.Text).SingleOrDefault().Uf
-                + "\nUnidade: " + _unidades.Where(u => u.Sigla == cbxUnidades.Text).SingleOrDefault().Nome;
-            Properties.Settings.Default.UnidadePadrao = cbxUnidades.Text;
-            Properties.Settings.Default.Save();
             Update();
         }
 
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
         public void Carregar()
         {
             using (var context = new InventarioContext())
             {
-                string re = Properties.Settings.Default.Usuario;
-                var resp = context.Responsaveis.Where(r => r.CLiente.UserId == re).SingleOrDefault();
-
-                _unidades = context.ResponsaveisUnidades.Where(u => u.Responsavel.Equals(resp)).Select(u => u.Unidade).ToList();
-
-                foreach (var u in _unidades)
-                {
-                    cbxUnidades.Items.Add(u.Sigla);
-                }
-
+                var resp = context.Responsaveis.Where(r => r.CLiente.UserId == Properties.Settings.Default.Usuario).SingleOrDefault();
                 context.Entry(resp).Reference(r => r.CLiente).Load();
 
                 lblinformacao.Text = "Responsável: " + resp.CLiente.Nome
                     + "\nCargo: " + resp.CLiente.Cargo
                     + "\nÁrea: " + resp.CLiente.Area;
 
+                _unidades = context.ResponsaveisUnidades.Where(u => u.Responsavel.Equals(resp)).Select(u => u.Unidade).ToArray();
+
+                cbxUnidades.Items.AddRange(_unidades.Select(u => u.Sigla).ToArray());
+
+
                 if (!string.IsNullOrEmpty(Properties.Settings.Default.UnidadePadrao))
                 {
-                    cbxUnidades.Text = _unidades.Where(u => u.Sigla == Properties.Settings.Default.UnidadePadrao).Select(u => u.Sigla).SingleOrDefault();
-                    lblLocal.Text = _unidades.Where(u => u.Sigla == Properties.Settings.Default.UnidadePadrao).Select(u => u.Regiao).SingleOrDefault()
-                    + "\nEstado: " + _unidades.Where(u => u.Sigla == Properties.Settings.Default.UnidadePadrao).Select(u => u.Uf).SingleOrDefault()
-                    + "\nUnidade: " + _unidades.Where(u => u.Sigla == Properties.Settings.Default.UnidadePadrao).Select(u => u.Nome).SingleOrDefault();
+                    cbxUnidades.Text = _unidades.Where(u => u.Sigla == Properties.Settings.Default.UnidadePadrao).First().Sigla;
                 }
                 else
                 {
                     cbxUnidades.Text = _unidades.First().Sigla;
-                    lblLocal.Text = "Regiao: " + _unidades.First().Regiao
-                    + "\nEstado: " + _unidades.First().Uf
-                    + "\nUnidade: " + _unidades.First().Nome;
                 }
 
                 int b = 0, c = 0;
@@ -101,7 +89,7 @@ namespace InventarioTI.Views
                                 _combos[c] = comboBox;
                                 if (comboBox.Name == "cbxPatrimonio")
                                 {
-                                    comboBox.KeyDown += EnterCombobox;
+                                    comboBox.KeyDown += EnterComboBox;
                                 }
                                 else
                                 {
@@ -112,66 +100,79 @@ namespace InventarioTI.Views
                             if (c2 is Button)
                             {
                                 Button button = c2 as Button;
+                                button.Click += Button_Click;
                                 _buttons[b] = button;
                                 b++;
                             }
                         }
                     }
                 }
-
                 Update();
-
+                TabelaEquipe(context);
             }
         }
 
-
-
-        private void Update(bool Informativos = true)
+        
+        private void Update(bool informativos = true)
         {
             using (var context = new InventarioContext())
             {
-                string[] s = new string[7];
-                if (Informativos)
+                if (informativos)
                 {
-                    _filtro = context.Equipamentos.Where(b => b.Unidade.Sigla == cbxUnidades.Text).ToArray();
+                    var b = context.Equipamentos.Where(b => b.Unidade.Sigla == cbxUnidades.Text);
+                    _filtro = b.ToArray();
 
-                    var back = context.Equipamentos.Where(b => b.Cliente.Nome == "Backup").Where(b => b.Unidade.Sigla == cbxUnidades.Text).Count();
-                    var total = context.Equipamentos.Where(b => b.Unidade.Sigla == cbxUnidades.Text).Count();
-                    var totalNot = context.Equipamentos.Where(b => b.Unidade.Sigla == cbxUnidades.Text).Where(b => b.Tipo == "Notebook").Count();
-                    var totalBackNot = context.Equipamentos.Where(b => b.Cliente.Nome == "Backup").Where(b => b.Unidade.Sigla == cbxUnidades.Text).Where(b => b.Tipo == "Notebook").Count();
-                    var totalBackDesk = context.Equipamentos.Where(b => b.Cliente.Nome == "Backup").Where(b => b.Unidade.Sigla == cbxUnidades.Text).Where(b => b.Tipo == "Desktop").Count();
-                    lblTotal.Text = "Equipamentos: " + total.ToString();
-                    lblTotalNot.Text = "Notebooks: " + totalNot.ToString();
-                    lblTotaBackup.Text = "Total Backups: " + back.ToString();
-                    lblBackupNot.Text = "Backups Notebooks: " + totalBackNot.ToString();
-                    lblBackupDesk.Text = "Backup Desktops: " + totalBackDesk.ToString();
-                    int i = 0;
-                    foreach (var c in _combos)
+                    lblTotal.Text = "Equipamentos: " + b.Count().ToString();
+                    lblTotalNot.Text = "Notebooks: " + b.Where(b => b.Tipo == "Notebook").Count().ToString();
+                    lblTotaBackup.Text = "Total Backups: " + b.Where(b => b.Cliente.Nome == "Backup").Count().ToString();
+                    lblBackupNot.Text = "Nackups Notebooks: " + b.Where(b => b.Cliente.Nome == "Backup").Where(b => b.Tipo == "Notebook").Count().ToString();
+                    lblBackupDesk.Text = "Backup Desktops: " + b.Where(b => b.Cliente.Nome == "Backup").Where(b => b.Tipo == "Desktop").Count().ToString();
+
+                    lblLocal.Text = "Regiao: " + _unidades.Where(u => u.Sigla == cbxUnidades.Text).First().Regiao
+                            + "\nEstado: " + _unidades.Where(u => u.Sigla == cbxUnidades.Text).First().Uf
+                            + "\nUnidade: " + _unidades.Where(u => u.Sigla == cbxUnidades.Text).First().Nome;
+
+                    Properties.Settings.Default.UnidadePadrao = cbxUnidades.Text;
+                    Properties.Settings.Default.Save();
+
+                    for (int i = 0; i < 7; i++)
                     {
-                        c.Text = null;
-                        _buttons[i].Visible = false;
-                        i++;
+
+                        _combos[i].Enabled = true;
+                        _buttons[i].Enabled = true;
                     }
+
+                    cbxUnidades.Visible = false;
                 }
-                else
+
+                string[] s = new string[7];
+
+                for (int i = 0; i < 7; i++)
                 {
-                    int i = 0;
-                    foreach (var c in _combos)
+
+                    s[i] = _combos[i].Text;
+                    if (_combos[i].Name == "cbxPatrimonio")
                     {
-                        if (c.Name == "cbxPatrimonio")
+                        if (!string.IsNullOrEmpty(_combos[i].Text))
                         {
-                            s[i] = c.Text;
-                            c.AutoCompleteCustomSource.Clear();
-                            c.KeyDown -= EnterCombobox;
+                            _combos[i].KeyDown -= EnterComboBox;
+                            _combos[i].Text = null;
+                            _buttons[i].Visible = false;
                         }
-                        else
-                        {
-                            s[i] = c.Text;
-                            c.Items.Clear();
-                            c.SelectionChangeCommitted -= ComboBox_SelectionChangeCommitted;
-                        }
-                        i++;
+                        _combos[i].AutoCompleteCustomSource.Clear();
                     }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(_combos[i].Text))
+                        {
+                            _combos[i].SelectionChangeCommitted -= ComboBox_SelectionChangeCommitted;
+                            _combos[i].Text = null;
+                            _buttons[i].Visible = false;
+                        }
+                        _combos[i].Items.Clear();
+                    }
+
+
                 }
 
                 dgvBackups.Estilo(_filtro);
@@ -191,45 +192,37 @@ namespace InventarioTI.Views
                 cbxModelo.Items.AddRange(_filtro.Select(e => e.Modelo).Distinct().ToArray());
 
                 cbxStatus.Items.AddRange(_filtro.Select(e => e.Status).Distinct().ToArray());
-                if (!Informativos)
+
+                cbxStatus.Items.AddRange(_filtro.Select(e => e.Status).Distinct().ToArray());
+
+                for (int i = 0; i < 7; i++)
                 {
-                    int i = 0;
-                    foreach (var c in _combos)
+                    if (!string.IsNullOrEmpty(s[i]))
                     {
-                        if (c.Name == "cbxPatrimonio")
+                        if (_combos[i].Name == "cbxPatrimonio")
                         {
-                            c.Text = s[i];
-                            c.KeyDown += EnterCombobox;
+                            _combos[i].KeyDown += EnterComboBox;
+
                         }
                         else
                         {
-                            c.Text = s[i];
-                            c.SelectionChangeCommitted += ComboBox_SelectionChangeCommitted;
+                            _combos[i].SelectionChangeCommitted += ComboBox_SelectionChangeCommitted;
                         }
-                        i++;
+                        if (!informativos)
+                        {
+                            _combos[i].Text = s[i];
+                            _buttons[i].Visible = true;
+                        }
                     }
                 }
             }
-
         }
 
-        private void EnterCombobox(object sender, KeyEventArgs e)
+        private void EnterComboBox(object? sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                foreach (var c in _combos)
-                {
-                    if (!string.IsNullOrEmpty(c.Text))
-                    {
-                        ComboBox comboBox = (ComboBox)sender;
-                        if (comboBox.Name.Substring(3) == c.Name.Substring(3))
-                        {
-                            Filtro(comboBox);
-                            Update(false);
-                            return;
-                        }
-                    }
-                }
+                ComboBox_SelectionChangeCommitted(sender, e);
             }
         }
 
@@ -237,74 +230,144 @@ namespace InventarioTI.Views
         {
             foreach (var c in _combos)
             {
-                if (!string.IsNullOrEmpty(c.Text))
+                ComboBox comboBox = (ComboBox)sender;
+                if (comboBox.Name.Substring(3) == c.Name.Substring(3))
                 {
-                    ComboBox comboBox = (ComboBox)sender;
-                    if (comboBox.Name.Substring(3) == c.Name.Substring(3))
-                    {
-                        Filtro(comboBox);
-                        Update(false);
-                        return;
-                    }
+                    Filtro(comboBox);
+                    Update(false);
+                    return;
                 }
             }
         }
 
         private void Filtro(ComboBox c)
         {
-            if (c.Name.Substring(3) == "Patrimonio")
+            if (string.IsNullOrEmpty(c.Text))
             {
-                if (_filtro.Where(e => e.Patrimonio == int.Parse(cbxPatrimonio.Text)).Count() == 0)
+                using (var context = new InventarioContext())
                 {
-                    MessageBox.Show("Equimamento não existe na uindade.");
+                    _filtro = context.Equipamentos.Where(b => b.Unidade.Sigla == cbxUnidades.Text).ToArray();
                 }
-                else
+                foreach (var combo in _combos)
                 {
-                    _filtro = _filtro.Where(e => e.Patrimonio == int.Parse(cbxPatrimonio.Text)).ToArray();
-                    int i = 0;
-                    foreach (var iten in _combos)
+                    if (!string.IsNullOrEmpty(combo.Text))
                     {
-
-                        iten.Enabled = false;
-                        _buttons[i].Enabled = false;
-                        i++;
+                        Filtro(combo);
                     }
-                    cbxPatrimonio.Enabled= true;    
-                    btnPatrimonio.Visible = true;
+                }
+            }
+            else
+            {
+                if (c.Name.Substring(3) == "Patrimonio")
+                {
+                    if (_filtro.Where(e => e.Patrimonio == int.Parse(cbxPatrimonio.Text)).Count() == 0)
+                    {
+                        MessageBox.Show("Equimamento não existe na uindade.");
+                    }
+                    else
+                    {
+                        _filtro = _filtro.Where(e => e.Patrimonio == int.Parse(cbxPatrimonio.Text)).ToArray();
+                        for (int i = 0; i < 7; i++)
+                        {
+
+                            _combos[i].Enabled = false;
+                            _buttons[i].Enabled = false;
+                        }
+                        cbxPatrimonio.Enabled = true;
+                        btnPatrimonio.Enabled = true;
+
+                    }
 
                 }
+                else if (c.Name.Substring(3) == "Tipo")
+                {
+                    _filtro = _filtro.Where(e => e.Tipo == c.Text).ToArray();
+                }
+                else if (c.Name.Substring(3) == "Marca")
+                {
+                    _filtro = _filtro.Where(e => e.Marca == c.Text).ToArray();
+                }
+                else if (c.Name.Substring(3) == "Processador")
+                {
+                    _filtro = _filtro.Where(e => e.Processador == c.Text).ToArray();
+                }
+                else if (c.Name.Substring(3) == "Ram")
+                {
+                    _filtro = _filtro.Where(e => e.Ram == c.Text).ToArray();
+                }
+                else if (c.Name.Substring(3) == "Modelo")
+                {
+                    _filtro = _filtro.Where(e => e.Modelo == c.Text).ToArray();
+                }
+                else if (c.Name.Substring(3) == "Status")
+                {
+                    _filtro = _filtro.Where(e => e.Status == c.Text).ToArray();
+                }
+            }
+        }
 
-            }
-            else if (c.Name.Substring(3) == "Tipo")
+        private void Button_Click(object? sender, EventArgs e)
+        {
+
+            Button b = sender as Button;
+            if (b.Name == "btnPatrimonio")
             {
-                _filtro = _filtro.Where(e => e.Tipo == c.Text).ToArray();
-                btnTipo.Visible = true;
+                for (int i = 0; i < 7; i++)
+                {
+
+                    _combos[i].Enabled = true;
+                    _buttons[i].Enabled = true;
+                }
             }
-            else if (c.Name.Substring(3) == "Marca")
+            b.Visible = false;
+            ButtonToCombo(b).Text = null;
+
+            ComboBox_SelectionChangeCommitted(ButtonToCombo(b), e);
+
+
+        }
+
+        private ComboBox ButtonToCombo(Button b)
+        {
+            for (int i = 0; i < 7; i++)
             {
-                _filtro = _filtro.Where(e => e.Marca == c.Text).ToArray();
-                btnMarca.Visible = true;
+                if (b.Equals(_buttons[i]))
+                {
+                    return _combos[i];
+                }
             }
-            else if (c.Name.Substring(3) == "Processador")
+            return null;
+        }
+
+        private void TabelaEquipe(InventarioContext context)
+        {
+            Responsavel[] r = context.Responsaveis.Include(r => r.CLiente).ToArray();
+            Unidade[] u;
+            List<string> lista = new List<string>();
+            string unidades = "";
+            foreach (Responsavel responsavel in r)
             {
-                _filtro = _filtro.Where(e => e.Processador == c.Text).ToArray();
-                btnProcessador.Visible = true;
+                context.Entry(responsavel).Collection(r => r.Unidades).Load();
+                u = responsavel.Unidades.Where(u => u.Responsavel.Equals(responsavel)).Select(u => u.Unidade).ToArray();
+                foreach (Unidade unidade in u)
+                {
+                    unidades += unidade.Sigla + ", ";
+                }
+                lista.Add(unidades);
+                unidades = "";
             }
-            else if (c.Name.Substring(3) == "Ram")
-            {
-                _filtro = _filtro.Where(e => e.Ram == c.Text).ToArray();
-                btnRam.Visible = true;
-            }
-            else if (c.Name.Substring(3) == "Modelo")
-            {
-                _filtro = _filtro.Where(e => e.Modelo == c.Text).ToArray();
-                btnModelo.Visible = true;
-            }
-            else if (c.Name.Substring(3) == "Status")
-            {
-                _filtro = _filtro.Where(e => e.Status == c.Text).ToArray();
-                btnStatus.Visible = true;
-            }
+
+            var dados = from responsavel in r
+                        select new
+                        {
+                            Nome = responsavel.CLiente.Nome,
+                            Area = responsavel.CLiente.Area,
+                            Cargo = responsavel.CLiente.Cargo,
+                            Tel_Corporativo = responsavel.TelefoneCorporativo,
+                            Tel_Secundario = responsavel.TelefoneSecundario,
+                            Email = responsavel.Email,
+                        };
+            dgvEquipe.Estilo(dados.ToArray());
         }
     }
 }

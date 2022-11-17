@@ -3,6 +3,7 @@ using DocumentFormat.OpenXml.Drawing.Charts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,36 +30,43 @@ namespace InventarioTI.Extencions
 
             foreach (DataGridViewColumn column in DG.Columns)
             {
-                if (column.HeaderText == "Uf")
+                try
                 {
-                    column.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-                    column.Width = 25;
+                    if (column.HeaderText == "Uf")
+                    {
+                        column.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                        column.Width = 25;
+                    }
+                    if (column.HeaderText == "Disco" || column.HeaderText == "Ram" || column.HeaderText == "Sigla")
+                    {
+                        column.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                        column.Width = 40;
+                    }
+                    if (column.HeaderText == "UserID" || column.HeaderText == "Matricula")
+                    {
+                        column.Width = 65;
+                    }
+                    if (column.HeaderText == "Regiao" || column.HeaderText == "Processador" || column.HeaderText == "Tipo")
+                    {
+                        column.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                        column.Width = 110;
+                    }
+                    if (column.HeaderText == "Nome" || column.HeaderText == "Email")
+                    {
+                        if (DG.Name != "dgvEquipe")
+                        {
+                            column.Width = 300;
+                        }
+                    }
+                    if (column.HeaderText == "ID_C" || column.HeaderText == "ID_U" || column.HeaderText == "ID_FK_C"
+                        || column.HeaderText == "ID_FK_U" || column.HeaderText == "Nivel" || column.HeaderText == "Senha"
+                        || column.HeaderText == "ID_E" || column.HeaderText == "Cliente" || column.HeaderText == "Unidade"
+                        || column.HeaderText == "Movimentacoes" || column.HeaderText == "Disco" || column.HeaderText == "Status")
+                    {
+                        column.Visible = false;
+                    }
                 }
-                if (column.HeaderText == "Disco" || column.HeaderText == "Ram" || column.HeaderText == "Sigla")
-                {
-                    column.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-                    column.Width = 40;
-                }
-                if (column.HeaderText == "UserID" || column.HeaderText == "Matricula")
-                {
-                    column.Width = 65;
-                }
-                if (column.HeaderText == "Regiao" || column.HeaderText == "Processador" || column.HeaderText == "Tipo")
-                {
-                    column.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-                    column.Width = 110;
-                }
-                if (column.HeaderText == "Nome" || column.HeaderText == "Email")
-                {
-                    column.Width = 300;
-                }
-                if (column.HeaderText == "ID_C" || column.HeaderText == "ID_U" || column.HeaderText == "ID_FK_C" 
-                    || column.HeaderText == "ID_FK_U" || column.HeaderText == "Nivel" || column.HeaderText == "Senha"
-                    || column.HeaderText == "ID_E" || column.HeaderText == "Cliente" || column.HeaderText == "Unidade"
-                    || column.HeaderText == "Movimentacoes" || column.HeaderText == "Disco" || column.HeaderText == "Status")
-                {
-                    column.Visible = false;
-                }
+                catch (NullReferenceException) { }
             }
 
         }
