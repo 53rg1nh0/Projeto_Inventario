@@ -17,6 +17,44 @@ namespace InventarioTI.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.10");
 
+            modelBuilder.Entity("InventarioTI.Entites.AprovacaoTransferencia", b =>
+                {
+                    b.Property<int>("ID_A")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("DataAprovacao")
+                        .HasColumnType("DateTime");
+
+                    b.Property<DateTime>("DataInicio")
+                        .HasColumnType("DateTime");
+
+                    b.Property<int>("EquipamentoID_E")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ResponsavelAprovacao")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ResponsavelID_R")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UnidadeDestino")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ID_A");
+
+                    b.HasIndex("EquipamentoID_E");
+
+                    b.HasIndex("ResponsavelID_R");
+
+                    b.ToTable("AprovacaoTransferencias");
+                });
+
             modelBuilder.Entity("InventarioTI.Entites.Cliente", b =>
                 {
                     b.Property<int>("ID_C")
@@ -186,7 +224,7 @@ namespace InventarioTI.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("TelefoneCOrporativo")
+                    b.Property<string>("TelefoneCorporativo")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -253,6 +291,23 @@ namespace InventarioTI.Migrations
                     b.HasKey("ID_U");
 
                     b.ToTable("Unidades");
+                });
+
+            modelBuilder.Entity("InventarioTI.Entites.AprovacaoTransferencia", b =>
+                {
+                    b.HasOne("InventarioTI.Entites.Equipamento", "Equipamento")
+                        .WithMany()
+                        .HasForeignKey("EquipamentoID_E")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("InventarioTI.Entites.Responsavel", "Responsavel")
+                        .WithMany("AprovacaoTransferencias")
+                        .HasForeignKey("ResponsavelID_R");
+
+                    b.Navigation("Equipamento");
+
+                    b.Navigation("Responsavel");
                 });
 
             modelBuilder.Entity("InventarioTI.Entites.Equipamento", b =>
@@ -351,6 +406,8 @@ namespace InventarioTI.Migrations
 
             modelBuilder.Entity("InventarioTI.Entites.Responsavel", b =>
                 {
+                    b.Navigation("AprovacaoTransferencias");
+
                     b.Navigation("Unidades");
                 });
 

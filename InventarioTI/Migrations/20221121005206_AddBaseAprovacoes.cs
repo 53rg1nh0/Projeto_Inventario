@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace InventarioTI.Migrations
 {
-    public partial class Inicial : Migration
+    public partial class AddBaseAprovacoes : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -48,7 +48,7 @@ namespace InventarioTI.Migrations
                 {
                     ID_R = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    TelefoneCOrporativo = table.Column<string>(type: "TEXT", nullable: false),
+                    TelefoneCorporativo = table.Column<string>(type: "TEXT", nullable: false),
                     TelefoneSecundario = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
                     Nivel = table.Column<int>(type: "INTEGER", nullable: false),
@@ -130,6 +130,36 @@ namespace InventarioTI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AprovacaoTransferencias",
+                columns: table => new
+                {
+                    ID_A = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ResponsavelID_R = table.Column<int>(type: "INTEGER", nullable: false),
+                    EquipamentoID_E = table.Column<int>(type: "INTEGER", nullable: false),
+                    UnidadeDestino = table.Column<string>(type: "TEXT", nullable: false),
+                    Status = table.Column<string>(type: "TEXT", nullable: false),
+                    DataInicio = table.Column<DateTime>(type: "DateTime", nullable: false),
+                    DataAprovacao = table.Column<DateTime>(type: "DateTime", nullable: false),
+                    ResponsavelAprovacao = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AprovacaoTransferencias", x => x.ID_A);
+                    table.ForeignKey(
+                        name: "FK_AprovacaoTransferencias_Equipamentos_EquipamentoID_E",
+                        column: x => x.EquipamentoID_E,
+                        principalTable: "Equipamentos",
+                        principalColumn: "ID_E",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AprovacaoTransferencias_Responsaveis_ResponsavelID_R",
+                        column: x => x.ResponsavelID_R,
+                        principalTable: "Responsaveis",
+                        principalColumn: "ID_R");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Movimentacoes",
                 columns: table => new
                 {
@@ -170,6 +200,16 @@ namespace InventarioTI.Migrations
                         principalColumn: "ID_U",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AprovacaoTransferencias_EquipamentoID_E",
+                table: "AprovacaoTransferencias",
+                column: "EquipamentoID_E");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AprovacaoTransferencias_ResponsavelID_R",
+                table: "AprovacaoTransferencias",
+                column: "ResponsavelID_R");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Equipamentos_ClienteID_C",
@@ -219,6 +259,9 @@ namespace InventarioTI.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AprovacaoTransferencias");
+
             migrationBuilder.DropTable(
                 name: "Movimentacoes");
 

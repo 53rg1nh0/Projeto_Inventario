@@ -810,40 +810,42 @@
             this.tbcHome.Controls.Add(this.pagTele);
             this.tbcHome.Controls.Add(this.pagEquipe);
             this.tbcHome.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbcHome.ImeMode = System.Windows.Forms.ImeMode.Katakana;
             this.tbcHome.Location = new System.Drawing.Point(0, 50);
             this.tbcHome.Multiline = true;
             this.tbcHome.Name = "tbcHome";
             this.tbcHome.SelectedIndex = 0;
             this.tbcHome.Size = new System.Drawing.Size(1016, 409);
+            this.tbcHome.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.tbcHome.TabIndex = 3;
             // 
             // pagImp
             // 
             this.pagImp.BackColor = System.Drawing.SystemColors.Control;
-            this.pagImp.Location = new System.Drawing.Point(27, 4);
+            this.pagImp.Location = new System.Drawing.Point(24, 4);
             this.pagImp.Name = "pagImp";
             this.pagImp.Padding = new System.Windows.Forms.Padding(3);
-            this.pagImp.Size = new System.Drawing.Size(985, 401);
+            this.pagImp.Size = new System.Drawing.Size(988, 401);
             this.pagImp.TabIndex = 1;
             this.pagImp.Text = "Imp.";
             // 
             // pagInfra
             // 
             this.pagInfra.BackColor = System.Drawing.SystemColors.Control;
-            this.pagInfra.Location = new System.Drawing.Point(27, 4);
+            this.pagInfra.Location = new System.Drawing.Point(24, 4);
             this.pagInfra.Name = "pagInfra";
             this.pagInfra.Padding = new System.Windows.Forms.Padding(3);
-            this.pagInfra.Size = new System.Drawing.Size(985, 401);
+            this.pagInfra.Size = new System.Drawing.Size(988, 401);
             this.pagInfra.TabIndex = 2;
             this.pagInfra.Text = "Infra.";
             // 
             // pagTele
             // 
             this.pagTele.BackColor = System.Drawing.SystemColors.Control;
-            this.pagTele.Location = new System.Drawing.Point(27, 4);
+            this.pagTele.Location = new System.Drawing.Point(24, 4);
             this.pagTele.Name = "pagTele";
             this.pagTele.Padding = new System.Windows.Forms.Padding(3);
-            this.pagTele.Size = new System.Drawing.Size(985, 401);
+            this.pagTele.Size = new System.Drawing.Size(988, 401);
             this.pagTele.TabIndex = 3;
             this.pagTele.Text = "Tele.";
             // 

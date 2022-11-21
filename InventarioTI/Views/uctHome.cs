@@ -112,7 +112,7 @@ namespace InventarioTI.Views
             }
         }
 
-        
+
         private void Update(bool informativos = true)
         {
             using (var context = new InventarioContext())
@@ -342,20 +342,6 @@ namespace InventarioTI.Views
         private void TabelaEquipe(InventarioContext context)
         {
             Responsavel[] r = context.Responsaveis.Include(r => r.CLiente).ToArray();
-            Unidade[] u;
-            List<string> lista = new List<string>();
-            string unidades = "";
-            foreach (Responsavel responsavel in r)
-            {
-                context.Entry(responsavel).Collection(r => r.Unidades).Load();
-                u = responsavel.Unidades.Where(u => u.Responsavel.Equals(responsavel)).Select(u => u.Unidade).ToArray();
-                foreach (Unidade unidade in u)
-                {
-                    unidades += unidade.Sigla + ", ";
-                }
-                lista.Add(unidades);
-                unidades = "";
-            }
 
             var dados = from responsavel in r
                         select new
@@ -366,8 +352,26 @@ namespace InventarioTI.Views
                             Tel_Corporativo = responsavel.TelefoneCorporativo,
                             Tel_Secundario = responsavel.TelefoneSecundario,
                             Email = responsavel.Email,
+                            Unidades = Unidades(context, responsavel)
                         };
+
             dgvEquipe.Estilo(dados.ToArray());
+
+        }
+
+        private string Unidades(InventarioContext context, Responsavel responsavel)
+        {
+            string unidades = "";
+
+
+            foreach (Unidade unidade in context.ResponsaveisUnidades.Where(ru => ru.Responsavel.Equals(responsavel)).Select(ru => ru.Unidade))
+            {
+
+                unidades += unidade.Sigla + ", ";
+
+            }
+
+            return unidades;
         }
     }
 }

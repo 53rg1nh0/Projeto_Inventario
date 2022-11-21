@@ -19,6 +19,7 @@ namespace InventarioTI.Entites
         public string Senha { get; set; }
         public string Codigo { get; set; }
         public Cliente CLiente { get; set; }
+        public ICollection<AprovacaoTransferencia> AprovacaoTransferencias { get; set; }
         public ICollection<ResponsavelUnidade> Unidades { get; set; }
     }
 }

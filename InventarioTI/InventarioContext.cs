@@ -18,6 +18,7 @@ namespace InventarioTI
         public DbSet<Responsavel> Responsaveis { get; set; }
         public DbSet<ResponsavelUnidade> ResponsaveisUnidades { get; set; }
         public DbSet<Unidade> Unidades { get; set; }
+        public DbSet<AprovacaoTransferencia> AprovacaoTransferencias { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -123,6 +124,15 @@ namespace InventarioTI
                     .WithMany(c => c.Equipamentos);
 
 
+
+            //////////////////////////////////RESPONSAVEL//////////////////////////////
+            ///
+
+            //modelBuilder.Entity<Responsavel>()
+            //    .Property(r => r.AprovacaoTransferencias)
+            //            .IsRequired(false);
+
+
             //////////////////////////////////UNIDADE//////////////////////////////
             ///
 
@@ -177,6 +187,32 @@ namespace InventarioTI
             ///
             modelBuilder.Entity<ResponsavelUnidade>()
                 .HasKey(c => new { c.ID_R, c.ID_U });
+
+
+            //////////////////////////////////APROVACOES//////////////////////////////
+            ///
+
+            modelBuilder.Entity<AprovacaoTransferencia>()
+              .Property(a => a.UnidadeDestino)
+                      .IsRequired();
+
+            modelBuilder.Entity<AprovacaoTransferencia>()
+               .Property(a => a.DataInicio)
+                   .HasColumnType("DateTime")
+                       .IsRequired();
+
+            modelBuilder.Entity<AprovacaoTransferencia>()
+                .Property(a => a.DataAprovacao)
+                    .HasColumnType("DateTime");
+
+            modelBuilder.Entity<AprovacaoTransferencia>()
+                .Property(a => a.ResponsavelAprovacao)
+                    .IsRequired(false);
+
+            modelBuilder.Entity<AprovacaoTransferencia>()
+              .HasOne(a => a.Responsavel)
+                  .WithMany(r => r.AprovacaoTransferencias)
+                       .IsRequired(false);
         }
 
 
