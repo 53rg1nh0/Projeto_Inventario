@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.InkML;
+using DocumentFormat.OpenXml.Math;
 using DocumentFormat.OpenXml.Vml;
 using InventarioTI.Entites;
 using InventarioTI.Extencions;
@@ -10,6 +11,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -20,8 +22,8 @@ namespace InventarioTI.Views
     {
         Unidade[] _unidades;
         Equipamento[] _filtro;
-        ComboBox[] _combos = new ComboBox[7];
-        Button[] _buttons = new Button[7];
+        string[] _arrayFiltros;
+        Dictionary<string, string[]> _arrayFiltro = new Dictionary<string, string[]>();
         public uctHome()
         {
             InitializeComponent();
@@ -44,6 +46,7 @@ namespace InventarioTI.Views
 
         private void cbxUnidades_SelectionChangeCommitted(object sender, EventArgs e)
         {
+            cbxUnidades.Visible = false;
             Update();
         }
 
@@ -76,110 +79,48 @@ namespace InventarioTI.Views
                     cbxUnidades.Text = _unidades.First().Sigla;
                 }
 
-                int b = 0, c = 0;
-                foreach (Control control in tlpFiltro.Controls)
-                {
-                    if (control is Panel)
-                    {
-                        foreach (Control c2 in control.Controls)
-                        {
-                            if (c2 is ComboBox)
-                            {
-                                ComboBox comboBox = c2 as ComboBox;
-                                _combos[c] = comboBox;
-                                if (comboBox.Name == "cbxPatrimonio")
-                                {
-                                    comboBox.KeyDown += EnterComboBox;
-                                }
-                                else
-                                {
-                                    comboBox.SelectionChangeCommitted += ComboBox_SelectionChangeCommitted;
-                                }
-                                c++;
-                            }
-                            if (c2 is Button)
-                            {
-                                Button button = c2 as Button;
-                                button.Click += Button_Click;
-                                _buttons[b] = button;
-                                b++;
-                            }
-                        }
-                    }
-                }
+
                 Update();
                 TabelaEquipe(context);
             }
         }
 
 
-        private void Update(bool informativos = true)
+        private void Update()
         {
             using (var context = new InventarioContext())
             {
-                if (informativos)
-                {
-                    var b = context.Equipamentos.Where(b => b.Unidade.Sigla == cbxUnidades.Text);
-                    _filtro = b.ToArray();
 
-                    lblTotal.Text = "Equipamentos: " + b.Count().ToString();
-                    lblTotalNot.Text = "Notebooks: " + b.Where(b => b.Tipo == "Notebook").Count().ToString();
-                    lblTotaBackup.Text = "Total Backups: " + b.Where(b => b.Cliente.Nome == "Backup").Count().ToString();
-                    lblBackupNot.Text = "Nackups Notebooks: " + b.Where(b => b.Cliente.Nome == "Backup").Where(b => b.Tipo == "Notebook").Count().ToString();
-                    lblBackupDesk.Text = "Backup Desktops: " + b.Where(b => b.Cliente.Nome == "Backup").Where(b => b.Tipo == "Desktop").Count().ToString();
+                var b = context.Equipamentos.Where(b => b.Unidade.Sigla == cbxUnidades.Text);
+                _filtro = b.ToArray();
 
-                    lblLocal.Text = "Regiao: " + _unidades.Where(u => u.Sigla == cbxUnidades.Text).First().Regiao
-                            + "\nEstado: " + _unidades.Where(u => u.Sigla == cbxUnidades.Text).First().Uf
-                            + "\nUnidade: " + _unidades.Where(u => u.Sigla == cbxUnidades.Text).First().Nome;
+                lblTotal.Text = "Equipamentos: " + b.Count().ToString();
+                lblTotalNot.Text = "Notebooks: " + b.Where(b => b.Tipo == "Notebook").Count().ToString();
+                lblTotaBackup.Text = "Total Backups: " + b.Where(b => b.Cliente.Nome == "Backup").Count().ToString();
+                lblBackupNot.Text = "Nackups Notebooks: " + b.Where(b => b.Cliente.Nome == "Backup").Where(b => b.Tipo == "Notebook").Count().ToString();
+                lblBackupDesk.Text = "Backup Desktops: " + b.Where(b => b.Cliente.Nome == "Backup").Where(b => b.Tipo == "Desktop").Count().ToString();
 
-                    Properties.Settings.Default.UnidadePadrao = cbxUnidades.Text;
-                    Properties.Settings.Default.Save();
+                lblLocal.Text = "Regiao: " + _unidades.Where(u => u.Sigla == cbxUnidades.Text).First().Regiao
+                        + "\nEstado: " + _unidades.Where(u => u.Sigla == cbxUnidades.Text).First().Uf
+                        + "\nUnidade: " + _unidades.Where(u => u.Sigla == cbxUnidades.Text).First().Nome;
 
-                    for (int i = 0; i < 7; i++)
-                    {
-
-                        _combos[i].Enabled = true;
-                        _buttons[i].Enabled = true;
-                    }
-
-                    cbxUnidades.Visible = false;
-                }
-
-                string[] s = new string[7];
-
-                for (int i = 0; i < 7; i++)
-                {
-
-                    s[i] = _combos[i].Text;
-                    if (_combos[i].Name == "cbxPatrimonio")
-                    {
-                        if (!string.IsNullOrEmpty(_combos[i].Text))
-                        {
-                            _combos[i].KeyDown -= EnterComboBox;
-                            _combos[i].Text = null;
-                            _buttons[i].Visible = false;
-                        }
-                        _combos[i].AutoCompleteCustomSource.Clear();
-                    }
-                    else
-                    {
-                        if (!string.IsNullOrEmpty(_combos[i].Text))
-                        {
-                            _combos[i].SelectionChangeCommitted -= ComboBox_SelectionChangeCommitted;
-                            _combos[i].Text = null;
-                            _buttons[i].Visible = false;
-                        }
-                        _combos[i].Items.Clear();
-                    }
-
-
-                }
+                Properties.Settings.Default.UnidadePadrao = cbxUnidades.Text;
+                Properties.Settings.Default.Save();
 
                 dgvBackups.Estilo(_filtro);
+
 
                 cbxPatrimonio.AutoCompleteCustomSource.AddRange(_filtro.Select(e => e.Patrimonio.ToString()).ToArray());
                 cbxPatrimonio.AutoCompleteSource = AutoCompleteSource.CustomSource;
                 cbxPatrimonio.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+
+                cbxNomenclatura.AutoCompleteCustomSource.AddRange(_filtro.Select(e => e.Nomenclatura.ToString()).ToArray());
+                cbxNomenclatura.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                cbxNomenclatura.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+
+                cbxSerie.AutoCompleteCustomSource.AddRange(_filtro.Select(e => e.Serie.ToString()).ToArray());
+                cbxSerie.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                cbxSerie.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 
                 cbxTipo.Items.AddRange(_filtro.Select(e => e.Tipo).Distinct().ToArray());
 
@@ -193,151 +134,9 @@ namespace InventarioTI.Views
 
                 cbxStatus.Items.AddRange(_filtro.Select(e => e.Status).Distinct().ToArray());
 
-                cbxStatus.Items.AddRange(_filtro.Select(e => e.Status).Distinct().ToArray());
-
-                for (int i = 0; i < 7; i++)
-                {
-                    if (!string.IsNullOrEmpty(s[i]))
-                    {
-                        if (_combos[i].Name == "cbxPatrimonio")
-                        {
-                            _combos[i].KeyDown += EnterComboBox;
-
-                        }
-                        else
-                        {
-                            _combos[i].SelectionChangeCommitted += ComboBox_SelectionChangeCommitted;
-                        }
-                        if (!informativos)
-                        {
-                            _combos[i].Text = s[i];
-                            _buttons[i].Visible = true;
-                        }
-                    }
-                }
             }
         }
 
-        private void EnterComboBox(object? sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                ComboBox_SelectionChangeCommitted(sender, e);
-            }
-        }
-
-        private void ComboBox_SelectionChangeCommitted(object? sender, EventArgs e)
-        {
-            foreach (var c in _combos)
-            {
-                ComboBox comboBox = (ComboBox)sender;
-                if (comboBox.Name.Substring(3) == c.Name.Substring(3))
-                {
-                    Filtro(comboBox);
-                    Update(false);
-                    return;
-                }
-            }
-        }
-
-        private void Filtro(ComboBox c)
-        {
-            if (string.IsNullOrEmpty(c.Text))
-            {
-                using (var context = new InventarioContext())
-                {
-                    _filtro = context.Equipamentos.Where(b => b.Unidade.Sigla == cbxUnidades.Text).ToArray();
-                }
-                foreach (var combo in _combos)
-                {
-                    if (!string.IsNullOrEmpty(combo.Text))
-                    {
-                        Filtro(combo);
-                    }
-                }
-            }
-            else
-            {
-                if (c.Name.Substring(3) == "Patrimonio")
-                {
-                    if (_filtro.Where(e => e.Patrimonio == int.Parse(cbxPatrimonio.Text)).Count() == 0)
-                    {
-                        MessageBox.Show("Equimamento não existe na uindade.");
-                    }
-                    else
-                    {
-                        _filtro = _filtro.Where(e => e.Patrimonio == int.Parse(cbxPatrimonio.Text)).ToArray();
-                        for (int i = 0; i < 7; i++)
-                        {
-
-                            _combos[i].Enabled = false;
-                            _buttons[i].Enabled = false;
-                        }
-                        cbxPatrimonio.Enabled = true;
-                        btnPatrimonio.Enabled = true;
-
-                    }
-
-                }
-                else if (c.Name.Substring(3) == "Tipo")
-                {
-                    _filtro = _filtro.Where(e => e.Tipo == c.Text).ToArray();
-                }
-                else if (c.Name.Substring(3) == "Marca")
-                {
-                    _filtro = _filtro.Where(e => e.Marca == c.Text).ToArray();
-                }
-                else if (c.Name.Substring(3) == "Processador")
-                {
-                    _filtro = _filtro.Where(e => e.Processador == c.Text).ToArray();
-                }
-                else if (c.Name.Substring(3) == "Ram")
-                {
-                    _filtro = _filtro.Where(e => e.Ram == c.Text).ToArray();
-                }
-                else if (c.Name.Substring(3) == "Modelo")
-                {
-                    _filtro = _filtro.Where(e => e.Modelo == c.Text).ToArray();
-                }
-                else if (c.Name.Substring(3) == "Status")
-                {
-                    _filtro = _filtro.Where(e => e.Status == c.Text).ToArray();
-                }
-            }
-        }
-
-        private void Button_Click(object? sender, EventArgs e)
-        {
-
-            Button b = sender as Button;
-            if (b.Name == "btnPatrimonio")
-            {
-                for (int i = 0; i < 7; i++)
-                {
-
-                    _combos[i].Enabled = true;
-                    _buttons[i].Enabled = true;
-                }
-            }
-            b.Visible = false;
-            ButtonToCombo(b).Text = null;
-
-            ComboBox_SelectionChangeCommitted(ButtonToCombo(b), e);
-
-
-        }
-
-        private ComboBox ButtonToCombo(Button b)
-        {
-            for (int i = 0; i < 7; i++)
-            {
-                if (b.Equals(_buttons[i]))
-                {
-                    return _combos[i];
-                }
-            }
-            return null;
-        }
 
         private void TabelaEquipe(InventarioContext context)
         {
@@ -372,6 +171,55 @@ namespace InventarioTI.Views
             }
 
             return unidades;
+        }
+
+        private void dgvBackups_FilterStringChanged(object sender, Zuby.ADGV.AdvancedDataGridView.FilterEventArgs e)
+        {
+
+            
+            string s = dgvBackups.FilterString;
+            if (!string.IsNullOrEmpty(s))
+            {
+                _arrayFiltros = s.Split(" AND ");
+                foreach (string str in _arrayFiltros)
+                {
+                    _arrayFiltro[str.Substring(str.IndexOf('[') + 1, str.IndexOf(']') - str.IndexOf('[') - 1)] =
+                        str.Substring(str.LastIndexOf('(')).Trim(')').Trim('(').Split(", ");
+                }
+               
+                _filtro = _filtro.Where(e => Filtro(e)).ToArray();
+            }
+            
+            dgvBackups.Estilo(_filtro);
+            
+
+
+            s = "";
+            _arrayFiltro.Clear();
+            using (var context = new InventarioContext())
+            {
+                var b = context.Equipamentos.Where(b => b.Unidade.Sigla == cbxUnidades.Text);
+                _filtro = b.ToArray();
+            }
+
+        }
+
+        private bool Filtro(Equipamento e)
+        {
+            var p = e.GetType().GetProperties();
+            bool bi = false, be = true;
+
+            foreach (var a in _arrayFiltro)
+            {
+
+                foreach (var v in a.Value)
+                {
+                    bi |= p.Where(p => p.Name == a.Key).SingleOrDefault().GetValue(e).ToString() == v.Trim('\'');
+                }
+                be &= (bi);
+                bi = false;
+            }      
+            return be;
         }
     }
 }

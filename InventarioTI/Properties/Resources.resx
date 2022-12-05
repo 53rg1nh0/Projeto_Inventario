@@ -121,6 +121,9 @@
   <data name="AddClaro25" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>addclaro25.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="AdicionarEscuro30" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>adicionarescuro30.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="AjusteClaro45" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>ajusteclaro45.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -130,6 +133,9 @@
   <data name="BackClaro50" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>backclaro50.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="BorrachaEscuro30" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>borrachaescuro30.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ComputadorClaro45" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>computadorclaro45.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -138,6 +144,12 @@
   </data>
   <data name="DesconectadoBackgroud" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>desconectadobackgroud.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EditarEscuro30" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>editarescuro30.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="EscluirEscuro30" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>escluirescuro30.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Exit50" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>exit50.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -168,6 +180,15 @@
   </data>
   <data name="LupaClarp20" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>lupaclarp20.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ManutencaoEscuro30" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>manutencaoescuro30.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MoverEscuro30" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>moverescuro30.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NeditarEscuro30" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>neditarescuro30.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="NextClaro50" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>nextclaro50.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
