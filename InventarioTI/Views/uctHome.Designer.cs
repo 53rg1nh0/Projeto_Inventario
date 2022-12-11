@@ -50,46 +50,24 @@
             this.lblTotalNot = new System.Windows.Forms.Label();
             this.tlpHome = new System.Windows.Forms.TableLayoutPanel();
             this.tlpFiltro = new System.Windows.Forms.TableLayoutPanel();
-            this.lblDisco = new System.Windows.Forms.Label();
-            this.tlpDisco = new System.Windows.Forms.TableLayoutPanel();
-            this.btnDisco = new System.Windows.Forms.Button();
+            this.txbPatrimonio = new System.Windows.Forms.TextBox();
+            this.txbNomenclatura = new System.Windows.Forms.TextBox();
             this.cbxDisco = new System.Windows.Forms.ComboBox();
-            this.tlpSerie = new System.Windows.Forms.TableLayoutPanel();
-            this.btnSerie = new System.Windows.Forms.Button();
-            this.cbxSerie = new System.Windows.Forms.ComboBox();
+            this.cbxTipo = new System.Windows.Forms.ComboBox();
+            this.cbxRam = new System.Windows.Forms.ComboBox();
+            this.lblDisco = new System.Windows.Forms.Label();
+            this.cbxProcessador = new System.Windows.Forms.ComboBox();
+            this.cbxModelo = new System.Windows.Forms.ComboBox();
+            this.cbxMarca = new System.Windows.Forms.ComboBox();
             this.lblSerie = new System.Windows.Forms.Label();
             this.lblNomenclatura = new System.Windows.Forms.Label();
-            this.tlpNomenclatura = new System.Windows.Forms.TableLayoutPanel();
-            this.btnNomenclatura = new System.Windows.Forms.Button();
-            this.cbxNomenclatura = new System.Windows.Forms.ComboBox();
             this.lblPatrimonio = new System.Windows.Forms.Label();
-            this.tlpPatrimonio = new System.Windows.Forms.TableLayoutPanel();
-            this.btnPatrimonio = new System.Windows.Forms.Button();
-            this.cbxPatrimonio = new System.Windows.Forms.ComboBox();
-            this.tlpstatus = new System.Windows.Forms.TableLayoutPanel();
-            this.cbxStatus = new System.Windows.Forms.ComboBox();
-            this.btnStatus = new System.Windows.Forms.Button();
-            this.lblStatus = new System.Windows.Forms.Label();
             this.lblModelo = new System.Windows.Forms.Label();
-            this.tlpModelo = new System.Windows.Forms.TableLayoutPanel();
-            this.btnModelo = new System.Windows.Forms.Button();
-            this.cbxModelo = new System.Windows.Forms.ComboBox();
             this.lblRam = new System.Windows.Forms.Label();
-            this.tlpRam = new System.Windows.Forms.TableLayoutPanel();
-            this.btnRam = new System.Windows.Forms.Button();
-            this.cbxRam = new System.Windows.Forms.ComboBox();
             this.lblProcessador = new System.Windows.Forms.Label();
-            this.tlpProcessador = new System.Windows.Forms.TableLayoutPanel();
-            this.btnProcessador = new System.Windows.Forms.Button();
-            this.cbxProcessador = new System.Windows.Forms.ComboBox();
             this.lblMarca = new System.Windows.Forms.Label();
-            this.tlpMarca = new System.Windows.Forms.TableLayoutPanel();
-            this.btnMarca = new System.Windows.Forms.Button();
-            this.cbxMarca = new System.Windows.Forms.ComboBox();
             this.lblTipo = new System.Windows.Forms.Label();
-            this.tlpTipo = new System.Windows.Forms.TableLayoutPanel();
-            this.btnTipo = new System.Windows.Forms.Button();
-            this.cbxTipo = new System.Windows.Forms.ComboBox();
+            this.txbSerie = new System.Windows.Forms.TextBox();
             this.dgvBackups = new Zuby.ADGV.AdvancedDataGridView();
             this.iDEDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.patrimonioDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -113,6 +91,7 @@
             this.ptbRemover = new System.Windows.Forms.PictureBox();
             this.ptbMover = new System.Windows.Forms.PictureBox();
             this.ptbAdd = new System.Windows.Forms.PictureBox();
+            this.lblInfoCliente = new System.Windows.Forms.Label();
             this.pagComp = new System.Windows.Forms.TabPage();
             this.tlpBackComp = new System.Windows.Forms.TableLayoutPanel();
             this.tlpButoes = new System.Windows.Forms.TableLayoutPanel();
@@ -132,16 +111,6 @@
             this.tlpBotton.SuspendLayout();
             this.tlpHome.SuspendLayout();
             this.tlpFiltro.SuspendLayout();
-            this.tlpDisco.SuspendLayout();
-            this.tlpSerie.SuspendLayout();
-            this.tlpNomenclatura.SuspendLayout();
-            this.tlpPatrimonio.SuspendLayout();
-            this.tlpstatus.SuspendLayout();
-            this.tlpModelo.SuspendLayout();
-            this.tlpRam.SuspendLayout();
-            this.tlpProcessador.SuspendLayout();
-            this.tlpMarca.SuspendLayout();
-            this.tlpTipo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBackups)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.equipamentoBindingSource)).BeginInit();
             this.tlpBotoes.SuspendLayout();
@@ -338,7 +307,8 @@
             this.lblTotaBackup.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblTotaBackup.AutoSize = true;
             this.lblTotaBackup.ForeColor = System.Drawing.Color.White;
-            this.lblTotaBackup.Location = new System.Drawing.Point(335, 6);
+            this.lblTotaBackup.Location = new System.Drawing.Point(362, 6);
+            this.lblTotaBackup.Margin = new System.Windows.Forms.Padding(30, 0, 3, 0);
             this.lblTotaBackup.Name = "lblTotaBackup";
             this.lblTotaBackup.Size = new System.Drawing.Size(46, 17);
             this.lblTotaBackup.TabIndex = 10;
@@ -349,7 +319,8 @@
             this.lblBackupDesk.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblBackupDesk.AutoSize = true;
             this.lblBackupDesk.ForeColor = System.Drawing.Color.White;
-            this.lblBackupDesk.Location = new System.Drawing.Point(667, 6);
+            this.lblBackupDesk.Location = new System.Drawing.Point(694, 6);
+            this.lblBackupDesk.Margin = new System.Windows.Forms.Padding(30, 0, 3, 0);
             this.lblBackupDesk.Name = "lblBackupDesk";
             this.lblBackupDesk.Size = new System.Drawing.Size(46, 17);
             this.lblBackupDesk.TabIndex = 8;
@@ -360,7 +331,8 @@
             this.lblTotal.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblTotal.AutoSize = true;
             this.lblTotal.ForeColor = System.Drawing.Color.White;
-            this.lblTotal.Location = new System.Drawing.Point(3, 6);
+            this.lblTotal.Location = new System.Drawing.Point(30, 6);
+            this.lblTotal.Margin = new System.Windows.Forms.Padding(30, 0, 3, 0);
             this.lblTotal.Name = "lblTotal";
             this.lblTotal.Size = new System.Drawing.Size(46, 17);
             this.lblTotal.TabIndex = 6;
@@ -371,7 +343,8 @@
             this.lblBackupNot.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblBackupNot.AutoSize = true;
             this.lblBackupNot.ForeColor = System.Drawing.Color.White;
-            this.lblBackupNot.Location = new System.Drawing.Point(501, 6);
+            this.lblBackupNot.Location = new System.Drawing.Point(528, 6);
+            this.lblBackupNot.Margin = new System.Windows.Forms.Padding(30, 0, 3, 0);
             this.lblBackupNot.Name = "lblBackupNot";
             this.lblBackupNot.Size = new System.Drawing.Size(46, 17);
             this.lblBackupNot.TabIndex = 7;
@@ -382,7 +355,8 @@
             this.lblTotalNot.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblTotalNot.AutoSize = true;
             this.lblTotalNot.ForeColor = System.Drawing.Color.White;
-            this.lblTotalNot.Location = new System.Drawing.Point(169, 6);
+            this.lblTotalNot.Location = new System.Drawing.Point(196, 6);
+            this.lblTotalNot.Margin = new System.Windows.Forms.Padding(30, 0, 3, 0);
             this.lblTotalNot.Name = "lblTotalNot";
             this.lblTotalNot.Size = new System.Drawing.Size(46, 17);
             this.lblTotalNot.TabIndex = 9;
@@ -407,37 +381,35 @@
             // 
             // tlpFiltro
             // 
-            this.tlpFiltro.ColumnCount = 10;
-            this.tlpFiltro.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
-            this.tlpFiltro.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
-            this.tlpFiltro.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
-            this.tlpFiltro.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
-            this.tlpFiltro.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
-            this.tlpFiltro.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
-            this.tlpFiltro.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
+            this.tlpFiltro.ColumnCount = 9;
+            this.tlpFiltro.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.tlpFiltro.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.tlpFiltro.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.tlpFiltro.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.tlpFiltro.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.tlpFiltro.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.tlpFiltro.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
             this.tlpFiltro.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
-            this.tlpFiltro.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
-            this.tlpFiltro.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
+            this.tlpFiltro.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.tlpFiltro.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpFiltro.Controls.Add(this.txbPatrimonio, 0, 1);
+            this.tlpFiltro.Controls.Add(this.txbNomenclatura, 1, 1);
+            this.tlpFiltro.Controls.Add(this.cbxDisco, 8, 1);
+            this.tlpFiltro.Controls.Add(this.cbxTipo, 3, 1);
+            this.tlpFiltro.Controls.Add(this.cbxRam, 7, 1);
             this.tlpFiltro.Controls.Add(this.lblDisco, 8, 0);
-            this.tlpFiltro.Controls.Add(this.tlpDisco, 8, 1);
-            this.tlpFiltro.Controls.Add(this.tlpSerie, 2, 1);
+            this.tlpFiltro.Controls.Add(this.cbxProcessador, 6, 1);
+            this.tlpFiltro.Controls.Add(this.cbxModelo, 5, 1);
+            this.tlpFiltro.Controls.Add(this.cbxMarca, 4, 1);
             this.tlpFiltro.Controls.Add(this.lblSerie, 2, 0);
             this.tlpFiltro.Controls.Add(this.lblNomenclatura, 1, 0);
-            this.tlpFiltro.Controls.Add(this.tlpNomenclatura, 1, 1);
             this.tlpFiltro.Controls.Add(this.lblPatrimonio, 0, 0);
-            this.tlpFiltro.Controls.Add(this.tlpPatrimonio, 0, 1);
-            this.tlpFiltro.Controls.Add(this.tlpstatus, 9, 1);
-            this.tlpFiltro.Controls.Add(this.lblStatus, 9, 0);
             this.tlpFiltro.Controls.Add(this.lblModelo, 5, 0);
-            this.tlpFiltro.Controls.Add(this.tlpModelo, 5, 1);
             this.tlpFiltro.Controls.Add(this.lblRam, 7, 0);
-            this.tlpFiltro.Controls.Add(this.tlpRam, 7, 1);
             this.tlpFiltro.Controls.Add(this.lblProcessador, 6, 0);
-            this.tlpFiltro.Controls.Add(this.tlpProcessador, 6, 1);
             this.tlpFiltro.Controls.Add(this.lblMarca, 4, 0);
-            this.tlpFiltro.Controls.Add(this.tlpMarca, 4, 1);
             this.tlpFiltro.Controls.Add(this.lblTipo, 3, 0);
-            this.tlpFiltro.Controls.Add(this.tlpTipo, 3, 1);
+            this.tlpFiltro.Controls.Add(this.txbSerie, 2, 1);
             this.tlpFiltro.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpFiltro.Location = new System.Drawing.Point(0, 0);
             this.tlpFiltro.Margin = new System.Windows.Forms.Padding(0);
@@ -448,108 +420,112 @@
             this.tlpFiltro.Size = new System.Drawing.Size(804, 42);
             this.tlpFiltro.TabIndex = 1;
             // 
+            // txbPatrimonio
+            // 
+            this.txbPatrimonio.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txbPatrimonio.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txbPatrimonio.Location = new System.Drawing.Point(3, 18);
+            this.txbPatrimonio.Name = "txbPatrimonio";
+            this.txbPatrimonio.Size = new System.Drawing.Size(85, 22);
+            this.txbPatrimonio.TabIndex = 23;
+            this.txbPatrimonio.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txbPatrimonio_KeyDown);
+            // 
+            // txbNomenclatura
+            // 
+            this.txbNomenclatura.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txbNomenclatura.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txbNomenclatura.Location = new System.Drawing.Point(94, 18);
+            this.txbNomenclatura.Name = "txbNomenclatura";
+            this.txbNomenclatura.Size = new System.Drawing.Size(85, 22);
+            this.txbNomenclatura.TabIndex = 22;
+            this.txbNomenclatura.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txbNomenclatura_KeyDown);
+            // 
+            // cbxDisco
+            // 
+            this.cbxDisco.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbxDisco.BackColor = System.Drawing.SystemColors.Window;
+            this.cbxDisco.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxDisco.FormattingEnabled = true;
+            this.cbxDisco.Location = new System.Drawing.Point(715, 16);
+            this.cbxDisco.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.cbxDisco.Name = "cbxDisco";
+            this.cbxDisco.Size = new System.Drawing.Size(89, 25);
+            this.cbxDisco.TabIndex = 18;
+            // 
+            // cbxTipo
+            // 
+            this.cbxTipo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbxTipo.BackColor = System.Drawing.SystemColors.Window;
+            this.cbxTipo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxTipo.FormattingEnabled = true;
+            this.cbxTipo.Location = new System.Drawing.Point(276, 16);
+            this.cbxTipo.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.cbxTipo.Name = "cbxTipo";
+            this.cbxTipo.Size = new System.Drawing.Size(85, 25);
+            this.cbxTipo.TabIndex = 7;
+            // 
+            // cbxRam
+            // 
+            this.cbxRam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbxRam.BackColor = System.Drawing.SystemColors.Window;
+            this.cbxRam.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxRam.FormattingEnabled = true;
+            this.cbxRam.Location = new System.Drawing.Point(640, 17);
+            this.cbxRam.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.cbxRam.Name = "cbxRam";
+            this.cbxRam.Size = new System.Drawing.Size(69, 25);
+            this.cbxRam.TabIndex = 10;
+            // 
             // lblDisco
             // 
             this.lblDisco.AutoSize = true;
-            this.lblDisco.Location = new System.Drawing.Point(642, 0);
+            this.lblDisco.Location = new System.Drawing.Point(712, 0);
             this.lblDisco.Margin = new System.Windows.Forms.Padding(0);
             this.lblDisco.Name = "lblDisco";
             this.lblDisco.Size = new System.Drawing.Size(41, 15);
             this.lblDisco.TabIndex = 12;
             this.lblDisco.Text = "Disco";
             // 
-            // tlpDisco
+            // cbxProcessador
             // 
-            this.tlpDisco.ColumnCount = 2;
-            this.tlpDisco.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpDisco.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpDisco.Controls.Add(this.btnDisco, 1, 0);
-            this.tlpDisco.Controls.Add(this.cbxDisco, 0, 0);
-            this.tlpDisco.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpDisco.Location = new System.Drawing.Point(642, 15);
-            this.tlpDisco.Margin = new System.Windows.Forms.Padding(0);
-            this.tlpDisco.Name = "tlpDisco";
-            this.tlpDisco.RowCount = 1;
-            this.tlpDisco.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpDisco.Size = new System.Drawing.Size(81, 27);
-            this.tlpDisco.TabIndex = 25;
+            this.cbxProcessador.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbxProcessador.BackColor = System.Drawing.SystemColors.Window;
+            this.cbxProcessador.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxProcessador.FormattingEnabled = true;
+            this.cbxProcessador.Location = new System.Drawing.Point(549, 16);
+            this.cbxProcessador.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.cbxProcessador.Name = "cbxProcessador";
+            this.cbxProcessador.Size = new System.Drawing.Size(85, 25);
+            this.cbxProcessador.TabIndex = 9;
             // 
-            // btnDisco
+            // cbxModelo
             // 
-            this.btnDisco.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnDisco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(65)))), ((int)(((byte)(81)))));
-            this.btnDisco.BackgroundImage = global::InventarioTI.Properties.Resources.FecharClaro25;
-            this.btnDisco.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnDisco.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnDisco.FlatAppearance.BorderSize = 0;
-            this.btnDisco.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDisco.Location = new System.Drawing.Point(61, 7);
-            this.btnDisco.Margin = new System.Windows.Forms.Padding(0);
-            this.btnDisco.Name = "btnDisco";
-            this.btnDisco.Size = new System.Drawing.Size(20, 20);
-            this.btnDisco.TabIndex = 16;
-            this.btnDisco.UseVisualStyleBackColor = false;
-            this.btnDisco.Visible = false;
+            this.cbxModelo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbxModelo.BackColor = System.Drawing.SystemColors.Window;
+            this.cbxModelo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxModelo.FormattingEnabled = true;
+            this.cbxModelo.Location = new System.Drawing.Point(458, 16);
+            this.cbxModelo.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.cbxModelo.Name = "cbxModelo";
+            this.cbxModelo.Size = new System.Drawing.Size(85, 25);
+            this.cbxModelo.TabIndex = 11;
             // 
-            // cbxDisco
+            // cbxMarca
             // 
-            this.cbxDisco.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbxDisco.BackColor = System.Drawing.SystemColors.Window;
-            this.cbxDisco.FormattingEnabled = true;
-            this.cbxDisco.Location = new System.Drawing.Point(0, 1);
-            this.cbxDisco.Margin = new System.Windows.Forms.Padding(0);
-            this.cbxDisco.Name = "cbxDisco";
-            this.cbxDisco.Size = new System.Drawing.Size(61, 25);
-            this.cbxDisco.TabIndex = 18;
-            // 
-            // tlpSerie
-            // 
-            this.tlpSerie.ColumnCount = 2;
-            this.tlpSerie.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpSerie.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpSerie.Controls.Add(this.btnSerie, 1, 0);
-            this.tlpSerie.Controls.Add(this.cbxSerie, 0, 0);
-            this.tlpSerie.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpSerie.Location = new System.Drawing.Point(162, 15);
-            this.tlpSerie.Margin = new System.Windows.Forms.Padding(0);
-            this.tlpSerie.Name = "tlpSerie";
-            this.tlpSerie.RowCount = 1;
-            this.tlpSerie.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpSerie.Size = new System.Drawing.Size(81, 27);
-            this.tlpSerie.TabIndex = 25;
-            // 
-            // btnSerie
-            // 
-            this.btnSerie.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSerie.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(65)))), ((int)(((byte)(81)))));
-            this.btnSerie.BackgroundImage = global::InventarioTI.Properties.Resources.FecharClaro25;
-            this.btnSerie.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnSerie.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSerie.FlatAppearance.BorderSize = 0;
-            this.btnSerie.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSerie.Location = new System.Drawing.Point(61, 7);
-            this.btnSerie.Margin = new System.Windows.Forms.Padding(0);
-            this.btnSerie.Name = "btnSerie";
-            this.btnSerie.Size = new System.Drawing.Size(20, 20);
-            this.btnSerie.TabIndex = 16;
-            this.btnSerie.UseVisualStyleBackColor = false;
-            this.btnSerie.Visible = false;
-            // 
-            // cbxSerie
-            // 
-            this.cbxSerie.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbxSerie.BackColor = System.Drawing.SystemColors.Window;
-            this.cbxSerie.FormattingEnabled = true;
-            this.cbxSerie.Location = new System.Drawing.Point(0, 1);
-            this.cbxSerie.Margin = new System.Windows.Forms.Padding(0);
-            this.cbxSerie.Name = "cbxSerie";
-            this.cbxSerie.Size = new System.Drawing.Size(61, 25);
-            this.cbxSerie.TabIndex = 18;
+            this.cbxMarca.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbxMarca.BackColor = System.Drawing.SystemColors.Window;
+            this.cbxMarca.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxMarca.FormattingEnabled = true;
+            this.cbxMarca.Location = new System.Drawing.Point(367, 16);
+            this.cbxMarca.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.cbxMarca.Name = "cbxMarca";
+            this.cbxMarca.Size = new System.Drawing.Size(85, 25);
+            this.cbxMarca.TabIndex = 8;
             // 
             // lblSerie
             // 
             this.lblSerie.AutoSize = true;
-            this.lblSerie.Location = new System.Drawing.Point(162, 0);
+            this.lblSerie.Location = new System.Drawing.Point(182, 0);
             this.lblSerie.Margin = new System.Windows.Forms.Padding(0);
             this.lblSerie.Name = "lblSerie";
             this.lblSerie.Size = new System.Drawing.Size(38, 15);
@@ -559,56 +535,12 @@
             // lblNomenclatura
             // 
             this.lblNomenclatura.AutoSize = true;
-            this.lblNomenclatura.Location = new System.Drawing.Point(81, 0);
+            this.lblNomenclatura.Location = new System.Drawing.Point(91, 0);
             this.lblNomenclatura.Margin = new System.Windows.Forms.Padding(0);
             this.lblNomenclatura.Name = "lblNomenclatura";
-            this.lblNomenclatura.Size = new System.Drawing.Size(75, 15);
+            this.lblNomenclatura.Size = new System.Drawing.Size(86, 15);
             this.lblNomenclatura.TabIndex = 1;
             this.lblNomenclatura.Text = "Nomenclatura";
-            // 
-            // tlpNomenclatura
-            // 
-            this.tlpNomenclatura.ColumnCount = 2;
-            this.tlpNomenclatura.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpNomenclatura.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpNomenclatura.Controls.Add(this.btnNomenclatura, 1, 0);
-            this.tlpNomenclatura.Controls.Add(this.cbxNomenclatura, 0, 0);
-            this.tlpNomenclatura.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpNomenclatura.Location = new System.Drawing.Point(81, 15);
-            this.tlpNomenclatura.Margin = new System.Windows.Forms.Padding(0);
-            this.tlpNomenclatura.Name = "tlpNomenclatura";
-            this.tlpNomenclatura.RowCount = 1;
-            this.tlpNomenclatura.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpNomenclatura.Size = new System.Drawing.Size(81, 27);
-            this.tlpNomenclatura.TabIndex = 24;
-            // 
-            // btnNomenclatura
-            // 
-            this.btnNomenclatura.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnNomenclatura.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(65)))), ((int)(((byte)(81)))));
-            this.btnNomenclatura.BackgroundImage = global::InventarioTI.Properties.Resources.FecharClaro25;
-            this.btnNomenclatura.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnNomenclatura.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnNomenclatura.FlatAppearance.BorderSize = 0;
-            this.btnNomenclatura.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNomenclatura.Location = new System.Drawing.Point(61, 7);
-            this.btnNomenclatura.Margin = new System.Windows.Forms.Padding(0);
-            this.btnNomenclatura.Name = "btnNomenclatura";
-            this.btnNomenclatura.Size = new System.Drawing.Size(20, 20);
-            this.btnNomenclatura.TabIndex = 16;
-            this.btnNomenclatura.UseVisualStyleBackColor = false;
-            this.btnNomenclatura.Visible = false;
-            // 
-            // cbxNomenclatura
-            // 
-            this.cbxNomenclatura.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbxNomenclatura.BackColor = System.Drawing.SystemColors.Window;
-            this.cbxNomenclatura.FormattingEnabled = true;
-            this.cbxNomenclatura.Location = new System.Drawing.Point(0, 1);
-            this.cbxNomenclatura.Margin = new System.Windows.Forms.Padding(0);
-            this.cbxNomenclatura.Name = "cbxNomenclatura";
-            this.cbxNomenclatura.Size = new System.Drawing.Size(61, 25);
-            this.cbxNomenclatura.TabIndex = 18;
             // 
             // lblPatrimonio
             // 
@@ -620,379 +552,65 @@
             this.lblPatrimonio.TabIndex = 0;
             this.lblPatrimonio.Text = "Patrimonio";
             // 
-            // tlpPatrimonio
-            // 
-            this.tlpPatrimonio.ColumnCount = 2;
-            this.tlpPatrimonio.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpPatrimonio.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpPatrimonio.Controls.Add(this.btnPatrimonio, 1, 0);
-            this.tlpPatrimonio.Controls.Add(this.cbxPatrimonio, 0, 0);
-            this.tlpPatrimonio.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpPatrimonio.Location = new System.Drawing.Point(0, 15);
-            this.tlpPatrimonio.Margin = new System.Windows.Forms.Padding(0);
-            this.tlpPatrimonio.Name = "tlpPatrimonio";
-            this.tlpPatrimonio.RowCount = 1;
-            this.tlpPatrimonio.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpPatrimonio.Size = new System.Drawing.Size(81, 27);
-            this.tlpPatrimonio.TabIndex = 23;
-            // 
-            // btnPatrimonio
-            // 
-            this.btnPatrimonio.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnPatrimonio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(65)))), ((int)(((byte)(81)))));
-            this.btnPatrimonio.BackgroundImage = global::InventarioTI.Properties.Resources.FecharClaro25;
-            this.btnPatrimonio.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnPatrimonio.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnPatrimonio.FlatAppearance.BorderSize = 0;
-            this.btnPatrimonio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPatrimonio.Location = new System.Drawing.Point(61, 7);
-            this.btnPatrimonio.Margin = new System.Windows.Forms.Padding(0);
-            this.btnPatrimonio.Name = "btnPatrimonio";
-            this.btnPatrimonio.Size = new System.Drawing.Size(20, 20);
-            this.btnPatrimonio.TabIndex = 16;
-            this.btnPatrimonio.UseVisualStyleBackColor = false;
-            this.btnPatrimonio.Visible = false;
-            // 
-            // cbxPatrimonio
-            // 
-            this.cbxPatrimonio.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbxPatrimonio.BackColor = System.Drawing.SystemColors.Window;
-            this.cbxPatrimonio.FormattingEnabled = true;
-            this.cbxPatrimonio.Location = new System.Drawing.Point(0, 1);
-            this.cbxPatrimonio.Margin = new System.Windows.Forms.Padding(0);
-            this.cbxPatrimonio.Name = "cbxPatrimonio";
-            this.cbxPatrimonio.Size = new System.Drawing.Size(61, 25);
-            this.cbxPatrimonio.TabIndex = 18;
-            // 
-            // tlpstatus
-            // 
-            this.tlpstatus.ColumnCount = 2;
-            this.tlpstatus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpstatus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpstatus.Controls.Add(this.cbxStatus, 0, 0);
-            this.tlpstatus.Controls.Add(this.btnStatus, 1, 0);
-            this.tlpstatus.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpstatus.Location = new System.Drawing.Point(723, 15);
-            this.tlpstatus.Margin = new System.Windows.Forms.Padding(0);
-            this.tlpstatus.Name = "tlpstatus";
-            this.tlpstatus.RowCount = 1;
-            this.tlpstatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpstatus.Size = new System.Drawing.Size(81, 27);
-            this.tlpstatus.TabIndex = 29;
-            // 
-            // cbxStatus
-            // 
-            this.cbxStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbxStatus.BackColor = System.Drawing.SystemColors.Window;
-            this.cbxStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxStatus.FormattingEnabled = true;
-            this.cbxStatus.Location = new System.Drawing.Point(0, 1);
-            this.cbxStatus.Margin = new System.Windows.Forms.Padding(0);
-            this.cbxStatus.Name = "cbxStatus";
-            this.cbxStatus.Size = new System.Drawing.Size(61, 25);
-            this.cbxStatus.TabIndex = 12;
-            // 
-            // btnStatus
-            // 
-            this.btnStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(65)))), ((int)(((byte)(81)))));
-            this.btnStatus.BackgroundImage = global::InventarioTI.Properties.Resources.FecharClaro25;
-            this.btnStatus.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnStatus.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnStatus.FlatAppearance.BorderSize = 0;
-            this.btnStatus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnStatus.Location = new System.Drawing.Point(61, 7);
-            this.btnStatus.Margin = new System.Windows.Forms.Padding(0);
-            this.btnStatus.Name = "btnStatus";
-            this.btnStatus.Size = new System.Drawing.Size(20, 20);
-            this.btnStatus.TabIndex = 22;
-            this.btnStatus.UseVisualStyleBackColor = false;
-            this.btnStatus.Visible = false;
-            // 
-            // lblStatus
-            // 
-            this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(723, 0);
-            this.lblStatus.Margin = new System.Windows.Forms.Padding(0);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(45, 15);
-            this.lblStatus.TabIndex = 13;
-            this.lblStatus.Text = "Status";
-            // 
             // lblModelo
             // 
             this.lblModelo.AutoSize = true;
-            this.lblModelo.Location = new System.Drawing.Point(405, 0);
+            this.lblModelo.Location = new System.Drawing.Point(455, 0);
             this.lblModelo.Margin = new System.Windows.Forms.Padding(0);
             this.lblModelo.Name = "lblModelo";
             this.lblModelo.Size = new System.Drawing.Size(54, 15);
             this.lblModelo.TabIndex = 12;
             this.lblModelo.Text = "Modelo";
             // 
-            // tlpModelo
-            // 
-            this.tlpModelo.ColumnCount = 2;
-            this.tlpModelo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpModelo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpModelo.Controls.Add(this.btnModelo, 1, 0);
-            this.tlpModelo.Controls.Add(this.cbxModelo, 0, 0);
-            this.tlpModelo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpModelo.Location = new System.Drawing.Point(405, 15);
-            this.tlpModelo.Margin = new System.Windows.Forms.Padding(0);
-            this.tlpModelo.Name = "tlpModelo";
-            this.tlpModelo.RowCount = 1;
-            this.tlpModelo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpModelo.Size = new System.Drawing.Size(81, 27);
-            this.tlpModelo.TabIndex = 28;
-            // 
-            // btnModelo
-            // 
-            this.btnModelo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnModelo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(65)))), ((int)(((byte)(81)))));
-            this.btnModelo.BackgroundImage = global::InventarioTI.Properties.Resources.FecharClaro25;
-            this.btnModelo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnModelo.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnModelo.FlatAppearance.BorderSize = 0;
-            this.btnModelo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnModelo.Location = new System.Drawing.Point(61, 7);
-            this.btnModelo.Margin = new System.Windows.Forms.Padding(0);
-            this.btnModelo.Name = "btnModelo";
-            this.btnModelo.Size = new System.Drawing.Size(20, 20);
-            this.btnModelo.TabIndex = 21;
-            this.btnModelo.UseVisualStyleBackColor = false;
-            this.btnModelo.Visible = false;
-            // 
-            // cbxModelo
-            // 
-            this.cbxModelo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbxModelo.BackColor = System.Drawing.SystemColors.Window;
-            this.cbxModelo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxModelo.FormattingEnabled = true;
-            this.cbxModelo.Location = new System.Drawing.Point(0, 1);
-            this.cbxModelo.Margin = new System.Windows.Forms.Padding(0);
-            this.cbxModelo.Name = "cbxModelo";
-            this.cbxModelo.Size = new System.Drawing.Size(61, 25);
-            this.cbxModelo.TabIndex = 11;
-            // 
             // lblRam
             // 
             this.lblRam.AutoSize = true;
-            this.lblRam.Location = new System.Drawing.Point(567, 0);
+            this.lblRam.Location = new System.Drawing.Point(637, 0);
             this.lblRam.Margin = new System.Windows.Forms.Padding(0);
             this.lblRam.Name = "lblRam";
             this.lblRam.Size = new System.Drawing.Size(34, 15);
             this.lblRam.TabIndex = 11;
             this.lblRam.Text = "Ram";
             // 
-            // tlpRam
-            // 
-            this.tlpRam.ColumnCount = 2;
-            this.tlpRam.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpRam.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpRam.Controls.Add(this.btnRam, 1, 0);
-            this.tlpRam.Controls.Add(this.cbxRam, 0, 0);
-            this.tlpRam.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpRam.Location = new System.Drawing.Point(567, 15);
-            this.tlpRam.Margin = new System.Windows.Forms.Padding(0);
-            this.tlpRam.Name = "tlpRam";
-            this.tlpRam.RowCount = 1;
-            this.tlpRam.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpRam.Size = new System.Drawing.Size(75, 27);
-            this.tlpRam.TabIndex = 27;
-            // 
-            // btnRam
-            // 
-            this.btnRam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnRam.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(65)))), ((int)(((byte)(81)))));
-            this.btnRam.BackgroundImage = global::InventarioTI.Properties.Resources.FecharClaro25;
-            this.btnRam.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnRam.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnRam.FlatAppearance.BorderSize = 0;
-            this.btnRam.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRam.Location = new System.Drawing.Point(55, 7);
-            this.btnRam.Margin = new System.Windows.Forms.Padding(0);
-            this.btnRam.Name = "btnRam";
-            this.btnRam.Size = new System.Drawing.Size(20, 20);
-            this.btnRam.TabIndex = 20;
-            this.btnRam.UseVisualStyleBackColor = false;
-            this.btnRam.Visible = false;
-            // 
-            // cbxRam
-            // 
-            this.cbxRam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbxRam.BackColor = System.Drawing.SystemColors.Window;
-            this.cbxRam.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxRam.FormattingEnabled = true;
-            this.cbxRam.Location = new System.Drawing.Point(0, 2);
-            this.cbxRam.Margin = new System.Windows.Forms.Padding(0);
-            this.cbxRam.Name = "cbxRam";
-            this.cbxRam.Size = new System.Drawing.Size(55, 25);
-            this.cbxRam.TabIndex = 10;
-            // 
             // lblProcessador
             // 
             this.lblProcessador.AutoSize = true;
-            this.lblProcessador.Location = new System.Drawing.Point(486, 0);
+            this.lblProcessador.Location = new System.Drawing.Point(546, 0);
             this.lblProcessador.Margin = new System.Windows.Forms.Padding(0);
             this.lblProcessador.Name = "lblProcessador";
             this.lblProcessador.Size = new System.Drawing.Size(81, 15);
             this.lblProcessador.TabIndex = 10;
             this.lblProcessador.Text = "Processador";
             // 
-            // tlpProcessador
-            // 
-            this.tlpProcessador.ColumnCount = 2;
-            this.tlpProcessador.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpProcessador.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpProcessador.Controls.Add(this.btnProcessador, 1, 0);
-            this.tlpProcessador.Controls.Add(this.cbxProcessador, 0, 0);
-            this.tlpProcessador.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpProcessador.Location = new System.Drawing.Point(486, 15);
-            this.tlpProcessador.Margin = new System.Windows.Forms.Padding(0);
-            this.tlpProcessador.Name = "tlpProcessador";
-            this.tlpProcessador.RowCount = 1;
-            this.tlpProcessador.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpProcessador.Size = new System.Drawing.Size(81, 27);
-            this.tlpProcessador.TabIndex = 26;
-            // 
-            // btnProcessador
-            // 
-            this.btnProcessador.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnProcessador.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(65)))), ((int)(((byte)(81)))));
-            this.btnProcessador.BackgroundImage = global::InventarioTI.Properties.Resources.FecharClaro25;
-            this.btnProcessador.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnProcessador.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnProcessador.FlatAppearance.BorderSize = 0;
-            this.btnProcessador.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnProcessador.Location = new System.Drawing.Point(61, 7);
-            this.btnProcessador.Margin = new System.Windows.Forms.Padding(0);
-            this.btnProcessador.Name = "btnProcessador";
-            this.btnProcessador.Size = new System.Drawing.Size(20, 20);
-            this.btnProcessador.TabIndex = 19;
-            this.btnProcessador.UseVisualStyleBackColor = false;
-            this.btnProcessador.Visible = false;
-            // 
-            // cbxProcessador
-            // 
-            this.cbxProcessador.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbxProcessador.BackColor = System.Drawing.SystemColors.Window;
-            this.cbxProcessador.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxProcessador.FormattingEnabled = true;
-            this.cbxProcessador.Location = new System.Drawing.Point(0, 1);
-            this.cbxProcessador.Margin = new System.Windows.Forms.Padding(0);
-            this.cbxProcessador.Name = "cbxProcessador";
-            this.cbxProcessador.Size = new System.Drawing.Size(61, 25);
-            this.cbxProcessador.TabIndex = 9;
-            // 
             // lblMarca
             // 
             this.lblMarca.AutoSize = true;
-            this.lblMarca.Location = new System.Drawing.Point(324, 0);
+            this.lblMarca.Location = new System.Drawing.Point(364, 0);
             this.lblMarca.Margin = new System.Windows.Forms.Padding(0);
             this.lblMarca.Name = "lblMarca";
             this.lblMarca.Size = new System.Drawing.Size(47, 15);
             this.lblMarca.TabIndex = 9;
             this.lblMarca.Text = "Marca";
             // 
-            // tlpMarca
-            // 
-            this.tlpMarca.ColumnCount = 2;
-            this.tlpMarca.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpMarca.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpMarca.Controls.Add(this.btnMarca, 1, 0);
-            this.tlpMarca.Controls.Add(this.cbxMarca, 0, 0);
-            this.tlpMarca.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpMarca.Location = new System.Drawing.Point(324, 15);
-            this.tlpMarca.Margin = new System.Windows.Forms.Padding(0);
-            this.tlpMarca.Name = "tlpMarca";
-            this.tlpMarca.RowCount = 1;
-            this.tlpMarca.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpMarca.Size = new System.Drawing.Size(81, 27);
-            this.tlpMarca.TabIndex = 25;
-            // 
-            // btnMarca
-            // 
-            this.btnMarca.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnMarca.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(65)))), ((int)(((byte)(81)))));
-            this.btnMarca.BackgroundImage = global::InventarioTI.Properties.Resources.FecharClaro25;
-            this.btnMarca.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnMarca.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnMarca.FlatAppearance.BorderSize = 0;
-            this.btnMarca.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMarca.Location = new System.Drawing.Point(61, 7);
-            this.btnMarca.Margin = new System.Windows.Forms.Padding(0);
-            this.btnMarca.Name = "btnMarca";
-            this.btnMarca.Size = new System.Drawing.Size(20, 20);
-            this.btnMarca.TabIndex = 18;
-            this.btnMarca.UseVisualStyleBackColor = false;
-            this.btnMarca.Visible = false;
-            // 
-            // cbxMarca
-            // 
-            this.cbxMarca.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbxMarca.BackColor = System.Drawing.SystemColors.Window;
-            this.cbxMarca.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxMarca.FormattingEnabled = true;
-            this.cbxMarca.Location = new System.Drawing.Point(0, 1);
-            this.cbxMarca.Margin = new System.Windows.Forms.Padding(0);
-            this.cbxMarca.Name = "cbxMarca";
-            this.cbxMarca.Size = new System.Drawing.Size(61, 25);
-            this.cbxMarca.TabIndex = 8;
-            // 
             // lblTipo
             // 
             this.lblTipo.AutoSize = true;
-            this.lblTipo.Location = new System.Drawing.Point(243, 0);
+            this.lblTipo.Location = new System.Drawing.Point(273, 0);
             this.lblTipo.Margin = new System.Windows.Forms.Padding(0);
             this.lblTipo.Name = "lblTipo";
             this.lblTipo.Size = new System.Drawing.Size(32, 15);
             this.lblTipo.TabIndex = 2;
             this.lblTipo.Text = "Tipo";
             // 
-            // tlpTipo
+            // txbSerie
             // 
-            this.tlpTipo.ColumnCount = 2;
-            this.tlpTipo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpTipo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpTipo.Controls.Add(this.btnTipo, 1, 0);
-            this.tlpTipo.Controls.Add(this.cbxTipo, 0, 0);
-            this.tlpTipo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpTipo.Location = new System.Drawing.Point(243, 15);
-            this.tlpTipo.Margin = new System.Windows.Forms.Padding(0);
-            this.tlpTipo.Name = "tlpTipo";
-            this.tlpTipo.RowCount = 1;
-            this.tlpTipo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpTipo.Size = new System.Drawing.Size(81, 27);
-            this.tlpTipo.TabIndex = 24;
-            // 
-            // btnTipo
-            // 
-            this.btnTipo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnTipo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(65)))), ((int)(((byte)(81)))));
-            this.btnTipo.BackgroundImage = global::InventarioTI.Properties.Resources.FecharClaro25;
-            this.btnTipo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnTipo.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnTipo.FlatAppearance.BorderSize = 0;
-            this.btnTipo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnTipo.Location = new System.Drawing.Point(61, 7);
-            this.btnTipo.Margin = new System.Windows.Forms.Padding(0);
-            this.btnTipo.Name = "btnTipo";
-            this.btnTipo.Size = new System.Drawing.Size(20, 20);
-            this.btnTipo.TabIndex = 17;
-            this.btnTipo.UseVisualStyleBackColor = false;
-            this.btnTipo.Visible = false;
-            // 
-            // cbxTipo
-            // 
-            this.cbxTipo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbxTipo.BackColor = System.Drawing.SystemColors.Window;
-            this.cbxTipo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxTipo.FormattingEnabled = true;
-            this.cbxTipo.Location = new System.Drawing.Point(0, 1);
-            this.cbxTipo.Margin = new System.Windows.Forms.Padding(0);
-            this.cbxTipo.Name = "cbxTipo";
-            this.cbxTipo.Size = new System.Drawing.Size(61, 25);
-            this.cbxTipo.TabIndex = 7;
+            this.txbSerie.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txbSerie.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txbSerie.Location = new System.Drawing.Point(185, 18);
+            this.txbSerie.Name = "txbSerie";
+            this.txbSerie.Size = new System.Drawing.Size(85, 22);
+            this.txbSerie.TabIndex = 21;
+            this.txbSerie.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txbSerie_KeyDown);
             // 
             // dgvBackups
             // 
@@ -1023,7 +641,9 @@
             this.dgvBackups.Size = new System.Drawing.Size(720, 141);
             this.dgvBackups.SortStringChangedInvokeBeforeDatasourceUpdate = true;
             this.dgvBackups.TabIndex = 2;
+            this.dgvBackups.SortStringChanged += new System.EventHandler<Zuby.ADGV.AdvancedDataGridView.SortEventArgs>(this.dgvBackups_SortStringChanged);
             this.dgvBackups.FilterStringChanged += new System.EventHandler<Zuby.ADGV.AdvancedDataGridView.FilterEventArgs>(this.dgvBackups_FilterStringChanged);
+            this.dgvBackups.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvBackups_CellMouseDoubleClick);
             // 
             // iDEDataGridViewTextBoxColumn
             // 
@@ -1163,6 +783,7 @@
             this.tlpBotoes.Controls.Add(this.ptbRemover, 3, 0);
             this.tlpBotoes.Controls.Add(this.ptbMover, 7, 0);
             this.tlpBotoes.Controls.Add(this.ptbAdd, 1, 0);
+            this.tlpBotoes.Controls.Add(this.lblInfoCliente, 0, 0);
             this.tlpBotoes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpBotoes.Location = new System.Drawing.Point(0, 0);
             this.tlpBotoes.Margin = new System.Windows.Forms.Padding(0);
@@ -1182,6 +803,7 @@
             this.ptbBorracha.Size = new System.Drawing.Size(30, 35);
             this.ptbBorracha.TabIndex = 3;
             this.ptbBorracha.TabStop = false;
+            this.ptbBorracha.Click += new System.EventHandler(this.ptbBorracha_Click);
             // 
             // ptbEditar
             // 
@@ -1215,6 +837,7 @@
             this.ptbRemover.Size = new System.Drawing.Size(30, 35);
             this.ptbRemover.TabIndex = 1;
             this.ptbRemover.TabStop = false;
+            this.ptbRemover.Click += new System.EventHandler(this.ptbRemover_Click);
             // 
             // ptbMover
             // 
@@ -1237,6 +860,16 @@
             this.ptbAdd.Size = new System.Drawing.Size(30, 35);
             this.ptbAdd.TabIndex = 0;
             this.ptbAdd.TabStop = false;
+            this.ptbAdd.Click += new System.EventHandler(this.ptbAdd_Click);
+            // 
+            // lblInfoCliente
+            // 
+            this.lblInfoCliente.AutoSize = true;
+            this.lblInfoCliente.Font = new System.Drawing.Font("Century Gothic", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point);
+            this.lblInfoCliente.Location = new System.Drawing.Point(3, 0);
+            this.lblInfoCliente.Name = "lblInfoCliente";
+            this.lblInfoCliente.Size = new System.Drawing.Size(0, 15);
+            this.lblInfoCliente.TabIndex = 5;
             // 
             // pagComp
             // 
@@ -1354,7 +987,7 @@
             this.dgvEquipe.Location = new System.Drawing.Point(6, 6);
             this.dgvEquipe.Name = "dgvEquipe";
             this.dgvEquipe.RowTemplate.Height = 25;
-            this.dgvEquipe.Size = new System.Drawing.Size(69, 77);
+            this.dgvEquipe.Size = new System.Drawing.Size(185, 124);
             this.dgvEquipe.TabIndex = 0;
             // 
             // uctHome
@@ -1381,19 +1014,10 @@
             this.tlpHome.ResumeLayout(false);
             this.tlpFiltro.ResumeLayout(false);
             this.tlpFiltro.PerformLayout();
-            this.tlpDisco.ResumeLayout(false);
-            this.tlpSerie.ResumeLayout(false);
-            this.tlpNomenclatura.ResumeLayout(false);
-            this.tlpPatrimonio.ResumeLayout(false);
-            this.tlpstatus.ResumeLayout(false);
-            this.tlpModelo.ResumeLayout(false);
-            this.tlpRam.ResumeLayout(false);
-            this.tlpProcessador.ResumeLayout(false);
-            this.tlpMarca.ResumeLayout(false);
-            this.tlpTipo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvBackups)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.equipamentoBindingSource)).EndInit();
             this.tlpBotoes.ResumeLayout(false);
+            this.tlpBotoes.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptbBorracha)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ptbEditar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ptbManutencao)).EndInit();
@@ -1443,41 +1067,15 @@
         private Label lblProcessador;
         private Label lblRam;
         private Label lblModelo;
-        private Label lblStatus;
         private ComboBox cbxTipo;
-        private Button btnTipo;
-        private Button btnMarca;
         private ComboBox cbxMarca;
-        private Button btnProcessador;
         private ComboBox cbxProcessador;
-        private Button btnRam;
         private ComboBox cbxRam;
-        private Button btnModelo;
         private ComboBox cbxModelo;
-        private Button btnStatus;
-        private ComboBox cbxStatus;
-        private DataGridView dgvEquipe;
-        private TableLayoutPanel tlpPatrimonio;
-        private TableLayoutPanel tlpProcessador;
-        private TableLayoutPanel tlpMarca;
-        private TableLayoutPanel tlpTipo;
-        private TableLayoutPanel tlpstatus;
-        private Button btnPatrimonio;
-        private TableLayoutPanel tlpModelo;
-        private TableLayoutPanel tlpRam;
-        private ComboBox cbxPatrimonio;
         private Label lblDisco;
-        private TableLayoutPanel tlpDisco;
-        private Button btnDisco;
         private ComboBox cbxDisco;
-        private TableLayoutPanel tlpSerie;
-        private Button btnSerie;
-        private ComboBox cbxSerie;
         private Label lblSerie;
         private Label lblNomenclatura;
-        private TableLayoutPanel tlpNomenclatura;
-        private Button btnNomenclatura;
-        private ComboBox cbxNomenclatura;
         private TableLayoutPanel tlpBackComp;
         private TableLayoutPanel tlpButoes;
         private TableLayoutPanel tlpBotoes;
@@ -1503,5 +1101,10 @@
         private DataGridViewTextBoxColumn serieDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn modeloDataGridViewTextBoxColumn;
         private BindingSource equipamentoBindingSource;
+        private DataGridView dgvEquipe;
+        private TextBox txbSerie;
+        private TextBox txbPatrimonio;
+        private TextBox txbNomenclatura;
+        private Label lblInfoCliente;
     }
 }

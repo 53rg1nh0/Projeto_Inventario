@@ -6,6 +6,7 @@ using InventarioTI.Extencions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -21,9 +22,8 @@ namespace InventarioTI.Views
     public partial class uctHome : UserControl
     {
         Unidade[] _unidades;
-        Equipamento[] _filtro;
-        string[] _arrayFiltros;
-        Dictionary<string, string[]> _arrayFiltro = new Dictionary<string, string[]>();
+        Equipamento[] _filtro, _dados;
+        private static Dictionary<string, string> _ordenar = new Dictionary<string, string>();
         public uctHome()
         {
             InitializeComponent();
@@ -47,7 +47,24 @@ namespace InventarioTI.Views
         private void cbxUnidades_SelectionChangeCommitted(object sender, EventArgs e)
         {
             cbxUnidades.Visible = false;
-            Update();
+
+            Atualizar();
+        }
+
+        private void dgvBackups_FilterStringChanged(object sender, Zuby.ADGV.AdvancedDataGridView.FilterEventArgs e)
+        {
+            SortAndFilter();
+        }
+
+        private void dgvBackups_SortStringChanged(object sender, Zuby.ADGV.AdvancedDataGridView.SortEventArgs e)
+        {
+            SortAndFilter();
+        }
+
+        private void dgvBackups_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            Preencher(dgvBackups.Rows[e.RowIndex].Cells[1].Value.ToString());
+
         }
 
 
@@ -80,19 +97,21 @@ namespace InventarioTI.Views
                 }
 
 
-                Update();
+                Atualizar();
                 TabelaEquipe(context);
             }
         }
 
 
-        private void Update()
+        private void Atualizar()
         {
+            dgvBackups.CleanFilterAndSort();
             using (var context = new InventarioContext())
             {
-
+                _dados = context.Equipamentos.Include(e => e.Cliente).Include(e => e.Unidade).ToArray();
                 var b = context.Equipamentos.Where(b => b.Unidade.Sigla == cbxUnidades.Text);
                 _filtro = b.ToArray();
+
 
                 lblTotal.Text = "Equipamentos: " + b.Count().ToString();
                 lblTotalNot.Text = "Notebooks: " + b.Where(b => b.Tipo == "Notebook").Count().ToString();
@@ -106,38 +125,133 @@ namespace InventarioTI.Views
 
                 Properties.Settings.Default.UnidadePadrao = cbxUnidades.Text;
                 Properties.Settings.Default.Save();
+                Preencher("");
 
                 dgvBackups.Estilo(_filtro);
 
+                txbPatrimonio.AutoCompleteCustomSource.Clear();
+                txbNomenclatura.AutoCompleteCustomSource.Clear();
+                txbSerie.AutoCompleteCustomSource.Clear();
 
-                cbxPatrimonio.AutoCompleteCustomSource.AddRange(_filtro.Select(e => e.Patrimonio.ToString()).ToArray());
-                cbxPatrimonio.AutoCompleteSource = AutoCompleteSource.CustomSource;
-                cbxPatrimonio.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                cbxTipo.Items.Clear();
+                cbxMarca.Items.Clear();
+                cbxProcessador.Items.Clear();
+                cbxRam.Items.Clear();
+                cbxModelo.Items.Clear();
 
-                cbxNomenclatura.AutoCompleteCustomSource.AddRange(_filtro.Select(e => e.Nomenclatura.ToString()).ToArray());
-                cbxNomenclatura.AutoCompleteSource = AutoCompleteSource.CustomSource;
-                cbxNomenclatura.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                txbPatrimonio.AutoCompleteCustomSource.AddRange(_dados.Select(e => e.Patrimonio.ToString()).ToArray());
+                txbPatrimonio.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                txbPatrimonio.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 
-                cbxSerie.AutoCompleteCustomSource.AddRange(_filtro.Select(e => e.Serie.ToString()).ToArray());
-                cbxSerie.AutoCompleteSource = AutoCompleteSource.CustomSource;
-                cbxSerie.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                txbNomenclatura.AutoCompleteCustomSource.AddRange(_dados.Select(e => e.Nomenclatura.ToString()).ToArray());
+                txbNomenclatura.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                txbNomenclatura.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 
-                cbxTipo.Items.AddRange(_filtro.Select(e => e.Tipo).Distinct().ToArray());
+                txbSerie.AutoCompleteCustomSource.AddRange(_dados.Select(e => e.Serie.ToString()).ToArray());
+                txbSerie.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                txbSerie.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 
-                cbxMarca.Items.AddRange(_filtro.Select(e => e.Marca).Distinct().ToArray());
+                cbxTipo.Items.AddRange(_dados.Select(e => e.Tipo).Distinct().ToArray());
 
-                cbxProcessador.Items.AddRange(_filtro.Select(e => e.Processador).Distinct().ToArray());
+                cbxMarca.Items.AddRange(_dados.Select(e => e.Marca).Distinct().ToArray());
 
-                cbxRam.Items.AddRange(_filtro.Select(e => e.Ram).Distinct().ToArray());
+                cbxProcessador.Items.AddRange(_dados.Select(e => e.Processador).Distinct().ToArray());
 
-                cbxModelo.Items.AddRange(_filtro.Select(e => e.Modelo).Distinct().ToArray());
+                cbxRam.Items.AddRange(_dados.Select(e => e.Ram).Distinct().ToArray());
 
-                cbxStatus.Items.AddRange(_filtro.Select(e => e.Status).Distinct().ToArray());
+                cbxModelo.Items.AddRange(_dados.Select(e => e.Modelo).Distinct().ToArray());
+
 
             }
         }
 
+        private void Preencher(string s)
+        {
+            txbPatrimonio.Text = s == "" ? "" : _dados.Where(e => e.Patrimonio.ToString() == s).SingleOrDefault().Patrimonio.ToString();
+            cbxTipo.Text = s == "" ? null : _dados.Where(e => e.Patrimonio.ToString() == s).SingleOrDefault().Tipo;
+            cbxMarca.Text = s == "" ? null : _dados.Where(e => e.Patrimonio.ToString() == s).SingleOrDefault().Marca;
+            cbxProcessador.Text = s == "" ? null : _dados.Where(e => e.Patrimonio.ToString() == s).SingleOrDefault().Processador;
+            cbxRam.Text = s == "" ? null : _dados.Where(e => e.Patrimonio.ToString() == s).SingleOrDefault().Ram;
+            cbxTipo.Text = s == "" ? null : _dados.Where(e => e.Patrimonio.ToString() == s).SingleOrDefault().Tipo;
+            cbxModelo.Text = s == "" ? null : _dados.Where(e => e.Patrimonio.ToString() == s).SingleOrDefault().Modelo;
+            txbNomenclatura.Text = s == "" ? "" : _dados.Where(e => e.Patrimonio.ToString() == s).SingleOrDefault().Nomenclatura;
+            txbSerie.Text = s == "" ? "" : _dados.Where(e => e.Patrimonio.ToString() == s).SingleOrDefault().Serie;
+            cbxDisco.Text = s == "" ? null : _dados.Where(e => e.Patrimonio.ToString() == s).SingleOrDefault().Disco;
+            lblInfoCliente.Text = "";
+            if (s != "")
+            {
+                if (_dados.Where(e => e.Patrimonio.ToString() == s).SingleOrDefault().Status == "backup")
+                {
+                    lblInfoCliente.Text = "Equipamento backup TI \nUnidade: " + _dados.Where(e => e.Patrimonio.ToString() == s).SingleOrDefault().Unidade.Nome;
+                }
+                else if (_dados.Where(e => e.Patrimonio.ToString() == s).SingleOrDefault().Status == "unidade")
+                {
+                    lblInfoCliente.Text = "Equipamento pertencente a unidade: " + _dados.Where(e => e.Patrimonio.ToString() == s).SingleOrDefault().Unidade.Nome;
+                }
+                else
+                {
+                    lblInfoCliente.Text = "Equipamento pertencente a cliente " + _dados.Where(e => e.Patrimonio.ToString() == s).SingleOrDefault().Cliente.Nome +
+                        "(" + _dados.Where(e => e.Patrimonio.ToString() == s).SingleOrDefault().Cliente.UserId + ")"
+                        + "\nUnidade: " + _dados.Where(e => e.Patrimonio.ToString() == s).SingleOrDefault().Unidade.Nome;
+                }
+            }
+        }
 
+        private void SortAndFilter()
+        {
+            Equipamento[] sort;
+
+            dgvBackups.FilterString(dgvBackups.FilterString);
+            dgvBackups.SortString(dgvBackups.SortString);
+
+
+            using (var context = new InventarioContext())
+            {
+                var b = context.Equipamentos.Where(b => b.Unidade.Sigla == cbxUnidades.Text);
+                _filtro = b.ToArray();
+            }
+
+            _filtro = _filtro.Where(e => dgvBackups.Filtro(e)).ToArray();
+
+            sort = _filtro;
+
+            if (dgvBackups.Count() == 0)
+            {
+                sort = _filtro;
+            }
+            else if (dgvBackups.Count() == 1)
+            {
+                if (dgvBackups.OrderBy() == "ASC")
+                {
+                    if (dgvBackups.Campo() == "Patrimonio")
+                    {
+                        sort = sort.OrderBy(e => dgvBackups.OrdenarInt(e)).ToArray();
+                    }
+                    else
+                    {
+                        sort = sort.OrderBy(e => dgvBackups.OrdenarString(e)).ToArray();
+                    }
+                }
+                else if (dgvBackups.OrderBy() == "DESC")
+                {
+                    if (dgvBackups.Campo() == "Patrimonio")
+                    {
+                        sort = sort.OrderByDescending(e => dgvBackups.OrdenarInt(e)).ToArray();
+                    }
+                    else
+                    {
+                        sort = sort.OrderByDescending(e => dgvBackups.OrdenarString(e)).ToArray();
+                    }
+                }
+            }
+            else
+            {
+                dgvBackups.CleanSort();
+
+
+            }
+            dgvBackups.Estilo(sort);
+        }
         private void TabelaEquipe(InventarioContext context)
         {
             Responsavel[] r = context.Responsaveis.Include(r => r.CLiente).ToArray();
@@ -153,6 +267,7 @@ namespace InventarioTI.Views
                             Email = responsavel.Email,
                             Unidades = Unidades(context, responsavel)
                         };
+            //MessageBox.Show(dados.GetType().ToString());
 
             dgvEquipe.Estilo(dados.ToArray());
 
@@ -173,53 +288,95 @@ namespace InventarioTI.Views
             return unidades;
         }
 
-        private void dgvBackups_FilterStringChanged(object sender, Zuby.ADGV.AdvancedDataGridView.FilterEventArgs e)
+        private void txbNomenclatura_KeyDown(object sender, KeyEventArgs e)
         {
-
-            
-            string s = dgvBackups.FilterString;
-            if (!string.IsNullOrEmpty(s))
+            if (e.KeyCode == Keys.Enter && !string.IsNullOrEmpty(txbNomenclatura.Text))
             {
-                _arrayFiltros = s.Split(" AND ");
-                foreach (string str in _arrayFiltros)
+                if (_dados.Select(a => a.Nomenclatura).Contains(txbNomenclatura.Text.ToUpper()))
                 {
-                    _arrayFiltro[str.Substring(str.IndexOf('[') + 1, str.IndexOf(']') - str.IndexOf('[') - 1)] =
-                        str.Substring(str.LastIndexOf('(')).Trim(')').Trim('(').Split(", ");
+                    Preencher(_dados.Where(a => a.Nomenclatura == txbNomenclatura.Text.ToUpper()).Select(a => a.Patrimonio).SingleOrDefault().ToString());
                 }
-               
-                _filtro = _filtro.Where(e => Filtro(e)).ToArray();
             }
-            
-            dgvBackups.Estilo(_filtro);
-            
+        }
+
+        private void txbSerie_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter && !string.IsNullOrEmpty(txbSerie.Text))
+            {
+                if (_dados.Select(a => a.Serie).Contains(txbSerie.Text.ToUpper()))
+                {
+                    Preencher(_dados.Where(a => a.Serie == txbSerie.Text.ToUpper()).Select(a => a.Patrimonio).SingleOrDefault().ToString());
+                }
+            }
+        }
 
 
-            s = "";
-            _arrayFiltro.Clear();
+
+        private void txbPatrimonio_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter && !string.IsNullOrEmpty(txbPatrimonio.Text))
+            {
+                if (_dados.Select(a => a.Patrimonio).Contains(int.Parse(txbPatrimonio.Text)))
+                {
+                    Preencher(txbPatrimonio.Text);
+                }
+            }
+        }
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void ptbBorracha_Click(object sender, EventArgs e)
+        {
+            Preencher("");
+        }
+
+        private void ptbAdd_Click(object sender, EventArgs e)
+        {
             using (var context = new InventarioContext())
             {
-                var b = context.Equipamentos.Where(b => b.Unidade.Sigla == cbxUnidades.Text);
-                _filtro = b.ToArray();
+                var unidade = context.Unidades;
+                var cliente = context.Clientes;
+                if (!(_dados.Select(a => a.Patrimonio).Contains(int.Parse(txbPatrimonio.Text)) || _dados.Select(a => a.Nomenclatura).Contains(txbNomenclatura.Text.ToUpper()) ||
+                    _dados.Select(a => a.Serie).Contains(txbSerie.Text.ToUpper())))
+                {
+                    Equipamento eq = new Equipamento();
+                    eq.Patrimonio = int.Parse(txbPatrimonio.Text);
+                    eq.Nomenclatura = txbNomenclatura.Text.ToUpper();
+                    eq.Serie = txbSerie.Text.ToUpper();
+                    eq.Tipo = cbxTipo.Text;
+                    eq.Marca = cbxMarca.Text;
+                    eq.Modelo = cbxModelo.Text;
+                    eq.Processador = cbxProcessador.Text;
+                    eq.Ram = cbxRam.Text;
+                    eq.Status = "backup";
+                    eq.Unidade = unidade.Where(u => u.Sigla == Properties.Settings.Default.UnidadePadrao).SingleOrDefault();
+                    eq.Cliente = cliente.Where(c => c.UserId == "bck").SingleOrDefault();
+                    eq.Disco = cbxDisco.Text == null ? null : cbxDisco.Text;
+                    context.Add(eq);
+                    context.SaveChanges();
+                    Atualizar();
+                }
+                else
+                {
+                    MessageBox.Show("Equipamento já existe!");
+                }
             }
-
         }
 
-        private bool Filtro(Equipamento e)
+        private void ptbRemover_Click(object sender, EventArgs e)
         {
-            var p = e.GetType().GetProperties();
-            bool bi = false, be = true;
-
-            foreach (var a in _arrayFiltro)
+            using (var context = new InventarioContext())
             {
-
-                foreach (var v in a.Value)
+                if (_dados.Select(a => a.Patrimonio).Contains(int.Parse(txbPatrimonio.Text)))
                 {
-                    bi |= p.Where(p => p.Name == a.Key).SingleOrDefault().GetValue(e).ToString() == v.Trim('\'');
+                    context.Remove(_dados.Where(a => a.Patrimonio == int.Parse(txbPatrimonio.Text)).SingleOrDefault());
+                    context.SaveChanges();
+                    Atualizar();
                 }
-                be &= (bi);
-                bi = false;
-            }      
-            return be;
+            }
         }
     }
+
 }
