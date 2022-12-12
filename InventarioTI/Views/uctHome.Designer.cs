@@ -446,7 +446,7 @@
             this.cbxDisco.BackColor = System.Drawing.SystemColors.Window;
             this.cbxDisco.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxDisco.FormattingEnabled = true;
-            this.cbxDisco.Location = new System.Drawing.Point(715, 16);
+            this.cbxDisco.Location = new System.Drawing.Point(715, 17);
             this.cbxDisco.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.cbxDisco.Name = "cbxDisco";
             this.cbxDisco.Size = new System.Drawing.Size(89, 25);
@@ -458,7 +458,7 @@
             this.cbxTipo.BackColor = System.Drawing.SystemColors.Window;
             this.cbxTipo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxTipo.FormattingEnabled = true;
-            this.cbxTipo.Location = new System.Drawing.Point(276, 16);
+            this.cbxTipo.Location = new System.Drawing.Point(276, 17);
             this.cbxTipo.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.cbxTipo.Name = "cbxTipo";
             this.cbxTipo.Size = new System.Drawing.Size(85, 25);
@@ -470,7 +470,7 @@
             this.cbxRam.BackColor = System.Drawing.SystemColors.Window;
             this.cbxRam.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxRam.FormattingEnabled = true;
-            this.cbxRam.Location = new System.Drawing.Point(640, 17);
+            this.cbxRam.Location = new System.Drawing.Point(640, 16);
             this.cbxRam.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.cbxRam.Name = "cbxRam";
             this.cbxRam.Size = new System.Drawing.Size(69, 25);
@@ -492,7 +492,7 @@
             this.cbxProcessador.BackColor = System.Drawing.SystemColors.Window;
             this.cbxProcessador.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxProcessador.FormattingEnabled = true;
-            this.cbxProcessador.Location = new System.Drawing.Point(549, 16);
+            this.cbxProcessador.Location = new System.Drawing.Point(549, 17);
             this.cbxProcessador.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.cbxProcessador.Name = "cbxProcessador";
             this.cbxProcessador.Size = new System.Drawing.Size(85, 25);
@@ -504,7 +504,7 @@
             this.cbxModelo.BackColor = System.Drawing.SystemColors.Window;
             this.cbxModelo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxModelo.FormattingEnabled = true;
-            this.cbxModelo.Location = new System.Drawing.Point(458, 16);
+            this.cbxModelo.Location = new System.Drawing.Point(458, 17);
             this.cbxModelo.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.cbxModelo.Name = "cbxModelo";
             this.cbxModelo.Size = new System.Drawing.Size(85, 25);
@@ -516,7 +516,7 @@
             this.cbxMarca.BackColor = System.Drawing.SystemColors.Window;
             this.cbxMarca.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxMarca.FormattingEnabled = true;
-            this.cbxMarca.Location = new System.Drawing.Point(367, 16);
+            this.cbxMarca.Location = new System.Drawing.Point(367, 17);
             this.cbxMarca.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.cbxMarca.Name = "cbxMarca";
             this.cbxMarca.Size = new System.Drawing.Size(85, 25);
