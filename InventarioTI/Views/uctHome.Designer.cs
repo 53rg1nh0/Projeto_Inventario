@@ -815,6 +815,7 @@
             this.ptbEditar.Size = new System.Drawing.Size(30, 35);
             this.ptbEditar.TabIndex = 4;
             this.ptbEditar.TabStop = false;
+            this.ptbEditar.Click += new System.EventHandler(this.ptbEditar_Click);
             // 
             // ptbManutencao
             // 

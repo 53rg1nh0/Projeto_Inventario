@@ -23,7 +23,8 @@ namespace InventarioTI.Views
     public partial class uctHome : UserControl
     {
         Unidade[] _unidades;
-        Equipamento[] _filtro;//, _dados,_unidade;
+        Equipamento[] _filtro;
+        Equipamento _equipamento;
         private static Dictionary<string, string> _ordenar = new Dictionary<string, string>();
         public uctHome()
         {
@@ -110,12 +111,12 @@ namespace InventarioTI.Views
             using (var context = new InventarioContext())
             {
                 //_dados = context.Equipamentos.Where(b => b.Status != "obsoleto").Include(e => e.Cliente).Include(e => e.Unidade).ToArray();
-                var b = context.Equipamentos.Where(b => b.Unidade.Sigla == cbxUnidades.Text).Where(b=>b.Status!="obsoleto");
+                var b = context.Equipamentos.Where(b => b.Unidade.Sigla == cbxUnidades.Text).Where(b => b.Status != "obsoleto");
                 Equipamento[] dadosCompletos = DadosCompleto();
                 //_unidade = b.ToArray();
                 _filtro = b.ToArray();
 
-                
+
 
                 lblTotal.Text = "Equipamentos: " + b.Count().ToString();
                 lblTotalNot.Text = "Notebooks: " + b.Where(b => b.Tipo == "Notebook").Count().ToString();
@@ -185,6 +186,7 @@ namespace InventarioTI.Views
                 txbSerie.Text = s == "" ? "" : dadosCompletos.Where(e => e.Patrimonio.ToString() == s).SingleOrDefault().Serie;
                 cbxDisco.Text = s == "" ? null : dadosCompletos.Where(e => e.Patrimonio.ToString() == s).SingleOrDefault().Disco;
                 lblInfoCliente.Text = "";
+                _equipamento = s == "" ? null : dadosCompletos.Where(e => e.Patrimonio.ToString() == s).SingleOrDefault();
             }
             if (s != "")
             {
@@ -328,7 +330,7 @@ namespace InventarioTI.Views
                 }
                 else
                 {
-                    temp=txbSerie.Text;
+                    temp = txbSerie.Text;
                     MessageBox.Show("Equipamento não existente!");
                     Preencher("");
                     txbSerie.Text = temp;
@@ -353,7 +355,7 @@ namespace InventarioTI.Views
                     temp = txbPatrimonio.Text;
                     MessageBox.Show("Equipamento não existente!");
                     Preencher("");
-                    txbPatrimonio.Text= temp;
+                    txbPatrimonio.Text = temp;
                 }
             }
         }
@@ -371,7 +373,7 @@ namespace InventarioTI.Views
         {
             using (var context = new InventarioContext())
             {
-                return context.Equipamentos.Where(b => b.Unidade.Sigla == cbxUnidades.Text).Where(b=>b.Status!="obsoleto").ToArray();
+                return context.Equipamentos.Where(b => b.Unidade.Sigla == cbxUnidades.Text).Where(b => b.Status != "obsoleto").ToArray();
             }
         }
 
@@ -411,14 +413,14 @@ namespace InventarioTI.Views
                     context.Add(eq);
                     context.SaveChanges();
                     Atualizar();
-                    Preencher(DadosCompleto().Where(a=>a.Patrimonio==eq.Patrimonio).Select(a=>a.Patrimonio).SingleOrDefault().ToString());
+                    Preencher(DadosCompleto().Where(a => a.Patrimonio == eq.Patrimonio).Select(a => a.Patrimonio).SingleOrDefault().ToString());
                     MessageBox.Show("Equipamento cadastrado com sucesso!");
 
-                    m.Data=DateTime.Now;
+                    m.Data = DateTime.Now;
                     m.Status = "adicionado";
-                    m.Cliente=cliente.Where(c => c.UserId == "bck").SingleOrDefault();
+                    m.Cliente = cliente.Where(c => c.UserId == "bck").SingleOrDefault();
                     m.Equipamento = eq;
-                    m.Unidade= unidade.Where(u => u.Sigla == Properties.Settings.Default.UnidadePadrao).SingleOrDefault();
+                    m.Unidade = unidade.Where(u => u.Sigla == Properties.Settings.Default.UnidadePadrao).SingleOrDefault();
                     m.Responsavel = responsavel.Where(r => r.CLiente.Equals(cliente.Where(c => c.UserId == Properties.Settings.Default.Usuario).SingleOrDefault())).SingleOrDefault();
                     context.Add(m);
                     context.SaveChanges();
@@ -485,6 +487,64 @@ namespace InventarioTI.Views
                 else
                 {
                     MessageBox.Show("Apenas o PATRIMONIO é considerado para remossão do equipamento.\n\t\tEquipamento não existe em sua unidade!");
+                }
+            }
+        }
+
+        private void ptbEditar_Click(object sender, EventArgs e)
+        {
+            Equipamento[] dadosUnidade = DadosCompleto().Where(b => b.Unidade.Sigla == cbxUnidades.Text).ToArray();
+            Equipamento[] skip = dadosUnidade.Except(dadosUnidade.Where(e=>e.Patrimonio==_equipamento.Patrimonio)).ToArray();
+            Movimetacao m = new Movimetacao();
+
+            using (var context = new InventarioContext())
+            {
+                if (!(skip.Select(a => a.Patrimonio).Contains(int.Parse(txbPatrimonio.Text)) || skip.Select(a => a.Nomenclatura).Contains(txbNomenclatura.Text.ToUpper()) ||
+                    skip.Select(a => a.Serie).Contains(txbSerie.Text.ToUpper())))
+                {
+                    var responsavel = context.Responsaveis;
+                    var cliente = context.Clientes;
+                    Equipamento eq = context.Equipamentos.Where(e => e.Patrimonio == _equipamento.Patrimonio).Include(e=>e.Cliente).Include(e=>e.Unidade).FirstOrDefault();
+
+                    m.Data = DateTime.Now;
+                    m.Status = "editado";
+                    m.Cliente = eq.Cliente;
+                    m.Equipamento = eq;
+                    m.Unidade = eq.Unidade;
+                    m.Responsavel = responsavel.Where(r => r.CLiente.Equals(cliente.Where(c => c.UserId == Properties.Settings.Default.Usuario).SingleOrDefault())).SingleOrDefault();
+                    context.Add(m);
+                    
+                    eq.Patrimonio = int.Parse(txbPatrimonio.Text);
+                    eq.Nomenclatura = txbNomenclatura.Text;
+                    eq.Tipo = cbxTipo.Text;
+                    eq.Marca=cbxMarca.Text;
+                    eq.Modelo = cbxModelo.Text;
+                    eq.Processador = cbxProcessador.Text;
+                    eq.Ram = cbxRam.Text;
+                    eq.Disco = cbxDisco.Text;
+                    context.Update(eq);
+                    context.SaveChanges();
+                    Atualizar();
+                    Preencher(DadosCompleto().Where(a => a.Patrimonio == eq.Patrimonio).Select(a => a.Patrimonio).SingleOrDefault().ToString());
+                    MessageBox.Show("Equipamento Editado com sucesso!");
+                }
+                else
+                {
+                    if (skip.Select(a => a.Patrimonio).Contains(int.Parse(txbPatrimonio.Text)))
+                    {
+                        Preencher(txbPatrimonio.Text, false);
+                        MessageBox.Show("Computador com PATRIMONIO já cadastrado!\n" + lblInfoCliente.Text);
+                    }
+                    else if (skip.Select(a => a.Nomenclatura).Contains(txbNomenclatura.Text.ToUpper()))
+                    {
+                        Preencher(skip.Where(a => a.Nomenclatura == txbNomenclatura.Text.ToUpper()).Select(a => a.Patrimonio).SingleOrDefault().ToString(), false);
+                        MessageBox.Show("Computador com NOMENCLATURA já cadastrado!\n" + lblInfoCliente.Text);
+                    }
+                    else if (skip.Select(a => a.Serie).Contains(txbSerie.Text.ToUpper()))
+                    {
+                        Preencher(skip.Where(a => a.Serie == txbSerie.Text.ToUpper()).Select(a => a.Patrimonio).SingleOrDefault().ToString(), false);
+                        MessageBox.Show("Computador com número de SÉRIE já cadastrado!\n" + lblInfoCliente.Text);
+                    }
                 }
             }
         }
