@@ -24,11 +24,13 @@ namespace InventarioTI.Views
     {
         Unidade[] _unidades;
         Equipamento[] _filtro;
-        Equipamento _equipamento;
+
         private static Dictionary<string, string> _ordenar = new Dictionary<string, string>();
         public uctHome()
         {
             InitializeComponent();
+            Properties.Settings.Default.Eq = -1;
+            Properties.Settings.Default.Save();
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -36,6 +38,7 @@ namespace InventarioTI.Views
             Properties.Settings.Default.Senha = null;
             Properties.Settings.Default.Usuario = null;
             Properties.Settings.Default.UnidadePadrao = null;
+            Properties.Settings.Default.Eq = -1;
             Properties.Settings.Default.Save();
             Application.Restart();
         }
@@ -98,7 +101,13 @@ namespace InventarioTI.Views
                     cbxUnidades.Text = _unidades.First().Sigla;
                 }
 
-
+                ttpInformar.SetToolTip(ptbAdd, "Adicionar equipamento");
+                ttpInformar.SetToolTip(ptbLocal, "Escolha sua localidade");
+                ttpInformar.SetToolTip(ptbRemover, "Remover equipamento");
+                ttpInformar.SetToolTip(ptbEditar, "Editar equipamento");
+                ttpInformar.SetToolTip(ptbBorracha, "Apagar campos");
+                ttpInformar.SetToolTip(ptbManutencao, "Equipamento em status de manutenção");
+                ttpInformar.SetToolTip(ptbMover, "Mover equipamento para unidade");
                 Atualizar();
                 TabelaEquipe(context);
             }
@@ -110,13 +119,10 @@ namespace InventarioTI.Views
             dgvBackups.CleanFilterAndSort();
             using (var context = new InventarioContext())
             {
-                //_dados = context.Equipamentos.Where(b => b.Status != "obsoleto").Include(e => e.Cliente).Include(e => e.Unidade).ToArray();
                 var b = context.Equipamentos.Where(b => b.Unidade.Sigla == cbxUnidades.Text).Where(b => b.Status != "obsoleto");
                 Equipamento[] dadosCompletos = DadosCompleto();
-                //_unidade = b.ToArray();
+
                 _filtro = b.ToArray();
-
-
 
                 lblTotal.Text = "Equipamentos: " + b.Count().ToString();
                 lblTotalNot.Text = "Notebooks: " + b.Where(b => b.Tipo == "Notebook").Count().ToString();
@@ -165,8 +171,6 @@ namespace InventarioTI.Views
                 cbxRam.Items.AddRange(dadosCompletos.Select(e => e.Ram).Distinct().ToArray());
 
                 cbxModelo.Items.AddRange(dadosCompletos.Select(e => e.Modelo).Distinct().ToArray());
-
-
             }
         }
 
@@ -186,11 +190,16 @@ namespace InventarioTI.Views
                 txbSerie.Text = s == "" ? "" : dadosCompletos.Where(e => e.Patrimonio.ToString() == s).SingleOrDefault().Serie;
                 cbxDisco.Text = s == "" ? null : dadosCompletos.Where(e => e.Patrimonio.ToString() == s).SingleOrDefault().Disco;
                 lblInfoCliente.Text = "";
-                _equipamento = s == "" ? null : dadosCompletos.Where(e => e.Patrimonio.ToString() == s).SingleOrDefault();
+                using (var context = new InventarioContext())
+                {
+                    Properties.Settings.Default.Eq = s == "" ? -1 : context.Equipamentos.Where(e => e.Patrimonio.ToString() == s).SingleOrDefault().ID_E;
+                    Properties.Settings.Default.Save();
+                }
             }
             if (s != "")
             {
-                if (dadosCompletos.Where(e => e.Patrimonio.ToString() == s).SingleOrDefault().Status == "backup")
+                if (dadosCompletos.Where(e => e.Patrimonio.ToString() == s).SingleOrDefault().Status == "backup" ||
+                    dadosCompletos.Where(e => e.Patrimonio.ToString() == s).SingleOrDefault().Status == "manutencao")
                 {
                     lblInfoCliente.Text = "Equipamento backup TI \nUnidade: " + dadosCompletos.Where(e => e.Patrimonio.ToString() == s).SingleOrDefault().Unidade.Nome;
                 }
@@ -257,8 +266,6 @@ namespace InventarioTI.Views
             else
             {
                 dgvBackups.CleanSort();
-
-
             }
             dgvBackups.Estilo(sort);
         }
@@ -280,21 +287,16 @@ namespace InventarioTI.Views
             //MessageBox.Show(dados.GetType().ToString());
 
             dgvEquipe.Estilo(dados.ToArray());
-
         }
 
         private string Unidades(InventarioContext context, Responsavel responsavel)
         {
             string unidades = "";
 
-
             foreach (Unidade unidade in context.ResponsaveisUnidades.Where(ru => ru.Responsavel.Equals(responsavel)).Select(ru => ru.Unidade))
             {
-
                 unidades += unidade.Sigla + ", ";
-
             }
-
             return unidades;
         }
 
@@ -386,92 +388,40 @@ namespace InventarioTI.Views
         private void ptbAdd_Click(object sender, EventArgs e)
         {
             Equipamento[] dadosCompletos = DadosCompleto();
-            using (var context = new InventarioContext())
+            try
             {
-                var unidade = context.Unidades;
-                var cliente = context.Clientes;
-                var responsavel = context.Responsaveis;
-
-                if (!(dadosCompletos.Select(a => a.Patrimonio).Contains(int.Parse(txbPatrimonio.Text)) || dadosCompletos.Select(a => a.Nomenclatura).Contains(txbNomenclatura.Text.ToUpper()) ||
-                    dadosCompletos.Select(a => a.Serie).Contains(txbSerie.Text.ToUpper())))
-                {
-                    Equipamento eq = new Equipamento();
-                    Movimetacao m = new Movimetacao();
-
-                    eq.Patrimonio = int.Parse(txbPatrimonio.Text);
-                    eq.Nomenclatura = txbNomenclatura.Text.ToUpper();
-                    eq.Serie = txbSerie.Text.ToUpper();
-                    eq.Tipo = cbxTipo.Text;
-                    eq.Marca = cbxMarca.Text;
-                    eq.Modelo = cbxModelo.Text;
-                    eq.Processador = cbxProcessador.Text;
-                    eq.Ram = cbxRam.Text;
-                    eq.Status = "backup";
-                    eq.Unidade = unidade.Where(u => u.Sigla == Properties.Settings.Default.UnidadePadrao).SingleOrDefault();
-                    eq.Cliente = cliente.Where(c => c.UserId == "bck").SingleOrDefault();
-                    eq.Disco = cbxDisco.Text == null ? null : cbxDisco.Text;
-                    context.Add(eq);
-                    context.SaveChanges();
-                    Atualizar();
-                    Preencher(DadosCompleto().Where(a => a.Patrimonio == eq.Patrimonio).Select(a => a.Patrimonio).SingleOrDefault().ToString());
-                    MessageBox.Show("Equipamento cadastrado com sucesso!");
-
-                    m.Data = DateTime.Now;
-                    m.Status = "adicionado";
-                    m.Cliente = cliente.Where(c => c.UserId == "bck").SingleOrDefault();
-                    m.Equipamento = eq;
-                    m.Unidade = unidade.Where(u => u.Sigla == Properties.Settings.Default.UnidadePadrao).SingleOrDefault();
-                    m.Responsavel = responsavel.Where(r => r.CLiente.Equals(cliente.Where(c => c.UserId == Properties.Settings.Default.Usuario).SingleOrDefault())).SingleOrDefault();
-                    context.Add(m);
-                    context.SaveChanges();
-                }
-                else
-                {
-                    if (dadosCompletos.Select(a => a.Patrimonio).Contains(int.Parse(txbPatrimonio.Text)))
-                    {
-                        Preencher(txbPatrimonio.Text, false);
-                        MessageBox.Show("Computador com PATRIMONIO já cadastrado!\n" + lblInfoCliente.Text);
-                    }
-                    else if (dadosCompletos.Select(a => a.Nomenclatura).Contains(txbNomenclatura.Text.ToUpper()))
-                    {
-                        Preencher(dadosCompletos.Where(a => a.Nomenclatura == txbNomenclatura.Text.ToUpper()).Select(a => a.Patrimonio).SingleOrDefault().ToString(), false);
-                        MessageBox.Show("Computador com NOMENCLATURA já cadastrado!\n" + lblInfoCliente.Text);
-                    }
-                    else if (dadosCompletos.Select(a => a.Serie).Contains(txbSerie.Text.ToUpper()))
-                    {
-                        Preencher(dadosCompletos.Where(a => a.Serie == txbSerie.Text.ToUpper()).Select(a => a.Patrimonio).SingleOrDefault().ToString(), false);
-                        MessageBox.Show("Computador com número de SÉRIE já cadastrado!\n" + lblInfoCliente.Text);
-                    }
-                }
-            }
-        }
-
-        private void ptbRemover_Click(object sender, EventArgs e)
-        {
-            Equipamento[] dadosUnidade = DadosUnidade();
-            Movimetacao m = new Movimetacao();
-
-            using (var context = new InventarioContext())
-            {
-                if (dadosUnidade.Select(a => a.Patrimonio).Contains(int.Parse(txbPatrimonio.Text)))
+                using (var context = new InventarioContext())
                 {
                     var unidade = context.Unidades;
                     var cliente = context.Clientes;
                     var responsavel = context.Responsaveis;
 
-                    if (dadosUnidade.Where(a => a.Patrimonio == int.Parse(txbPatrimonio.Text)).SingleOrDefault().Status == "backup")
+                    if (!(dadosCompletos.Select(a => a.Patrimonio).Contains(int.Parse(txbPatrimonio.Text)) || dadosCompletos.Select(a => a.Nomenclatura).Contains(txbNomenclatura.Text.ToUpper()) ||
+                        dadosCompletos.Select(a => a.Serie).Contains(txbSerie.Text.ToUpper())))
                     {
                         Equipamento eq = new Equipamento();
-                        Cliente c = new Cliente();
-                        eq = DadosCompleto().Where(a => a.Patrimonio == int.Parse(txbPatrimonio.Text)).SingleOrDefault();
-                        eq.Status = "obsoleto";
-                        context.Update(eq);
+                        Movimetacao m = new Movimetacao();
+
+                        eq.Patrimonio = int.Parse(txbPatrimonio.Text);
+                        eq.Nomenclatura = txbNomenclatura.Text.ToUpper();
+                        eq.Serie = txbSerie.Text.ToUpper();
+                        eq.Tipo = cbxTipo.Text;
+                        eq.Marca = cbxMarca.Text;
+                        eq.Modelo = cbxModelo.Text;
+                        eq.Processador = cbxProcessador.Text;
+                        eq.Ram = cbxRam.Text;
+                        eq.Status = "backup";
+                        eq.Unidade = unidade.Where(u => u.Sigla == Properties.Settings.Default.UnidadePadrao).SingleOrDefault();
+                        eq.Cliente = cliente.Where(c => c.UserId == "bck").SingleOrDefault();
+                        eq.Disco = cbxDisco.Text == null ? null : cbxDisco.Text;
+                        context.Add(eq);
                         context.SaveChanges();
                         Atualizar();
-                        MessageBox.Show("Equipamento removido com sucesso!");
+                        Preencher(DadosCompleto().Where(a => a.Patrimonio == eq.Patrimonio).Select(a => a.Patrimonio).SingleOrDefault().ToString());
+                        MessageBox.Show("Equipamento cadastrado com sucesso!");
 
                         m.Data = DateTime.Now;
-                        m.Status = "Removido";
+                        m.Status = "adicionado";
                         m.Cliente = cliente.Where(c => c.UserId == "bck").SingleOrDefault();
                         m.Equipamento = eq;
                         m.Unidade = unidade.Where(u => u.Sigla == Properties.Settings.Default.UnidadePadrao).SingleOrDefault();
@@ -481,73 +431,264 @@ namespace InventarioTI.Views
                     }
                     else
                     {
-                        MessageBox.Show("Somente equipamentos Backup TI podem ser removidos!");
+                        if (dadosCompletos.Select(a => a.Patrimonio).Contains(int.Parse(txbPatrimonio.Text)))
+                        {
+                            Preencher(txbPatrimonio.Text, false);
+                            MessageBox.Show("Computador com PATRIMONIO já cadastrado!\n" + lblInfoCliente.Text);
+                        }
+                        else if (dadosCompletos.Select(a => a.Nomenclatura).Contains(txbNomenclatura.Text.ToUpper()))
+                        {
+                            Preencher(dadosCompletos.Where(a => a.Nomenclatura == txbNomenclatura.Text.ToUpper()).Select(a => a.Patrimonio).SingleOrDefault().ToString(), false);
+                            MessageBox.Show("Computador com NOMENCLATURA já cadastrado!\n" + lblInfoCliente.Text);
+                        }
+                        else if (dadosCompletos.Select(a => a.Serie).Contains(txbSerie.Text.ToUpper()))
+                        {
+                            Preencher(dadosCompletos.Where(a => a.Serie == txbSerie.Text.ToUpper()).Select(a => a.Patrimonio).SingleOrDefault().ToString(), false);
+                            MessageBox.Show("Computador com número de SÉRIE já cadastrado!\n" + lblInfoCliente.Text);
+                        }
                     }
                 }
-                else
+            }
+            catch
+            {
+                MessageBox.Show("Não pode conter campos vazios.");
+            }
+        }
+
+        private void ptbRemover_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Equipamento[] dadosUnidade = DadosUnidade();
+                Movimetacao m = new Movimetacao();
+
+                using (var context = new InventarioContext())
                 {
-                    MessageBox.Show("Apenas o PATRIMONIO é considerado para remossão do equipamento.\n\t\tEquipamento não existe em sua unidade!");
+                    if (dadosUnidade.Select(a => a.Patrimonio).Contains(int.Parse(txbPatrimonio.Text)))
+                    {
+                        var unidade = context.Unidades;
+                        var cliente = context.Clientes;
+                        var responsavel = context.Responsaveis;
+
+                        if (dadosUnidade.Where(a => a.Patrimonio == int.Parse(txbPatrimonio.Text)).SingleOrDefault().Status == "backup")
+                        {
+                            Equipamento eq = new Equipamento();
+                            Cliente c = new Cliente();
+                            eq = DadosCompleto().Where(a => a.Patrimonio == int.Parse(txbPatrimonio.Text)).SingleOrDefault();
+                            eq.Status = "obsoleto";
+                            context.Update(eq);
+                            context.SaveChanges();
+                            Atualizar();
+                            MessageBox.Show("Equipamento removido com sucesso!");
+
+                            m.Data = DateTime.Now;
+                            m.Status = "Removido";
+                            m.Cliente = cliente.Where(c => c.UserId == "bck").SingleOrDefault();
+                            m.Equipamento = eq;
+                            m.Unidade = unidade.Where(u => u.Sigla == Properties.Settings.Default.UnidadePadrao).SingleOrDefault();
+                            m.Responsavel = responsavel.Where(r => r.CLiente.Equals(cliente.Where(c => c.UserId == Properties.Settings.Default.Usuario).SingleOrDefault())).SingleOrDefault();
+                            context.Add(m);
+                            context.SaveChanges();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Somente equipamentos Backup TI podem ser removidos!");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Apenas o PATRIMONIO é considerado para remossão do equipamento.\n\t\tEquipamento não existe em sua unidade!");
+                    }
                 }
+            }
+            catch
+            {
+                MessageBox.Show("Não pode conter campos vazios.");
             }
         }
 
         private void ptbEditar_Click(object sender, EventArgs e)
         {
-            Equipamento[] dadosUnidade = DadosCompleto().Where(b => b.Unidade.Sigla == cbxUnidades.Text).ToArray();
-            Equipamento[] skip = dadosUnidade.Except(dadosUnidade.Where(e=>e.Patrimonio==_equipamento.Patrimonio)).ToArray();
-            Movimetacao m = new Movimetacao();
-
-            using (var context = new InventarioContext())
+            try
             {
-                if (!(skip.Select(a => a.Patrimonio).Contains(int.Parse(txbPatrimonio.Text)) || skip.Select(a => a.Nomenclatura).Contains(txbNomenclatura.Text.ToUpper()) ||
-                    skip.Select(a => a.Serie).Contains(txbSerie.Text.ToUpper())))
-                {
-                    var responsavel = context.Responsaveis;
-                    var cliente = context.Clientes;
-                    Equipamento eq = context.Equipamentos.Where(e => e.Patrimonio == _equipamento.Patrimonio).Include(e=>e.Cliente).Include(e=>e.Unidade).FirstOrDefault();
+                Equipamento equipamento = new Equipamento();
+                equipamento = DadosCompleto().Where(e => e.ID_E == Properties.Settings.Default.Eq).SingleOrDefault();
+                Equipamento[] dadosUnidade = DadosCompleto().Where(b => b.Unidade.Sigla == cbxUnidades.Text).ToArray();
+                Equipamento[] skip = dadosUnidade.Except(dadosUnidade.Where(e => e.Patrimonio == equipamento.Patrimonio)).ToArray();
+                Movimetacao m = new Movimetacao();
 
-                    m.Data = DateTime.Now;
-                    m.Status = "editado";
-                    m.Cliente = eq.Cliente;
-                    m.Equipamento = eq;
-                    m.Unidade = eq.Unidade;
-                    m.Responsavel = responsavel.Where(r => r.CLiente.Equals(cliente.Where(c => c.UserId == Properties.Settings.Default.Usuario).SingleOrDefault())).SingleOrDefault();
-                    context.Add(m);
-                    
-                    eq.Patrimonio = int.Parse(txbPatrimonio.Text);
-                    eq.Nomenclatura = txbNomenclatura.Text;
-                    eq.Tipo = cbxTipo.Text;
-                    eq.Marca=cbxMarca.Text;
-                    eq.Modelo = cbxModelo.Text;
-                    eq.Processador = cbxProcessador.Text;
-                    eq.Ram = cbxRam.Text;
-                    eq.Disco = cbxDisco.Text;
-                    context.Update(eq);
-                    context.SaveChanges();
-                    Atualizar();
-                    Preencher(DadosCompleto().Where(a => a.Patrimonio == eq.Patrimonio).Select(a => a.Patrimonio).SingleOrDefault().ToString());
-                    MessageBox.Show("Equipamento Editado com sucesso!");
-                }
-                else
+                using (var context = new InventarioContext())
                 {
-                    if (skip.Select(a => a.Patrimonio).Contains(int.Parse(txbPatrimonio.Text)))
+                    if (!(skip.Select(a => a.Patrimonio).Contains(int.Parse(txbPatrimonio.Text)) || skip.Select(a => a.Nomenclatura).Contains(txbNomenclatura.Text.ToUpper()) ||
+                        skip.Select(a => a.Serie).Contains(txbSerie.Text.ToUpper())))
                     {
-                        Preencher(txbPatrimonio.Text, false);
-                        MessageBox.Show("Computador com PATRIMONIO já cadastrado!\n" + lblInfoCliente.Text);
+                        var responsavel = context.Responsaveis;
+                        var cliente = context.Clientes;
+                        Equipamento eq = context.Equipamentos.Where(e => e.Patrimonio == equipamento.Patrimonio).Include(e => e.Cliente).Include(e => e.Unidade).FirstOrDefault();
+                        m.Data = DateTime.Now;
+                        m.Status = "editado";
+                        m.Cliente = eq.Cliente;
+                        m.Equipamento = eq;
+                        m.Unidade = eq.Unidade;
+                        m.Responsavel = responsavel.Where(r => r.CLiente.Equals(cliente.Where(c => c.UserId == Properties.Settings.Default.Usuario).SingleOrDefault())).SingleOrDefault();
+                        context.Add(m);
+
+                        eq.Patrimonio = int.Parse(txbPatrimonio.Text);
+                        eq.Nomenclatura = txbNomenclatura.Text;
+                        eq.Tipo = cbxTipo.Text;
+                        eq.Marca = cbxMarca.Text;
+                        eq.Modelo = cbxModelo.Text;
+                        eq.Processador = cbxProcessador.Text;
+                        eq.Ram = cbxRam.Text;
+                        eq.Disco = cbxDisco.Text;
+                        context.Update(eq);
+                        context.SaveChanges();
+                        Atualizar();
+                        Preencher(DadosCompleto().Where(a => a.Patrimonio == eq.Patrimonio).Select(a => a.Patrimonio).SingleOrDefault().ToString());
+                        MessageBox.Show("Equipamento Editado com sucesso!");
                     }
-                    else if (skip.Select(a => a.Nomenclatura).Contains(txbNomenclatura.Text.ToUpper()))
+                    else
                     {
-                        Preencher(skip.Where(a => a.Nomenclatura == txbNomenclatura.Text.ToUpper()).Select(a => a.Patrimonio).SingleOrDefault().ToString(), false);
-                        MessageBox.Show("Computador com NOMENCLATURA já cadastrado!\n" + lblInfoCliente.Text);
-                    }
-                    else if (skip.Select(a => a.Serie).Contains(txbSerie.Text.ToUpper()))
-                    {
-                        Preencher(skip.Where(a => a.Serie == txbSerie.Text.ToUpper()).Select(a => a.Patrimonio).SingleOrDefault().ToString(), false);
-                        MessageBox.Show("Computador com número de SÉRIE já cadastrado!\n" + lblInfoCliente.Text);
+                        if (skip.Select(a => a.Patrimonio).Contains(int.Parse(txbPatrimonio.Text)))
+                        {
+                            Preencher(txbPatrimonio.Text, false);
+                            MessageBox.Show("Computador com PATRIMONIO já cadastrado!\n" + lblInfoCliente.Text);
+                        }
+                        else if (skip.Select(a => a.Nomenclatura).Contains(txbNomenclatura.Text.ToUpper()))
+                        {
+                            Preencher(skip.Where(a => a.Nomenclatura == txbNomenclatura.Text.ToUpper()).Select(a => a.Patrimonio).SingleOrDefault().ToString(), false);
+                            MessageBox.Show("Computador com NOMENCLATURA já cadastrado!\n" + lblInfoCliente.Text);
+                        }
+                        else if (skip.Select(a => a.Serie).Contains(txbSerie.Text.ToUpper()))
+                        {
+                            Preencher(skip.Where(a => a.Serie == txbSerie.Text.ToUpper()).Select(a => a.Patrimonio).SingleOrDefault().ToString(), false);
+                            MessageBox.Show("Computador com número de SÉRIE já cadastrado!\n" + lblInfoCliente.Text);
+                        }
                     }
                 }
             }
+            catch
+            {
+                MessageBox.Show("Não pode conter campos vazios.");
+            }
+        }
+
+        private void ptbManutencao_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Equipamento[] dadosUnidade = DadosUnidade();
+                Movimetacao m = new Movimetacao();
+
+                using (var context = new InventarioContext())
+                {
+                    if (dadosUnidade.Select(a => a.Patrimonio).Contains(int.Parse(txbPatrimonio.Text)))
+                    {
+                        var unidade = context.Unidades;
+                        var cliente = context.Clientes;
+                        var responsavel = context.Responsaveis;
+
+                        if (dadosUnidade.Where(a => a.Patrimonio == int.Parse(txbPatrimonio.Text)).SingleOrDefault().Status == "backup")
+                        {
+                            Equipamento eq = new Equipamento();
+                            Cliente c = new Cliente();
+                            eq = DadosCompleto().Where(a => a.Patrimonio == int.Parse(txbPatrimonio.Text)).SingleOrDefault();
+                            eq.Status = "manutencao";
+                            context.Update(eq);
+                            context.SaveChanges();
+                            Atualizar();
+                            MessageBox.Show("Equipamento em manutenção!");
+
+                            m.Data = DateTime.Now;
+                            m.Status = "manutencao";
+                            m.Cliente = cliente.Where(c => c.UserId == "bck").SingleOrDefault();
+                            m.Equipamento = eq;
+                            m.Unidade = unidade.Where(u => u.Sigla == Properties.Settings.Default.UnidadePadrao).SingleOrDefault();
+                            m.Responsavel = responsavel.Where(r => r.CLiente.Equals(cliente.Where(c => c.UserId == Properties.Settings.Default.Usuario).SingleOrDefault())).SingleOrDefault();
+                            context.Add(m);
+                            context.SaveChanges();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Somente equipamentos Backup TI podem ser colcados como manunteção!");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Apenas o PATRIMONIO é considerado para remossão do equipamento.\n\t\tEquipamento não existe em sua unidade!");
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Não pode conter campos vazios.");
+            }
+        }
+
+        private void ptbMover_Click(object sender, EventArgs e)
+        {
+            if (cbxUni.Visible)
+            {
+                cbxUni.Visible = false;
+            }
+            else
+            {
+                string[] u;
+                using (var context = new InventarioContext())
+                {
+                    u = context.Unidades.Select(e => e.Sigla).ToArray();
+                    cbxUni.DataSource = u;
+                    cbxUni.Text = null;
+                }
+                cbxUni.Visible = true;
+            }
+        }
+
+        private void cbxUni_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            Equipamento equipamento = new Equipamento();
+            equipamento = DadosCompleto().Where(e => e.ID_E == Properties.Settings.Default.Eq).SingleOrDefault();
+            try
+            {
+                Equipamento[] dadosUnidade = DadosCompleto().Where(b => b.Unidade.Sigla == cbxUnidades.Text).ToArray();
+                AprovacaoTransferencia a = new AprovacaoTransferencia();
+
+                using (var context = new InventarioContext())
+                {
+                    if (dadosUnidade.Select(a => a.Patrimonio).Contains(int.Parse(txbPatrimonio.Text)))
+                    {
+                        var unidade = context.Unidades;
+                        var responsavel = context.Responsaveis.Include(e => e.CLiente);
+                        if (dadosUnidade.Where(a => a.Patrimonio == int.Parse(txbPatrimonio.Text)).SingleOrDefault().Status == "backup")
+                        {
+                            Equipamento eq = context.Equipamentos.Where(e => e.Patrimonio == equipamento.Patrimonio).SingleOrDefault();
+
+                            a.Responsavel = responsavel.Where(e => e.CLiente.UserId == Properties.Settings.Default.Usuario).SingleOrDefault();
+                            a.Equipamento = eq;
+                            a.UnidadeDestino = cbxUni.Text;
+                            a.Status = "aprovacao";
+                            a.DataInicio = DateTime.Now;
+
+                            context.Add(a);
+                            context.SaveChanges();
+                            MessageBox.Show("Equipamento será movido assim que responsável pela unidade realizar a aprovação dessa movimentação!");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Somente equipamentos Backup TI podem ser movimentados!");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Apenas o PATRIMONIO é considerado para movimentação do equipamento.\n\t\tEquipamento não existe em sua unidade!");
+                    }
+                }
+                cbxUni.Visible = false;
+            }
+            catch
+            {
+                MessageBox.Show("Não pode conter campos vazios.");
+            }
         }
     }
-
 }

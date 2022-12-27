@@ -58,5 +58,41 @@ namespace InventarioTI.Properties {
                 this["UnidadePadrao"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Lateral {
+            get {
+                return ((bool)(this["Lateral"]));
+            }
+            set {
+                this["Lateral"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Maximizado {
+            get {
+                return ((bool)(this["Maximizado"]));
+            }
+            set {
+                this["Maximizado"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Eq {
+            get {
+                return ((int)(this["Eq"]));
+            }
+            set {
+                this["Eq"] = value;
+            }
+        }
     }
 }

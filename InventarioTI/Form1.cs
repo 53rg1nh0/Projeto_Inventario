@@ -26,6 +26,16 @@ namespace InventarioTI
             imagem[2] = Properties.Resources.ComputadorClaro45;
             imagem[1] = Properties.Resources.SobreClaro45;
             imagem[0] = Properties.Resources.AjusteClaro45;
+
+            if (!Properties.Settings.Default.Lateral && !string.IsNullOrEmpty(Properties.Settings.Default.Usuario))
+            {
+                pnlLateralBack.Width = 55;
+            }
+            if (Properties.Settings.Default.Maximizado && !string.IsNullOrEmpty(Properties.Settings.Default.Usuario))
+            {
+                this.WindowState = FormWindowState.Maximized;
+            }
+
             try
             {
                 using (var context = new InventarioContext())
@@ -205,13 +215,33 @@ namespace InventarioTI
             if (pnlLateralBack.Width == 180)
             {
                 pnlLateralBack.Width = 55;
+                Properties.Settings.Default.Lateral = false;
+                Properties.Settings.Default.Save();
             }
             else
             {
                 pnlLateralBack.Width = 180;
+                Properties.Settings.Default.Lateral = true;
+                Properties.Settings.Default.Save();
             }
         }
 
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(Properties.Settings.Default.Usuario))
+            {
+                if (this.WindowState == FormWindowState.Maximized)
+                {
+                    Properties.Settings.Default.Maximizado = true;
+                    Properties.Settings.Default.Save();
+                }
+                else
+                {
+                    Properties.Settings.Default.Maximizado = false;
+                    Properties.Settings.Default.Save();
+                }
+            }
+        }
     }
 
 }

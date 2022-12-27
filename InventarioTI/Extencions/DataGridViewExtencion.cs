@@ -29,10 +29,12 @@ namespace InventarioTI.Extencions
             _ordenar.Clear();
             DG.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point);
             DG.ColumnHeadersDefaultCellStyle.Font = new Font("Century Gothic", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            DG.ColumnHeadersHeight = 30;
             DG.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(50, 65, 81);
             DG.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
             DG.CellBorderStyle = DataGridViewCellBorderStyle.None;
             DG.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            DG.SelectionMode=DataGridViewSelectionMode.FullRowSelect;
             DG.Dock = DockStyle.Fill;
             DG.RowHeadersVisible = false;
             DG.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;

@@ -199,6 +199,7 @@
             this.Name = "Form1";
             this.Text = "InventárioTI";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.Resize += new System.EventHandler(this.Form1_Resize);
             this.pnlLateral.ResumeLayout(false);
             this.pnlLateralTopo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ptbLateralSolar)).EndInit();

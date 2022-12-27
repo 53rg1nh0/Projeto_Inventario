@@ -30,6 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(uctHome));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlTopo = new System.Windows.Forms.Panel();
             this.tlpTopo = new System.Windows.Forms.TableLayoutPanel();
             this.pnlTopoUni = new System.Windows.Forms.Panel();
@@ -92,6 +94,7 @@
             this.ptbMover = new System.Windows.Forms.PictureBox();
             this.ptbAdd = new System.Windows.Forms.PictureBox();
             this.lblInfoCliente = new System.Windows.Forms.Label();
+            this.cbxUni = new System.Windows.Forms.ComboBox();
             this.pagComp = new System.Windows.Forms.TabPage();
             this.tlpBackComp = new System.Windows.Forms.TableLayoutPanel();
             this.tlpButoes = new System.Windows.Forms.TableLayoutPanel();
@@ -101,6 +104,7 @@
             this.pagTele = new System.Windows.Forms.TabPage();
             this.pagEquipe = new System.Windows.Forms.TabPage();
             this.dgvEquipe = new System.Windows.Forms.DataGridView();
+            this.ttpInformar = new System.Windows.Forms.ToolTip(this.components);
             this.pnlTopo.SuspendLayout();
             this.tlpTopo.SuspendLayout();
             this.pnlTopoUni.SuspendLayout();
@@ -615,7 +619,16 @@
             // dgvBackups
             // 
             this.dgvBackups.AutoGenerateColumns = false;
-            this.dgvBackups.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(95)))), ((int)(((byte)(111)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvBackups.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvBackups.ColumnHeadersHeight = 50;
+            this.dgvBackups.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvBackups.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.iDEDataGridViewTextBoxColumn,
             this.patrimonioDataGridViewTextBoxColumn,
@@ -632,6 +645,14 @@
             this.serieDataGridViewTextBoxColumn,
             this.modeloDataGridViewTextBoxColumn});
             this.dgvBackups.DataSource = this.equipamentoBindingSource;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(235)))), ((int)(((byte)(251)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvBackups.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvBackups.FilterAndSortEnabled = true;
             this.dgvBackups.FilterStringChangedInvokeBeforeDatasourceUpdate = true;
             this.dgvBackups.Location = new System.Drawing.Point(3, 45);
@@ -765,17 +786,17 @@
             // 
             this.tlpBotoes.BackColor = System.Drawing.SystemColors.Control;
             this.tlpBotoes.ColumnCount = 12;
-            this.tlpBotoes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 77.77777F));
+            this.tlpBotoes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 53.62319F));
             this.tlpBotoes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tlpBotoes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.444445F));
+            this.tlpBotoes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.275363F));
             this.tlpBotoes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tlpBotoes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.444445F));
+            this.tlpBotoes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.275363F));
             this.tlpBotoes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tlpBotoes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.444445F));
+            this.tlpBotoes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.275363F));
             this.tlpBotoes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tlpBotoes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.444445F));
+            this.tlpBotoes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.275363F));
             this.tlpBotoes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tlpBotoes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.444445F));
+            this.tlpBotoes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.275363F));
             this.tlpBotoes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tlpBotoes.Controls.Add(this.ptbBorracha, 11, 0);
             this.tlpBotoes.Controls.Add(this.ptbEditar, 5, 0);
@@ -784,6 +805,7 @@
             this.tlpBotoes.Controls.Add(this.ptbMover, 7, 0);
             this.tlpBotoes.Controls.Add(this.ptbAdd, 1, 0);
             this.tlpBotoes.Controls.Add(this.lblInfoCliente, 0, 0);
+            this.tlpBotoes.Controls.Add(this.cbxUni, 8, 0);
             this.tlpBotoes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpBotoes.Location = new System.Drawing.Point(0, 0);
             this.tlpBotoes.Margin = new System.Windows.Forms.Padding(0);
@@ -797,7 +819,7 @@
             // 
             this.ptbBorracha.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ptbBorracha.Image = global::InventarioTI.Properties.Resources.BorrachaEscuro30;
-            this.ptbBorracha.Location = new System.Drawing.Point(770, 0);
+            this.ptbBorracha.Location = new System.Drawing.Point(769, 0);
             this.ptbBorracha.Margin = new System.Windows.Forms.Padding(0);
             this.ptbBorracha.Name = "ptbBorracha";
             this.ptbBorracha.Size = new System.Drawing.Size(30, 35);
@@ -809,7 +831,7 @@
             // 
             this.ptbEditar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ptbEditar.Image = global::InventarioTI.Properties.Resources.EditarEscuro30;
-            this.ptbEditar.Location = new System.Drawing.Point(599, 0);
+            this.ptbEditar.Location = new System.Drawing.Point(508, 0);
             this.ptbEditar.Margin = new System.Windows.Forms.Padding(0);
             this.ptbEditar.Name = "ptbEditar";
             this.ptbEditar.Size = new System.Drawing.Size(30, 35);
@@ -821,18 +843,19 @@
             // 
             this.ptbManutencao.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ptbManutencao.Image = global::InventarioTI.Properties.Resources.ManutencaoEscuro30;
-            this.ptbManutencao.Location = new System.Drawing.Point(713, 0);
+            this.ptbManutencao.Location = new System.Drawing.Point(682, 0);
             this.ptbManutencao.Margin = new System.Windows.Forms.Padding(0);
             this.ptbManutencao.Name = "ptbManutencao";
             this.ptbManutencao.Size = new System.Drawing.Size(30, 35);
             this.ptbManutencao.TabIndex = 2;
             this.ptbManutencao.TabStop = false;
+            this.ptbManutencao.Click += new System.EventHandler(this.ptbManutencao_Click);
             // 
             // ptbRemover
             // 
             this.ptbRemover.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ptbRemover.Image = global::InventarioTI.Properties.Resources.EscluirEscuro30;
-            this.ptbRemover.Location = new System.Drawing.Point(542, 0);
+            this.ptbRemover.Location = new System.Drawing.Point(421, 0);
             this.ptbRemover.Margin = new System.Windows.Forms.Padding(0);
             this.ptbRemover.Name = "ptbRemover";
             this.ptbRemover.Size = new System.Drawing.Size(30, 35);
@@ -844,18 +867,19 @@
             // 
             this.ptbMover.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ptbMover.Image = global::InventarioTI.Properties.Resources.MoverEscuro30;
-            this.ptbMover.Location = new System.Drawing.Point(656, 0);
+            this.ptbMover.Location = new System.Drawing.Point(595, 0);
             this.ptbMover.Margin = new System.Windows.Forms.Padding(0);
             this.ptbMover.Name = "ptbMover";
             this.ptbMover.Size = new System.Drawing.Size(30, 35);
             this.ptbMover.TabIndex = 1;
             this.ptbMover.TabStop = false;
+            this.ptbMover.Click += new System.EventHandler(this.ptbMover_Click);
             // 
             // ptbAdd
             // 
             this.ptbAdd.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ptbAdd.Image = global::InventarioTI.Properties.Resources.AdicionarEscuro30;
-            this.ptbAdd.Location = new System.Drawing.Point(485, 0);
+            this.ptbAdd.Location = new System.Drawing.Point(334, 0);
             this.ptbAdd.Margin = new System.Windows.Forms.Padding(0);
             this.ptbAdd.Name = "ptbAdd";
             this.ptbAdd.Size = new System.Drawing.Size(30, 35);
@@ -871,6 +895,18 @@
             this.lblInfoCliente.Name = "lblInfoCliente";
             this.lblInfoCliente.Size = new System.Drawing.Size(0, 15);
             this.lblInfoCliente.TabIndex = 5;
+            // 
+            // cbxUni
+            // 
+            this.cbxUni.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbxUni.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxUni.FormattingEnabled = true;
+            this.cbxUni.Location = new System.Drawing.Point(628, 3);
+            this.cbxUni.Name = "cbxUni";
+            this.cbxUni.Size = new System.Drawing.Size(51, 25);
+            this.cbxUni.TabIndex = 6;
+            this.cbxUni.Visible = false;
+            this.cbxUni.SelectionChangeCommitted += new System.EventHandler(this.cbxUni_SelectionChangeCommitted);
             // 
             // pagComp
             // 
@@ -1085,7 +1121,6 @@
         private PictureBox ptbEditar;
         private PictureBox ptbManutencao;
         private PictureBox ptbRemover;
-        private PictureBox ptbMover;
         private Zuby.ADGV.AdvancedDataGridView dgvBackups;
         private DataGridViewTextBoxColumn iDEDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn patrimonioDataGridViewTextBoxColumn;
@@ -1107,5 +1142,8 @@
         private TextBox txbPatrimonio;
         private TextBox txbNomenclatura;
         private Label lblInfoCliente;
+        private ToolTip ttpInformar;
+        public PictureBox ptbMover;
+        private ComboBox cbxUni;
     }
 }
