@@ -169,8 +169,8 @@ namespace InventarioTI
                         .IsRequired();
 
             modelBuilder.Entity<Movimetacao>()
-                .Property(m => m.Chamado)
-                    .HasMaxLength(20)
+                .Property(m => m.Observacao)
+                    .HasMaxLength(50)
                         .IsRequired(false);
 
             modelBuilder.Entity<Movimetacao>()

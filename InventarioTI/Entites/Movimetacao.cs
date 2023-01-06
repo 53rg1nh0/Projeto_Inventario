@@ -17,6 +17,6 @@ namespace InventarioTI.Entites
         public Equipamento Equipamento { get; set; }
         public Unidade Unidade { get; set; }
         public Responsavel Responsavel { get; set; }
-        public int? Chamado { get; set; }
+        public string Observacao { get; set; }
     }
 }

@@ -421,6 +421,7 @@ namespace InventarioTI.Views
                         MessageBox.Show("Equipamento cadastrado com sucesso!");
 
                         m.Data = DateTime.Now;
+                        m.Observacao = "Equipamento adicionado!";
                         m.Status = "adicionado";
                         m.Cliente = cliente.Where(c => c.UserId == "bck").SingleOrDefault();
                         m.Equipamento = eq;
@@ -479,16 +480,21 @@ namespace InventarioTI.Views
                             context.Update(eq);
                             context.SaveChanges();
                             Atualizar();
-                            MessageBox.Show("Equipamento removido com sucesso!");
-
+                            
                             m.Data = DateTime.Now;
-                            m.Status = "Removido";
+                            m.Status = "obsoleto";
+
+                            obs obs = new obs(m);
+                            obs.lblObs.Text = "Motivo da remoção do equipamento.";
+                            obs.ShowDialog();
+
                             m.Cliente = cliente.Where(c => c.UserId == "bck").SingleOrDefault();
                             m.Equipamento = eq;
                             m.Unidade = unidade.Where(u => u.Sigla == Properties.Settings.Default.UnidadePadrao).SingleOrDefault();
                             m.Responsavel = responsavel.Where(r => r.CLiente.Equals(cliente.Where(c => c.UserId == Properties.Settings.Default.Usuario).SingleOrDefault())).SingleOrDefault();
                             context.Add(m);
                             context.SaveChanges();
+                            MessageBox.Show("Equipamento removido com sucesso!");
                         }
                         else
                         {
@@ -526,6 +532,7 @@ namespace InventarioTI.Views
                         var cliente = context.Clientes;
                         Equipamento eq = context.Equipamentos.Where(e => e.Patrimonio == equipamento.Patrimonio).Include(e => e.Cliente).Include(e => e.Unidade).FirstOrDefault();
                         m.Data = DateTime.Now;
+                        m.Observacao = "Equipamento editado!";
                         m.Status = "editado";
                         m.Cliente = eq.Cliente;
                         m.Equipamento = eq;
@@ -588,16 +595,17 @@ namespace InventarioTI.Views
                         var cliente = context.Clientes;
                         var responsavel = context.Responsaveis;
 
+                        Equipamento eq = new Equipamento();
+                        Cliente c = new Cliente();
+
                         if (dadosUnidade.Where(a => a.Patrimonio == int.Parse(txbPatrimonio.Text)).SingleOrDefault().Status == "backup")
                         {
-                            Equipamento eq = new Equipamento();
-                            Cliente c = new Cliente();
                             eq = DadosCompleto().Where(a => a.Patrimonio == int.Parse(txbPatrimonio.Text)).SingleOrDefault();
                             eq.Status = "manutencao";
                             context.Update(eq);
-                            context.SaveChanges();
-                            Atualizar();
-                            MessageBox.Show("Equipamento em manutenção!");
+                            //context.SaveChanges();
+                            //Atualizar();
+
 
                             m.Data = DateTime.Now;
                             m.Status = "manutencao";
@@ -605,12 +613,40 @@ namespace InventarioTI.Views
                             m.Equipamento = eq;
                             m.Unidade = unidade.Where(u => u.Sigla == Properties.Settings.Default.UnidadePadrao).SingleOrDefault();
                             m.Responsavel = responsavel.Where(r => r.CLiente.Equals(cliente.Where(c => c.UserId == Properties.Settings.Default.Usuario).SingleOrDefault())).SingleOrDefault();
+
+                            obs obs = new obs(m);
+                            obs.lblObs.Text = "Motivo da manutenção do equipamento";
+                            obs.ShowDialog();
+
                             context.Add(m);
                             context.SaveChanges();
+                            Atualizar();
+                            MessageBox.Show("Equipamento em manutenção!");
+                        }
+                        else if (dadosUnidade.Where(a => a.Patrimonio == int.Parse(txbPatrimonio.Text)).SingleOrDefault().Status == "manutencao")
+                        {
+                            eq = DadosCompleto().Where(a => a.Patrimonio == int.Parse(txbPatrimonio.Text)).SingleOrDefault();
+                            eq.Status = "backup";
+                            context.Update(eq);
+                            //context.SaveChanges();
+                            //Atualizar();
+
+                            m.Observacao = "Equipamento voltou do concerto!";
+                            m.Data = DateTime.Now;
+                            m.Status = "manutencao";
+                            m.Cliente = cliente.Where(c => c.UserId == "bck").SingleOrDefault();
+                            m.Equipamento = eq;
+                            m.Unidade = unidade.Where(u => u.Sigla == Properties.Settings.Default.UnidadePadrao).SingleOrDefault();
+                            m.Responsavel = responsavel.Where(r => r.CLiente.Equals(cliente.Where(c => c.UserId == Properties.Settings.Default.Usuario).SingleOrDefault())).SingleOrDefault();
+
+                            context.Add(m);
+                            context.SaveChanges();
+                            Atualizar();
+                            MessageBox.Show("Equipamento voltou do concerto! Backup TI");
                         }
                         else
                         {
-                            MessageBox.Show("Somente equipamentos Backup TI podem ser colcados como manunteção!");
+                            MessageBox.Show("Somente equipamentos com status backup ou manutenção podem realizar essa operação!");
                         }
                     }
                     else
@@ -652,17 +688,19 @@ namespace InventarioTI.Views
             {
                 Equipamento[] dadosUnidade = DadosCompleto().Where(b => b.Unidade.Sigla == cbxUnidades.Text).ToArray();
                 AprovacaoTransferencia a = new AprovacaoTransferencia();
+                Movimetacao m = new Movimetacao();
 
                 using (var context = new InventarioContext())
                 {
                     if (dadosUnidade.Select(a => a.Patrimonio).Contains(int.Parse(txbPatrimonio.Text)))
                     {
                         var unidade = context.Unidades;
+                        var cliente = context.Clientes;
                         var responsavel = context.Responsaveis.Include(e => e.CLiente);
-                        if (dadosUnidade.Where(a => a.Patrimonio == int.Parse(txbPatrimonio.Text)).SingleOrDefault().Status == "backup")
-                        {
-                            Equipamento eq = context.Equipamentos.Where(e => e.Patrimonio == equipamento.Patrimonio).SingleOrDefault();
+                        Equipamento eq = context.Equipamentos.Where(e => e.Patrimonio == equipamento.Patrimonio).SingleOrDefault();
 
+                        if (dadosUnidade.Where(a => a.Patrimonio == int.Parse(txbPatrimonio.Text)).SingleOrDefault().Status == "backup" && cbxUni.Text != cbxUnidades.Text)
+                        {
                             a.Responsavel = responsavel.Where(e => e.CLiente.UserId == Properties.Settings.Default.Usuario).SingleOrDefault();
                             a.Equipamento = eq;
                             a.UnidadeDestino = cbxUni.Text;
@@ -671,11 +709,48 @@ namespace InventarioTI.Views
 
                             context.Add(a);
                             context.SaveChanges();
+                            Atualizar();
                             MessageBox.Show("Equipamento será movido assim que responsável pela unidade realizar a aprovação dessa movimentação!");
+                        }
+                        else if (dadosUnidade.Where(a => a.Patrimonio == int.Parse(txbPatrimonio.Text)).SingleOrDefault().Status == "backup" && cbxUni.Text == cbxUnidades.Text)
+                        {
+                            eq.Status = "unidade";
+                            context.Update(eq);
+                            context.SaveChanges();
+
+                            m.Data = DateTime.Now;
+                            m.Status = "movido";
+                            m.Observacao = "Equipamento pertencente a unidade " + cbxUnidades.Text;
+                            m.Cliente = cliente.Where(c => c.UserId == "bck").SingleOrDefault();
+                            m.Equipamento = eq;
+                            m.Unidade = unidade.Where(u => u.Sigla == Properties.Settings.Default.UnidadePadrao).SingleOrDefault();
+                            m.Responsavel = responsavel.Where(r => r.CLiente.Equals(cliente.Where(c => c.UserId == Properties.Settings.Default.Usuario).SingleOrDefault())).SingleOrDefault();
+                            context.Add(m);
+                            context.SaveChanges();
+                            Atualizar();
+                            MessageBox.Show("Movimentação realizada com sucesso!", "Movimentação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else if (dadosUnidade.Where(a => a.Patrimonio == int.Parse(txbPatrimonio.Text)).SingleOrDefault().Status == "unidade" && cbxUni.Text == cbxUnidades.Text)
+                        {
+                            eq.Status = "backup";
+                            context.Update(eq);
+                            context.SaveChanges();
+
+                            m.Data = DateTime.Now;
+                            m.Status = "movido";
+                            m.Observacao = "Equipamento movido para backup TI de " + cbxUnidades.Text;
+                            m.Cliente = cliente.Where(c => c.UserId == "bck").SingleOrDefault();
+                            m.Equipamento = eq;
+                            m.Unidade = unidade.Where(u => u.Sigla == Properties.Settings.Default.UnidadePadrao).SingleOrDefault();
+                            m.Responsavel = responsavel.Where(r => r.CLiente.Equals(cliente.Where(c => c.UserId == Properties.Settings.Default.Usuario).SingleOrDefault())).SingleOrDefault();
+                            context.Add(m);
+                            context.SaveChanges();
+                            Atualizar();
+                            MessageBox.Show("Movimentação realizada com sucesso", "Movimentação", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         else
                         {
-                            MessageBox.Show("Somente equipamentos Backup TI podem ser movimentados!");
+                            MessageBox.Show("Somente equipamentos Backup TI ou em Unidade podem ser movimentados!");
                         }
                     }
                     else
